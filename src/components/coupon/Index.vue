@@ -43,7 +43,7 @@ export default {
   mounted: function() {
     this.$root.$emit('app:update', {
       title: language.title,
-      item: ['back', 'search']
+      item: ['back', 'search', 'footer']
     });
   },
   methods: {

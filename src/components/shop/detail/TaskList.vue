@@ -9,7 +9,7 @@
   <div v-if="list.length > 0" class="shop-item ui-card ui-card-overline ui-card-underline ui-card-mar-btm">
     <h5 class="t-bold ui-card-underline">{{lang.title}}</h5>
     <div class="generic-list">
-      <list-item v-for="item in showList" :taskId="item.task_id" :taskName="item.title" :taskLogo="item.logo" :taskCost="item.cost" :taskUv="item.count" :shopId="shopId" :shopName="shopName" :shopAuth="shopAuth"></list-item>
+      <list-item v-for="item in showList" :taskId="item.task_id" :taskName="item.title" :taskLogo="item.logo" :taskCost="item.cost" :taskUv="item.count - item.rest_count" :shopId="shopId" :shopName="shopName" :shopAuth="shopAuth"></list-item>
       <div v-if="hideList.length" @click="showMore" class="list-show-more ui-card-overline">
         <span class="iconfont i-arrow-down-aft">{{lang.showMore[0]}}{{hideList.length}}{{lang.showMore[1]}}</span>
       </div>

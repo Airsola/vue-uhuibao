@@ -54,7 +54,7 @@ p.no-next-data{padding:.2rem 0;}
 }
 .generic-list dl>dd>h4.single-row{-webkit-line-clamp:1;}
 .generic-list dl>dd>h4 span{padding-right:.08rem;margin-right:.08rem;position:relative;}
-.generic-list dl>dd>h4 span:after{background-color:#222;height:90%;}
+.generic-list dl>dd>h4 span:after{background-color:#222;height:80%;}
 
 .generic-list dl>dd>div.item-info{margin-top:.05rem;}
 .generic-list dl>dd>div.item-info>.shop-name{color:#999;}

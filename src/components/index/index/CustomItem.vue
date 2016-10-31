@@ -38,7 +38,7 @@
     <div v-else :class="['clearfix', className]">
       <span v-for="(item, index) in data.list" :class="gridClass ? gridClass[index] : ''">
         <a :href="item.url">
-          <img v-lazy="item.image">
+          <img :src="item.image">
         </a>
       </span>
     </div>

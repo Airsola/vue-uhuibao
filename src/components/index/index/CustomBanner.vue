@@ -15,8 +15,8 @@
     <div class="swiper-wrapper">
       <div class="swiper-slide" v-for="item in data">
         <a :href="item.bann_link_url">
-          <img v-if="observer" v-lazy v-lazy="item.bann_pic_img" @load="update">
-          <img v-else v-lazy="item.bann_pic_img" @load="update">
+          <img v-if="observer" :src="item.bann_pic_img" @load="update">
+          <img v-else :src="item.bann_pic_img" @load="update">
         </a>
       </div>
     </div>

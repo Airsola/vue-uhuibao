@@ -14,7 +14,7 @@
   <transition name="slide-left">
     <dl class="underline" @click="redirectTo(serviceType, serviceLink, serviceId, shopId)">
       <dt>
-        <img v-lazy="serviceLogo" :alt="serviceLogo" :placeholder="placeholder"></lazy>
+        <img :src="serviceLogo" :alt="serviceLogo" :placeholder="placeholder"></lazy>
         <span v-if="discountPrice && discountTag">{{discountTag}}</span>
       </dt>
       <dd>

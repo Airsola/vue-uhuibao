@@ -21,7 +21,10 @@
   .shop-album>ul>li:nth-of-type(2){margin:0 .1rem;}
   .shop-album>ul>li>a{background-color:#f6f6f6;width:100%;height:100%;overflow:hidden;position:relative;}
   .shop-album>ul>li>a,.shop-album>ul>li>a>img{display:block;}
-  .shop-album>ul>li>a>img{min-height:100%;min-width:100%;position:absolute;left:50%;top:50%;transform:translate(-50%, -50%);}
+  .shop-album>ul>li>a>img{position:absolute;left:50%;top:50%;transform:translate(-50%, -50%);transition:transform .3s ease;}
+  .shop-album>ul>li>a>img.normal{min-height:100%;min-width:100%;}
+  .shop-album>ul>li>a>img.portrait{width:100%;}
+  .shop-album>ul>li>a>img.landscape{height:100%;}
 
   .info-content>.pay-type{height:.16rem;line-height:.16rem;}
   .info-content>.pay-type>*{float:left;}
@@ -51,11 +54,11 @@
           <i v-for="method in payMethods" :class="payMethodClass[method]"></i>
         </div>
       </div>
-      <div v-if="albumList.length > 0" class="shop-album clearfix">
+      <div v-if="photoList.length > 0" class="shop-album clearfix">
         <ul>
-          <li v-for="src in albumList">
+          <li v-for="(item, index) in photoList">
             <router-link :to="{name: 'shop:album', params: {shop_id: shopId}}">
-              <img :src="src">
+              <img :src="item.url" :class="item.scale" @load="imgResize($event, index)">
             </router-link>
           </li>
         </ul>
@@ -135,7 +138,7 @@ export default {
       payMethods: [],
       shopMapLng: '',
       shopMapLat: '',
-      albumList: [],
+      photoList: [],
       serviceList: [],
       taskList: [],
       couponList: [],
@@ -191,7 +194,15 @@ export default {
             this.$set(this, 'shopMapLng', result.data.shop_longitude);
             this.$set(this, 'shopMapLat', result.data.shop_latitude);
 
-            if (result.data.images) this.$set(this, 'albumList', result.data.images);
+            if (result.data.servers) {
+              result.data.images.forEach(url => {
+                this.photoList.push({
+                  url,
+                  scale: 'normal'
+                });
+              });
+            };
+
             if (result.data.servers) this.$set(this, 'serviceList', result.data.servers);
             if (result.data.tasks) this.$set(this, 'taskList', result.data.tasks);
             if (result.data.coupons) this.$set(this, 'couponList', result.data.coupons);
@@ -205,6 +216,9 @@ export default {
           });
         };
       });
+    },
+    imgResize: function(evt, index) {
+      this.photoList[index].scale = evt.target.height >= evt.target.width ? 'portrait' : 'landscape';
     }
   }
 };

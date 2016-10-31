@@ -7,6 +7,7 @@ import shareLogo from 'assets/images/share_logo.jpg';
 import 'whatwg-fetch';
 
 /* 根据域名设置系统语言 */
+const location = window.location;
 const hostArr = location.host.split('.');
 const hostName = hostArr.length === 4 ? location.host : hostArr[0];
 const hostDomain = location.host.slice(hostName.length + 1);
@@ -17,6 +18,9 @@ const API_PATH = '/res/';
 const LANG_TYPE = hostName.slice(0, 2) === 'tw' ? 'zh-tw' : 'zh-cn';
 const CHANNEL_CODE = {
   channel_code: window.uhb_config.channel_code
+};
+const CHANNEL_NAME = {
+  channel_name: window.uhb_config.channel_name
 };
 const AREA_CODE = {
   area_code: window.uhb_config.area_code
@@ -53,13 +57,13 @@ const Http = {
   }
 };
 
-export {Http, LANG_TYPE, CHANNEL_CODE, AREA_CODE, USER_AUTH};
+export {Http, LANG_TYPE, CHANNEL_CODE, CHANNEL_NAME, AREA_CODE, USER_AUTH};
 export {$, _, Helper};
 
 const WechatAPI = new JssdkHelper(API_PATH + 'api/wechat_config', _.assign({body: formDataSource({url: HOME_URL})}, fetchSettings), {
   title: '游惠宝',
   desc: '游惠宝，分享世界美一刻！',
-  link: HOME_URL,
+  link: location.href,
   imgUrl: shareLogo,
   callback: {
     success: function(a) {
@@ -112,12 +116,12 @@ $(document.body).on('click', 'a[href^="#!"]', function(evt) {
   for (let rule of urlRules) {
     let ruleStr = rule[0].source.replace(/\\/, '');
     if (hrefAttr.slice(0, ruleStr.length) === ruleStr) {
-      window.location.href = hrefAttr.replace(rule[0], rule[1]);
+      location.href = hrefAttr.replace(rule[0], rule[1]);
       return;
     };
   };
 
-  window.location.href = this.getAttribute('href').replace(/#!/, '/?channel=' + CHANNEL_CODE.channel_code + '&area=' + AREA_CODE.area_code + '#!');
+  location.href = this.getAttribute('href').replace(/#!/, '/?channel=' + CHANNEL_CODE.channel_code + '&area=' + AREA_CODE.area_code + '#!');
 });
 
 fastclick.attach(document.body);

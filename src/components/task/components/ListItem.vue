@@ -14,7 +14,7 @@
   <transition name="slide-left">
     <dl class="underline" @click="redirectTo(taskId)">
       <dt>
-        <img v-lazy="taskLogo" :alt="taskName">
+        <img :src="taskLogo" :alt="taskName">
       </dt>
       <dd>
         <h4 class="t-bold"><span v-if="productName" class="rightline">{{productName}}</span>{{taskName}}</h4>

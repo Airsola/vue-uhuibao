@@ -14,7 +14,7 @@
   <transition name="slide-left">
     <dl class="underline" @click="redirectTo(couponId)">
       <dt>
-        <img v-lazy="couponLogo" :alt="couponName">
+        <img :src="couponLogo" :alt="couponName">
       </dt>
       <dd>
         <h4 class="t-bold"><span v-if="productName" class="rightline">{{productName}}</span>{{couponName}}</h4>

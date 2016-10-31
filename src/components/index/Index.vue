@@ -14,7 +14,7 @@ import CustomBanner from './index/CustomBanner.vue';
 import CustomNav from './index/CustomNav.vue';
 import CustomItem from './index/CustomItem.vue';
 
-import {Http, CHANNEL_CODE, AREA_CODE, LANG_TYPE} from 'config';
+import {Http, CHANNEL_CODE, CHANNEL_NAME, AREA_CODE, LANG_TYPE} from 'config';
 
 const Language = {
   'zh-cn': {
@@ -32,6 +32,11 @@ export default {
     CustomBanner,
     CustomNav,
     CustomItem
+  },
+  computed: {
+    title() {
+      return CHANNEL_NAME.channel_name;
+    }
   },
   data() {
     return {
@@ -53,7 +58,7 @@ export default {
   },
   mounted: function() {
     this.$root.$emit('app:update', {
-      title: language.title,
+      title: this.title,
       item: ['area', 'search', 'footer']
     });
   },

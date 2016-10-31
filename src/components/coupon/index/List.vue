@@ -17,6 +17,7 @@
 <script>
 import ListItem from '../components/ListItem.vue';
 
+import Helper from 'helper';
 import {Http, CHANNEL_CODE, AREA_CODE, LANG_TYPE} from 'config';
 
 const Language = {
@@ -89,7 +90,7 @@ export default {
     },
     loadMoreFn: function(evt) {
       if (this.hasNext === false || this.isLoading === true) return;
-      if (window.document.body.clientHeight - window.scrollY - window.outerHeight <= 100) this.loadMoreData();
+      if (Helper.isPageBottom(Helper.rem2px(1))) this.loadMoreData();
     },
     loadMoreData: function() {
       this.fetchData(this.getUrlParams(0));

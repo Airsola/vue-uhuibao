@@ -5,12 +5,10 @@ import 'assets/style/global.css';
 import Vue from 'vue';
 import router from './router';
 import store from './store';
-import VueLazyload from 'vue-lazyload';
 import GinGili from './plugins/index';
 import App from './App.vue';
 
 Vue.use(GinGili);
-Vue.use(VueLazyload);
 
 new Vue({
   router,

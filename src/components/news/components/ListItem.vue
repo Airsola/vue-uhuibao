@@ -14,7 +14,7 @@
   <transition name="slide-left">
     <router-link :to="{name: 'news:detail', params: {news_id: newsId}}" tag="dl" class="underline">
       <dt>
-        <img v-lazy="newsLogo" :alt="newsName" :placeholder="placeholder"></img>
+        <img :src="newsLogo" :alt="newsName" :placeholder="placeholder"></img>
       </dt>
       <dd>
         <h4 class="t-bold"><span v-if="productName" class="rightline">{{productName}}</span>{{newsName}}</h4>
