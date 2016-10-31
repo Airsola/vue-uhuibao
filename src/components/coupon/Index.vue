@@ -1,0 +1,56 @@
+<style scoped>
+  .masker{position:fixed;left:0;top:0;z-index:1;width:100%;height:100%;background-color:rgba(0,0,0,.7);opacity:0;transition:opacity .2s ease;pointer-events:none;}
+  .masker.active{opacity:1;pointer-events:auto;}
+</style>
+<template>
+  <wrapper>
+    <div @click="showCateMenu = showAreaMenu = false" :class="['masker', showCateMenu || showAreaMenu ? 'active' : '']"></div>
+    <drop-menu :showCateMenu="showCateMenu" :showAreaMenu="showAreaMenu" :slideToggle="slideToggle"></drop-menu>
+    <list></list>
+  </wrapper>
+</template>
+
+<script>
+import Wrapper from 'components/layout/Wrapper.vue';
+import DropMenu from './index/DropMenu.vue';
+import List from './index/List.vue';
+
+import {LANG_TYPE} from 'config';
+
+const Language = {
+  'zh-cn': {
+    title: '卡券'
+  },
+  'zh-tw': {
+    title: '卡券'
+  }
+};
+const language = Language[LANG_TYPE];
+
+export default {
+  components: {
+    Wrapper,
+    DropMenu,
+    List
+  },
+  data() {
+    return {
+      showCateMenu: false,
+      showAreaMenu: false,
+      lang: language
+    };
+  },
+  mounted: function() {
+    this.$root.$emit('app:update', {
+      title: language.title,
+      item: ['back', 'search']
+    });
+  },
+  methods: {
+    slideToggle: function(cateMenu, areaMenu) {
+      this.showCateMenu = cateMenu;
+      this.showAreaMenu = areaMenu;
+    }
+  }
+};
+</script>
