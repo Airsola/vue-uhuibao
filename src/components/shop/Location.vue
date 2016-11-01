@@ -20,21 +20,23 @@
   .map-marker>i{position:relative;z-index:1;}
 </style>
 <template>
-  <wrapper>
-    <div id="map-container" class="location-map"></div>
-    <div class="location-bar ui-card-overline">
-      <div class="ui-card ui-card-padd ui-card-pos-rel">
-        <h5 class="t-bold">{{storeName}}</h5>
-        <p>{{storeAddress}}</p>
-        <a href="http://map.baidu.com/mobile/webapp/index/index/tab=line" class="iconfont i-compass-bfo">{{lang.seeRoadLine}}</a>
+  <layout>
+    <layout-header :title="shopName" :search="false"></layout-header>
+    <layout-body>
+      <div id="map-container" class="location-map"></div>
+      <div class="location-bar ui-card-overline">
+        <div class="ui-card ui-card-padd ui-card-pos-rel">
+          <h5 class="t-bold">{{storeName}}</h5>
+          <p>{{storeAddress}}</p>
+          <a href="http://map.baidu.com/mobile/webapp/index/index/tab=line" class="iconfont i-compass-bfo">{{lang.seeRoadLine}}</a>
+        </div>
       </div>
-    </div>
-  </wrapper>
+    </layout-body>
+  </layout>
 </template>
 
 <script>
-import Wrapper from 'components/layout/Wrapper.vue';
-
+import {Layout, LayoutHeader, LayoutBody} from '../layout';
 import {Http, LANG_TYPE} from 'config';
 
 const Language = {
@@ -51,7 +53,9 @@ const language = Language[LANG_TYPE];
 
 export default {
   components: {
-    Wrapper
+    Layout,
+    LayoutHeader,
+    LayoutBody
   },
   data() {
     return {
@@ -62,12 +66,6 @@ export default {
   },
   created: function() {
     this.fetchData(this.$route.params.shop_id, this.$route.params.store_id);
-  },
-  mounted: function() {
-    this.$root.$emit('app:update', {
-      title: language.title,
-      item: ['back']
-    });
   },
   watch: {
     $route: function(to, from) {

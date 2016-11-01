@@ -38,39 +38,42 @@
 </style>
 
 <template>
-  <wrapper>
-    <div class="news-detail ui-card ui-card-padd">
-      <div class="news-info">
-        <h1 class="t-bold">{{newsTitle}}</h1>
-        <span class="author">{{newsAuthor}}  {{newsDate}}</span>
-        <a v-if="newsCollected && collectStatus === -1" class="collectBtn collected" @click="collectNews(0)">{{lang.collected}}</a>
-        <a v-if="newsCollected && collectStatus === 0" class="collectBtn disabled">{{lang.collectCanceling}}</a>
-        <a v-if="!newsCollected && collectStatus === -1" class="collectBtn" @click="collectNews(1)">{{lang.collect}}</a>
-        <a v-if="!newsCollected && collectStatus === 1" class="collectBtn disabled">{{lang.collecting}}</a>
+  <layout>
+    <layout-header :title="lang.title"></layout-header>
+    <layout-body>
+      <div class="news-detail ui-card ui-card-padd">
+        <div class="news-info">
+          <h1 class="t-bold">{{newsTitle}}</h1>
+          <span class="author">{{newsAuthor}}  {{newsDate}}</span>
+          <a v-if="newsCollected && collectStatus === -1" class="collectBtn collected" @click="collectNews(0)">{{lang.collected}}</a>
+          <a v-if="newsCollected && collectStatus === 0" class="collectBtn disabled">{{lang.collectCanceling}}</a>
+          <a v-if="!newsCollected && collectStatus === -1" class="collectBtn" @click="collectNews(1)">{{lang.collect}}</a>
+          <a v-if="!newsCollected && collectStatus === 1" class="collectBtn disabled">{{lang.collecting}}</a>
+        </div>
+        <div class="shop-info" v-if="shopName">
+          <id-card :shopId="shopId" :shopName="shopName" :shopLogo="shopLogo" :shopDesc="shopDesc" :shopAuth="shopAuth"></id-card>
+        </div>
+        <article class="news-content" v-html="htmlpx2rem(newsContent)"></article>
+        <div class="related">
+          <h4 class="t-bold">{{lang.relatedRead}}</h4>
+          <ul>
+            <li v-for="item in readList">
+              <router-link :to="{name: 'news:detail', params: {news_id: item.news_id}}">{{item.news_title}}</router-link>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="shop-info" v-if="shopName">
-        <id-card :shopId="shopId" :shopName="shopName" :shopLogo="shopLogo" :shopDesc="shopDesc" :shopAuth="shopAuth"></id-card>
+      <div class="share-link ui-card ui-card-padd ui-card-overline ui-card-underline ui-card-mar-btm clearfix">
+        <a class="weibo iconfont i-weibo-aft" @click="WeiboShare"></a>
+        <a class="qq iconfont i-qq-aft" @click="QQShare"></a>
       </div>
-      <article class="news-content" v-html="htmlpx2rem(newsContent)"></article>
-      <div class="related">
-        <h4 class="t-bold">{{lang.relatedRead}}</h4>
-        <ul>
-          <li v-for="item in readList">
-            <router-link :to="{name: 'news:detail', params: {news_id: item.news_id}}">{{item.news_title}}</router-link>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="share-link ui-card ui-card-padd ui-card-overline ui-card-underline ui-card-mar-btm clearfix">
-      <a class="weibo iconfont i-weibo-aft" @click="WeiboShare"></a>
-      <a class="qq iconfont i-qq-aft" @click="QQShare"></a>
-    </div>
-    <div class="clearfix"></div>
-  </wrapper>
+      <div class="clearfix"></div>
+    </layout-body>
+  </layout>
 </template>
 
 <script>
-import Wrapper from 'components/layout/Wrapper.vue';
+import {Layout, LayoutHeader, LayoutBody} from '../layout';
 import IdCard from '../shop/components/IdCard.vue';
 
 import Helper from 'helper';
@@ -100,7 +103,9 @@ const language = Language[LANG_TYPE];
 
 export default {
   components: {
-    Wrapper,
+    Layout,
+    LayoutHeader,
+    LayoutBody,
     IdCard
   },
   data() {
@@ -124,12 +129,6 @@ export default {
   },
   created: function() {
     this.fetchData(this.$route.params.news_id);
-  },
-  mounted: function() {
-    this.$root.$emit('app:update', {
-      title: language.title,
-      item: ['back']
-    });
   },
   watch: {
     $route: function(to, from) {

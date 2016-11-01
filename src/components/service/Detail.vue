@@ -58,41 +58,44 @@
       line-height 1em
 </style>
 <template>
-  <wrapper>
-    <img :src="serviceImg" :alt="serviceName" class="service-img">
-    <div class="ui-card ui-card-padd">
-      <div class="service-info">
-        <h4 class="t-bold">{{serviceName}}</h4>
-        <span class="service-price" v-if="discountPrice">
-          {{lang.currencySymbol}}<b>{{discountPrice}}</b><s>{{lang.currencySymbol}}<i>{{servicePrice}}</i></s>
-        </span>
-        <span class="service-price" v-else>
-          {{lang.currencySymbol}}<b>{{servicePrice}}</b>
-        </span>
-        <div class="tags clearfix">
-          <span v-for="tag in serviceTags">{{tag.tag_name}}</span>
+  <layout>
+    <layout-header :title="lang.title"></layout-header>
+    <layout-body>
+      <img :src="serviceImg" :alt="serviceName" class="service-img">
+      <div class="ui-card ui-card-padd">
+        <div class="service-info">
+          <h4 class="t-bold">{{serviceName}}</h4>
+          <span class="service-price" v-if="discountPrice">
+            {{lang.currencySymbol}}<b>{{discountPrice}}</b><s>{{lang.currencySymbol}}<i>{{servicePrice}}</i></s>
+          </span>
+          <span class="service-price" v-else>
+            {{lang.currencySymbol}}<b>{{servicePrice}}</b>
+          </span>
+          <div class="tags clearfix">
+            <span v-for="tag in serviceTags">{{tag.tag_name}}</span>
+          </div>
+          <span class="clicked">{{serviceUV}} {{lang.clicked}}</span>
         </div>
-        <span class="clicked">{{serviceUV}} {{lang.clicked}}</span>
       </div>
-    </div>
-    <div class="ui-card ui-card-underline ui-card-mar-btm shop-info">
-      <id-card :shopId="shopId" :shopName="shopName" :shopLogo="shopLogo" :shopDesc="shopDesc" :shopAuth="shopAuth"></id-card>
-    </div>
-    <div class="ui-card ui-card-overline ui-card-underline ui-card-mar-btm service-notes">
-      <h5 class="title ui-card-underline">
-        <span class="t-bold">{{lang.buyNotes}}</span>
-      </h5>
-      <div class="ui-card-padd" v-html="htmlpx2rem(serviceInfo)"></div>
-    </div>
-    <div class="ui-card ui-card-overline ui-card-underline ui-card-mar-btm">
-      <div class="ui-card-padd" v-html="htmlpx2rem(serviceReason)"></div>
-    </div>
-    <div class="clearfix"></div>
-  </wrapper>
+      <div class="ui-card ui-card-underline ui-card-mar-btm shop-info">
+        <id-card :shopId="shopId" :shopName="shopName" :shopLogo="shopLogo" :shopDesc="shopDesc" :shopAuth="shopAuth"></id-card>
+      </div>
+      <div class="ui-card ui-card-overline ui-card-underline ui-card-mar-btm service-notes">
+        <h5 class="title ui-card-underline">
+          <span class="t-bold">{{lang.buyNotes}}</span>
+        </h5>
+        <div class="ui-card-padd" v-html="htmlpx2rem(serviceInfo)"></div>
+      </div>
+      <div class="ui-card ui-card-overline ui-card-underline ui-card-mar-btm">
+        <div class="ui-card-padd" v-html="htmlpx2rem(serviceReason)"></div>
+      </div>
+      <div class="clearfix"></div>
+    </layout-body>
+  </layout>
 </template>
 
 <script>
-import Wrapper from 'components/layout/Wrapper.vue';
+import {Layout, LayoutHeader, LayoutBody} from '../layout';
 import IdCard from '../shop/components/IdCard.vue';
 
 import Helper from 'helper';
@@ -116,7 +119,9 @@ const language = Language[LANG_TYPE];
 
 export default {
   components: {
-    Wrapper,
+    Layout,
+    LayoutHeader,
+    LayoutBody,
     IdCard
   },
   data() {
@@ -141,12 +146,6 @@ export default {
   },
   created: function() {
     this.fetchData(this.$route.params.service_id);
-  },
-  mounted: function() {
-    this.$root.$emit('app:update', {
-      title: language.title,
-      item: ['back']
-    });
   },
   methods: {
     fetchData: function(serviceId) {

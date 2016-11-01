@@ -9,28 +9,35 @@
   .main-nav>span:before{height:50%;}
 </style>
 <template>
-  <wrapper>
-    <p v-show="!lastKeyword" class="no-data">{{lang.noTypeKeyword}}</p>
-    <div v-show="lastKeyword" class="search-result">
-      <nav class="main-nav clearfix">
-        <span v-for="(name, index) in lang.productName" :class="['leftline', index === active ? 'current t-bold' : '']" @click="slideTo(index)">{{name}}</span>
-      </nav>
-      <div class="swiper-container" ref="swiper">
-        <div class="swiper-wrapper">
-          <slide-list :productName="lang.productName[0]" :active="active" :index="4" :data="news" :keyword="keyword" :swiperUpdate="swiperUpdate"></slide-list>
-          <slide-list :productName="lang.productName[1]" :active="active" :index="2" :data="task" :keyword="keyword" :swiperUpdate="swiperUpdate"></slide-list>
-          <slide-list :productName="lang.productName[2]" :active="active" :index="3" :data="coupon" :keyword="keyword" :swiperUpdate="swiperUpdate"></slide-list>
+  <layout>
+    <layout-header>
+      <div slot="head:title" class="search-bar">
+        <input :placeholder="lang.title" v-model="keyword" type="text">
+      </div>
+      <a slot="head:right" class="icon iconfont i-search-bfo search" @click="searchData"></a>
+    </layout-header>
+    <layout-body>
+      <p v-show="!lastKeyword" class="no-data">{{lang.noTypeKeyword}}</p>
+      <div v-show="lastKeyword" class="search-result">
+        <nav class="main-nav clearfix">
+          <span v-for="(name, index) in lang.productName" :class="['leftline', index === active ? 'current t-bold' : '']" @click="slideTo(index)">{{name}}</span>
+        </nav>
+        <div class="swiper-container" ref="swiper">
+          <div class="swiper-wrapper">
+            <slide-list :productName="lang.productName[0]" :active="active" :index="4" :data="news" :keyword="keyword" :swiperUpdate="swiperUpdate"></slide-list>
+            <slide-list :productName="lang.productName[1]" :active="active" :index="2" :data="task" :keyword="keyword" :swiperUpdate="swiperUpdate"></slide-list>
+            <slide-list :productName="lang.productName[2]" :active="active" :index="3" :data="coupon" :keyword="keyword" :swiperUpdate="swiperUpdate"></slide-list>
+          </div>
         </div>
       </div>
-    </div>
-  </wrapper>
+    </layout-body>
+  </layout>
 </template>
 
 <script>
-import Wrapper from 'components/layout/Wrapper.vue';
+import {Layout, LayoutHeader, LayoutBody} from '../layout';
 import SlideList from './index/SlideList.vue';
 
-import {mapGetters, mapActions} from 'vuex';
 import Swiper from 'swiper';
 import {Http, CHANNEL_CODE, AREA_CODE, LANG_TYPE} from 'config';
 
@@ -54,12 +61,11 @@ const language = Language[LANG_TYPE];
 
 export default {
   components: {
-    Wrapper,
+    Layout,
+    LayoutHeader,
+    LayoutBody,
     SlideList
   },
-  computed: mapGetters([
-    'keyword'
-  ]),
   data() {
     return {
       service: {
@@ -86,6 +92,7 @@ export default {
         isLoading: false,
         list: []
       },
+      keyword: this.$route.params.keyword || '',
       lastKeyword: '',
       active: 0,
       swiper: '',
@@ -95,23 +102,21 @@ export default {
   watch: {
     $route: function(to, from) {
       if (to.params.keyword) {
-        this.KeywordUpdate(to.params.keyword);
+        this.keyword = to.params.keyword;
         this.fetchData();
       };
     }
   },
   created: function() {
-    if (this.$route.params.keyword) {
-      this.KeywordUpdate(this.$route.params.keyword);
+    if (this.keyword) {
       this.fetchData();
     };
   },
   mounted: function() {
-    this.$root.$emit('app:update', {
-      title: language.title,
-      item: ['back', 'search', 'input']
-    });
-    this.$root.$emit('app:search', () => {
+    this.createSwiper();
+  },
+  methods: {
+    searchData() {
       if (!this.keyword) return this.$message(language.noTypeKeywordTips);
       if (this.lastKeyword === this.keyword) return this.$message(language.noTypeNewKeywordTips);
 
@@ -121,13 +126,7 @@ export default {
           keyword: this.keyword
         }
       });
-    });
-    this.createSwiper();
-  },
-  methods: {
-    ...mapActions([
-      'KeywordUpdate'
-    ]),
+    },
     fetchData() {
       // 得到最新的关键字
       this.lastKeyword = this.keyword;
@@ -183,9 +182,6 @@ export default {
     swiperUpdate: function() {
       this.swiper.update();
     }
-  },
-  beforeDestroy: function() {
-    this.$root.$emit('app:search', null);
   }
 };
 </script>

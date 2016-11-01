@@ -4,18 +4,7 @@
 </style>
 
 <template>
-  <div :class="['layout-body', footer ? 'show-footer' : '']">
+  <div class="layout-body">
     <slot></slot>
   </div>
 </template>
-
-<script>
-import {mapGetters} from 'vuex';
-
-export default {
-  name: 'body',
-  computed: mapGetters([
-    'footer'
-  ])
-};
-</script>

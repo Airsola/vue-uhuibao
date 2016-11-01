@@ -8,6 +8,7 @@ import service from './routes/service';
 import coupon from './routes/coupon';
 import news from './routes/news';
 import passport from './routes/passport';
+import market from './routes/market';
 
 const routes = [
   {
@@ -15,7 +16,8 @@ const routes = [
     alias: ['/'],
     name: 'index',
     component: r => System.import('./components/index/Index.vue')
-  }, {
+  },
+  {
     path: '/search/:keyword?',
     name: 'search',
     component: r => System.import('./components/search/Index.vue')
@@ -25,6 +27,7 @@ const routes = [
   ...coupon,
   ...news,
   ...passport,
+  ...market,
   {
     path: '*',
     name: '404',

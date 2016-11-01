@@ -2,21 +2,24 @@
   .branch-store>p{padding:.2rem .2rem .1rem .2rem;font-size:.14rem;}
 </style>
 <template>
-  <wrapper>
-    <div class="branch-store">
-      <p>{{lang.countDesc[0]}}{{storeList.length}}{{lang.countDesc[1]}}</p>
-    </div>
-    <div v-if="storeList.length > 0" class="store-list ui-card ui-card-overline ui-card-underline ui-card-mar-btm">
-      <ul>
-        <list-item v-for="item in storeList" :shopId="shopId" :storeId="item.store_id" :storeName="item.store_name" :storeAddress="item.address" :storeTelphone="item.store_telephone"></list-item>
-      </ul>
-    </div>
-    <div class="clearfix"></div>
-  </wrapper>
+  <layout>
+    <layout-header :title="lang.title" :search="false"></layout-header>
+    <layout-body>
+      <div class="branch-store">
+        <p>{{lang.countDesc[0]}}{{storeList.length}}{{lang.countDesc[1]}}</p>
+      </div>
+      <div v-if="storeList.length > 0" class="store-list ui-card ui-card-overline ui-card-underline ui-card-mar-btm">
+        <ul>
+          <list-item v-for="item in storeList" :shopId="shopId" :storeId="item.store_id" :storeName="item.store_name" :storeAddress="item.address" :storeTelphone="item.store_telephone"></list-item>
+        </ul>
+      </div>
+      <div class="clearfix"></div>
+    </layout-body>
+  </layout>
 </template>
 
 <script>
-import Wrapper from 'components/layout/Wrapper.vue';
+import {Layout, LayoutHeader, LayoutBody} from '../layout';
 import ListItem from './stores/ListItem.vue';
 
 import {Http, LANG_TYPE} from 'config';
@@ -35,8 +38,10 @@ const language = Language[LANG_TYPE];
 
 export default {
   components: {
-    ListItem,
-    Wrapper
+    Layout,
+    LayoutHeader,
+    LayoutBody,
+    ListItem
   },
   computed: {
     shopId: function() {
@@ -51,12 +56,6 @@ export default {
   },
   created: function() {
     this.fetchData(this.shopId);
-  },
-  mounted: function() {
-    this.$root.$emit('app:update', {
-      title: language.title,
-      item: ['back']
-    });
   },
   watch: {
     $route: function(to, from) {

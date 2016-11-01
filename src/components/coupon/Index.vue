@@ -3,15 +3,19 @@
   .masker.active{opacity:1;pointer-events:auto;}
 </style>
 <template>
-  <wrapper>
-    <div @click="showCateMenu = showAreaMenu = false" :class="['masker', showCateMenu || showAreaMenu ? 'active' : '']"></div>
-    <drop-menu :showCateMenu="showCateMenu" :showAreaMenu="showAreaMenu" :slideToggle="slideToggle"></drop-menu>
-    <list></list>
-  </wrapper>
+  <layout>
+    <layout-header :title="lang.title"></layout-header>
+    <layout-body>
+      <div @click="showCateMenu = showAreaMenu = false" :class="['masker', showCateMenu || showAreaMenu ? 'active' : '']"></div>
+      <drop-menu :showCateMenu="showCateMenu" :showAreaMenu="showAreaMenu" :slideToggle="slideToggle"></drop-menu>
+      <list></list>
+    </layout-body>
+    <layout-footer></layout-footer>
+  </layout>
 </template>
 
 <script>
-import Wrapper from 'components/layout/Wrapper.vue';
+import {Layout, LayoutHeader, LayoutBody, LayoutFooter} from '../layout';
 import DropMenu from './index/DropMenu.vue';
 import List from './index/List.vue';
 
@@ -29,7 +33,10 @@ const language = Language[LANG_TYPE];
 
 export default {
   components: {
-    Wrapper,
+    Layout,
+    LayoutHeader,
+    LayoutBody,
+    LayoutFooter,
     DropMenu,
     List
   },
@@ -39,12 +46,6 @@ export default {
       showAreaMenu: false,
       lang: language
     };
-  },
-  mounted: function() {
-    this.$root.$emit('app:update', {
-      title: language.title,
-      item: ['back', 'search', 'footer']
-    });
   },
   methods: {
     slideToggle: function(cateMenu, areaMenu) {

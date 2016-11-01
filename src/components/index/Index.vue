@@ -1,15 +1,21 @@
 <template>
-  <wrapper>
-    <custom-banner v-if="banner" :data="banner"></custom-banner>
-    <custom-nav :nav="nav" :news="newList" :show="newShow"></custom-nav>
-    <custom-item v-for="item in list" :data="item"></custom-item>
-  </wrapper>
+  <layout>
+    <layout-header :title="title">
+      <area-selector slot="head:left"></area-selector>
+    </layout-header>
+    <layout-body>
+      <custom-banner v-if="banner" :data="banner"></custom-banner>
+      <custom-nav :nav="nav" :news="newList" :show="newShow"></custom-nav>
+      <custom-item v-for="item in list" :data="item"></custom-item>
+    </layout-body>
+    <layout-footer></layout-footer>
+  </layout>
 </template>
 
 <script>
 import _ from 'lodash';
 
-import Wrapper from 'components/layout/Wrapper.vue';
+import {Layout, LayoutHeader, LayoutBody, LayoutFooter, AreaSelector} from '../layout';
 import CustomBanner from './index/CustomBanner.vue';
 import CustomNav from './index/CustomNav.vue';
 import CustomItem from './index/CustomItem.vue';
@@ -28,15 +34,14 @@ const language = Language[LANG_TYPE];
 
 export default {
   components: {
-    Wrapper,
+    Layout,
+    LayoutHeader,
+    LayoutBody,
+    LayoutFooter,
+    AreaSelector,
     CustomBanner,
     CustomNav,
     CustomItem
-  },
-  computed: {
-    title() {
-      return CHANNEL_NAME.channel_name;
-    }
   },
   data() {
     return {
@@ -45,22 +50,17 @@ export default {
       newList: [],
       newShow: false,
       list: [],
-      lan: language
+      lan: language,
+      title: CHANNEL_NAME.channel_name
     };
   },
   watch: {
-    $route: function(to, from) {
+    $route(to, from) {
       this.fetchData();
     }
   },
-  created: function() {
+  created() {
     this.fetchData();
-  },
-  mounted: function() {
-    this.$root.$emit('app:update', {
-      title: this.title,
-      item: ['area', 'search', 'footer']
-    });
   },
   methods: {
     fetchData() {

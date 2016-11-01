@@ -24,58 +24,22 @@
 <template>
   <header class="layout-header">
     <slot>
-      <a v-if="back" class="icon iconfont i-arrow-left-bfo back" @click="$router.go(-1)"></a>
-      <area-selector v-show="area"></area-selector>
-      <div class="search-bar" v-if="input">
-        <input :placeholder="title" :value="keyword" @keyup="keywordUpdate($event)" type="text">
-      </div>
-      <span v-else class="app-title">{{title}}</span>
-      <a v-if="input && search" class="icon iconfont i-search-bfo search" @click="submitEvent"></a>
-      <router-link :to="{name: 'search'}" v-if="!input && search" class="icon iconfont i-search-bfo search"></router-link>
+      <slot name="head:left">
+        <a class="icon iconfont i-arrow-left-bfo back" @click="$router.go(-1)"></a>
+      </slot>
+      <slot name="head:title">
+        <span class="app-title">{{title}}</span>
+      </slot>
+      <slot name="head:right" v-if="search !== false">
+        <router-link :to="{name: 'search'}" class="icon iconfont i-search-bfo search"></router-link>
+      </slot>
     </slot>
   </header>
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex';
-
-import AreaSelector from './components/AreaSelector.vue';
-
 export default {
   name: 'header',
-  components: {
-    AreaSelector
-  },
-  computed: {
-    ...mapGetters([
-      'title',
-      'back',
-      'area',
-      'search',
-      'input',
-      'keyword'
-    ])
-  },
-  data() {
-    return {
-      searchAction: null
-    };
-  },
-  created: function() {
-    this.$root.$on('app:search', callback => {
-      this.searchAction = callback;
-    });
-  },
-  methods: {
-    submitEvent: function() {
-      if (this.searchAction) this.searchAction(0, 0);
-    },
-    keywordUpdate: function(evt) {
-      this.KeywordUpdate(evt.target.value);
-    },
-    ...mapActions([
-      'KeywordUpdate'
-    ])
-  }
+  props: ['title', 'search']
 };
 </script>

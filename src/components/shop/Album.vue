@@ -15,31 +15,34 @@
   .album-swiper .swiper-slide figure{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);}
 </style>
 <template>
-  <wrapper>
-    <p v-if="photoList.length === 0" class="no-data"></p>
-    <div v-else class="album-list">
-      <ul class="clearfix">
-        <li v-for="(item, index) in photoList">
-          <figure @click="openPhoto(index)">
-            <img :src="item.url" :class="item.scale" @load="imgResize($event, index)">
-          </figure>
-        </li>
-      </ul>
-    </div>
-    <div :class="['album-swiper', 'swiper-container', show ? 'active' : '']">
-      <div class="swiper-wrapper" @click="hidePhoto">
-        <div v-for="(item, index) in photoList" class="swiper-slide">
-          <figure>
-            <img :src="item.url">
-          </figure>
+  <layout>
+    <layout-header :title="lang.title" :search="false"></layout-header>
+    <layout-body>
+      <p v-if="photoList.length === 0" class="no-data"></p>
+      <div v-else class="album-list">
+        <ul class="clearfix">
+          <li v-for="(item, index) in photoList">
+            <figure @click="openPhoto(index)">
+              <img :src="item.url" :class="item.scale" @load="imgResize($event, index)">
+            </figure>
+          </li>
+        </ul>
+      </div>
+      <div :class="['album-swiper', 'swiper-container', show ? 'active' : '']">
+        <div class="swiper-wrapper" @click="hidePhoto">
+          <div v-for="(item, index) in photoList" class="swiper-slide">
+            <figure>
+              <img :src="item.url">
+            </figure>
+          </div>
         </div>
       </div>
-    </div>
-  </wrapper>
+    </layout-body>
+  </layout>
 </template>
 
 <script>
-import Wrapper from 'components/layout/Wrapper.vue';
+import {Layout, LayoutHeader, LayoutBody} from '../layout';
 
 import Swiper from 'swiper';
 import {Http, LANG_TYPE, CHANNEL_CODE} from 'config';
@@ -58,7 +61,9 @@ const language = Language[LANG_TYPE];
 
 export default {
   components: {
-    Wrapper
+    Layout,
+    LayoutHeader,
+    LayoutBody
   },
   data() {
     return {
@@ -69,12 +74,6 @@ export default {
   },
   created: function() {
     this.fetchData(this.$route.params.shop_id);
-  },
-  mounted: function() {
-    this.$root.$emit('app:update', {
-      title: language.title,
-      item: ['back']
-    });
   },
   watch: {
     $route: function(to, from) {

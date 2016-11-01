@@ -20,6 +20,7 @@ import TaskListItem from '../../task/components/ListItem.vue';
 import CouponListItem from '../../coupon/components/ListItem.vue';
 import NewsListItem from '../../news/components/ListItem.vue';
 
+import Helper from 'helper';
 import {Http, CHANNEL_CODE, AREA_CODE, LANG_TYPE} from 'config';
 
 const Language = {
@@ -59,7 +60,7 @@ export default {
   methods: {
     loadMoreFn: function(evt) {
       if (this.data.hasNext === false || this.data.isLoading === true) return;
-      if (window.document.body.clientHeight - window.scrollY - window.outerHeight <= 100) this.fetchData(this.index, this.data.curPage + 1);
+      if (Helper.isPageBottom(Helper.rem2px(1))) this.fetchData(this.index, this.data.curPage + 1);
     },
     fetchData: function(flag, page) {
       switch (this.active) {

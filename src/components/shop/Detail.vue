@@ -42,59 +42,61 @@
   .shop-contact>ul>li>p:last-of-type:after,.shop-contact>ul>li>a:last-of-type:after{position:absolute;right:.2rem;color:#ccc;}
 </style>
 <template>
-  <wrapper>
-    <!-- 名片 -->
-    <div class="shop-info ui-card ui-card-padd ui-card-underline ui-card-mar-btm">
-      <img :src="shopLogo">
-      <div class="info-content">
-        <h4 class="t-bold">{{shopName}}<i v-if="shopAuth" class="iconfont i-verified-aft"></i><i v-if="couponList.length > 0" class="iconfont i-coupon-aft"></i><i v-if="taskList.length > 0" class="iconfont i-signal-aft"></i></h4>
-        <p>{{shopDesc}}</p>
-        <div v-if="payMethods.length > 0" class="pay-type">
-          <span>{{lang.payMethod}}</span>
-          <i v-for="method in payMethods" :class="payMethodClass[method]"></i>
+  <layout>
+    <layout-header :title="shopName"></layout-header>
+    <layout-body>
+      <div class="shop-info ui-card ui-card-padd ui-card-underline ui-card-mar-btm">
+        <img :src="shopLogo">
+        <div class="info-content">
+          <h4 class="t-bold">{{shopName}}<i v-if="shopAuth" class="iconfont i-verified-aft"></i><i v-if="couponList.length > 0" class="iconfont i-coupon-aft"></i><i v-if="taskList.length > 0" class="iconfont i-signal-aft"></i></h4>
+          <p>{{shopDesc}}</p>
+          <div v-if="payMethods.length > 0" class="pay-type">
+            <span>{{lang.payMethod}}</span>
+            <i v-for="method in payMethods" :class="payMethodClass[method]"></i>
+          </div>
+        </div>
+        <div v-if="photoList.length > 0" class="shop-album clearfix">
+          <ul>
+            <li v-for="(item, index) in photoList">
+              <router-link :to="{name: 'shop:album', params: {shop_id: shopId}}">
+                <img :src="item.url" :class="item.scale" @load="imgResize($event, index)">
+              </router-link>
+            </li>
+          </ul>
         </div>
       </div>
-      <div v-if="photoList.length > 0" class="shop-album clearfix">
+
+      <div class="shop-contact ui-card ui-card-overline ui-card-underline ui-card-mar-btm" v-if="shopAddress || shopMobile || shopLink || shopCount">
         <ul>
-          <li v-for="(item, index) in photoList">
-            <router-link :to="{name: 'shop:album', params: {shop_id: shopId}}">
-              <img :src="item.url" :class="item.scale" @load="imgResize($event, index)">
+          <li v-if="shopAddress">
+            <router-link v-if="shopMapLat && shopMapLng" :to="{name: 'shop:location', params: {shop_id: shopId}}" class="iconfont i-location-bfo">
+              <span>{{shopAddress}}</span>
             </router-link>
+            <p v-else class="iconfont i-location-bfo">{{shopAddress}}</p>
+          </li>
+          <li v-if="shopMobile">
+            <a :href="'tel:' + shopMobile" class="iconfont i-telphone-bfo">{{shopMobile}}</a>
+          </li>
+          <li v-if="shopLink">
+            <a :href="shopLink" class="iconfont i-link-bfo">{{shopLink}}</a>
+          </li>
+          <li v-if="shopCount > 0">
+            <router-link :to="{name: 'shop:stores', params: {shop_id: shopId}}" class="iconfont i-store-bfo i-arrow-right-aft">{{lang.showBranchStore[0]}}{{shopCount}}{{lang.showBranchStore[1]}}</router-link>
           </li>
         </ul>
       </div>
-    </div>
 
-    <div class="shop-contact ui-card ui-card-overline ui-card-underline ui-card-mar-btm" v-if="shopAddress || shopMobile || shopLink || shopCount">
-      <ul>
-        <li v-if="shopAddress">
-          <router-link v-if="shopMapLat && shopMapLng" :to="{name: 'shop:location', params: {shop_id: shopId}}" class="iconfont i-location-bfo">
-            <span>{{shopAddress}}</span>
-          </router-link>
-          <p v-else class="iconfont i-location-bfo">{{shopAddress}}</p>
-        </li>
-        <li v-if="shopMobile">
-          <a :href="'tel:' + shopMobile" class="iconfont i-telphone-bfo">{{shopMobile}}</a>
-        </li>
-        <li v-if="shopLink">
-          <a :href="shopLink" class="iconfont i-link-bfo">{{shopLink}}</a>
-        </li>
-        <li v-if="shopCount > 0">
-          <router-link :to="{name: 'shop:stores', params: {shop_id: shopId}}" class="iconfont i-store-bfo i-arrow-right-aft">{{lang.showBranchStore[0]}}{{shopCount}}{{lang.showBranchStore[1]}}</router-link>
-        </li>
-      </ul>
-    </div>
-
-    <service-list :shopId="shopId" :shopName="shopName" :shopAuth="shopAuth" :list="serviceList"></service-list>
-    <coupon-list :shopId="shopId" :shopName="shopName" :shopAuth="shopAuth" :list="couponList"></coupon-list>
-    <task-list :shopId="shopId" :shopName="shopName" :shopAuth="shopAuth" :list="taskList"></task-list>
-    <news-list :shopId="shopId" :shopName="shopName" :shopAuth="shopAuth" :list="newsList"></news-list>
-    <div class="clearfix"></div>
-  </wrapper>
+      <service-list :shopId="shopId" :shopName="shopName" :shopAuth="shopAuth" :list="serviceList"></service-list>
+      <coupon-list :shopId="shopId" :shopName="shopName" :shopAuth="shopAuth" :list="couponList"></coupon-list>
+      <task-list :shopId="shopId" :shopName="shopName" :shopAuth="shopAuth" :list="taskList"></task-list>
+      <news-list :shopId="shopId" :shopName="shopName" :shopAuth="shopAuth" :list="newsList"></news-list>
+      <div class="clearfix"></div>
+    </layout-body>
+  </layout>
 </template>
 
 <script>
-import Wrapper from 'components/layout/Wrapper.vue';
+import {Layout, LayoutHeader, LayoutBody} from '../layout';
 import ServiceList from './detail/ServiceList.vue';
 import CouponList from './detail/CouponList.vue';
 import TaskList from './detail/TaskList.vue';
@@ -104,12 +106,10 @@ import {Http, LANG_TYPE, CHANNEL_CODE} from 'config';
 
 const Language = {
   'zh-cn': {
-    title: '商家信息',
     payMethod: '支持：',
     showBranchStore: ['查看全部', '家分店']
   },
   'zh-tw': {
-    title: '商家信息',
     payMethod: '支持：',
     showBranchStore: ['查看全部', '家分店']
   }
@@ -118,7 +118,9 @@ const language = Language[LANG_TYPE];
 
 export default {
   components: {
-    Wrapper,
+    Layout,
+    LayoutHeader,
+    LayoutBody,
     ServiceList,
     CouponList,
     TaskList,
@@ -156,12 +158,6 @@ export default {
   },
   created: function() {
     this.fetchData(this.$route.params.shop_id);
-  },
-  mounted: function() {
-    this.$root.$emit('app:update', {
-      title: language.title,
-      item: ['back']
-    });
   },
   watch: {
     $route: function(to, from) {
@@ -207,12 +203,6 @@ export default {
             if (result.data.tasks) this.$set(this, 'taskList', result.data.tasks);
             if (result.data.coupons) this.$set(this, 'couponList', result.data.coupons);
             if (result.data.articles) this.$set(this, 'newsList', result.data.articles);
-
-            // 更换页面标题
-            this.$root.$emit('app:update', {
-              title: this.shopName,
-              item: ['back']
-            });
           });
         };
       });

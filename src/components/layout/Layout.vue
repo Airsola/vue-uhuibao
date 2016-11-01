@@ -10,36 +10,23 @@
 </style>
 
 <template>
-  <div :class="['layout', blur ? 'filter-blur' : '', hasShowTopBar ? 'has-top-bar' : '']">
-    <unicom-bar v-if="hasShowTopBar" :jsessionid="jsessionid" :mobile="mobile"></unicom-bar>
-    <layout-header></layout-header>
-    <layout-body>
-      <router-view></router-view>
-    </layout-body>
-    <layout-footer v-show="footer"></layout-footer>
+  <div :class="['layout', blur ? 'filter-blur' : '', topbar ? 'has-top-bar' : '']">
+    <unicom-bar v-if="topbar" :jsessionid="jsessionid" :mobile="mobile"></unicom-bar>
+    <slot></slot>
   </div>
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex';
-
-import UnicomBar from './components/layout/UnicomBar.vue';
-import LayoutHeader from './components/layout/Header.vue';
-import LayoutBody from './components/layout/Body.vue';
-import LayoutFooter from './components/layout/Footer.vue';
+import UnicomBar from './UnicomBar.vue';
 
 const unicom17wo = window.uhb_config['17wo'];
 
 export default {
-  name: 'app',
   components: {
-    UnicomBar,
-    LayoutHeader,
-    LayoutBody,
-    LayoutFooter
+    UnicomBar
   },
   computed: {
-    hasShowTopBar: function() {
+    topbar: function() {
       return !!unicom17wo;
     },
     jsessionid: function() {
@@ -47,10 +34,7 @@ export default {
     },
     mobile: function() {
       if (unicom17wo) return unicom17wo.mobile;
-    },
-    ...mapGetters([
-      'footer'
-    ])
+    }
   },
   data() {
     return {
@@ -66,15 +50,7 @@ export default {
     },
     blurToggle: function() {
       this.blur = !this.blur;
-    },
-    ...mapActions([
-      'UpdateConfig'
-    ])
-  },
-  created: function() {
-    this.$root.$on('app:update', (config) => {
-      this.UpdateConfig(config);
-    });
+    }
   },
   mounted: function() {
     this.$root.$on('blur:in', function() {

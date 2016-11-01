@@ -23,7 +23,7 @@ module.exports = {
       }, {
         test: /\.js$/,
         loader: 'babel!eslint',
-        exclude: /node_modules/
+        exclude: [/node_modules/, path.resolve(__dirname, './src/modules/')]
       }, {
         test: /\.css$/,
         loader: 'style!css!postcss',
@@ -39,7 +39,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      jquery: 'jquery/dist/jquery.slim',
+      jquery: path.resolve(__dirname, './src/modules/jquery.min'),
       config: path.resolve(__dirname, './src/config'),
       components: path.resolve(__dirname, './src/components'),
       assets: path.resolve(__dirname, './src/assets')

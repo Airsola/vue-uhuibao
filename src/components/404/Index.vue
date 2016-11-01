@@ -9,7 +9,9 @@
   .link-to>span>a:before{font-size:.12rem;position:absolute;left:.04rem;}
 </style>
 <template>
-  <wrapper>
+  <layout>
+  <layout-header :title="lang.title" :search="false"></layout-header>
+  <layout-body>
     <div class="page-404">
       <div class="page-content iconfont i-404-bfo">
         <p>{{lang.desc}}</p>
@@ -19,11 +21,12 @@
         </div>
       </div>
     </div>
-  </wrapper>
+  </layout-body>
+  </layout>
 </template>
 
 <script>
-import Wrapper from 'components/layout/Wrapper.vue';
+import {Layout, LayoutHeader, LayoutBody} from '../layout';
 
 import {LANG_TYPE} from 'config';
 
@@ -43,18 +46,14 @@ const language = Language[LANG_TYPE];
 
 export default {
   components: {
-    Wrapper
+    Layout,
+    LayoutHeader,
+    LayoutBody
   },
   data() {
     return {
       lang: language
     };
-  },
-  mounted: function() {
-    this.$root.$emit('app:update', {
-      title: language.title,
-      item: ['back']
-    });
   }
 };
 </script>
