@@ -93,24 +93,108 @@ export default {
         list: []
       },
       keyword: this.$route.params.keyword || '',
-      lastKeyword: '',
+      lastKeyword: this.$route.params.keyword || '',
       active: 0,
       swiper: '',
       lang: language
     };
   },
+  beforeRouteEnter(to, from, next) {
+    if (to.params.keyword) {
+      Http.fetch('common/search_data', CHANNEL_CODE, AREA_CODE, {
+        keyword: to.params.keyword,
+        flag: 0,
+        page: 1
+      }).then(response => {
+        Http.resolve(response, (error, result) => {
+          if (error) {
+            next(false);
+            throw result;
+          } else {
+            if (result.status === 1) {
+              next(vm => {
+                const task = result.data.tao_list;
+                const coupon = result.data.coupon_list;
+                const news = result.data.news_list;
+
+                vm.$set(vm.news, 'list', news.result_list);
+                vm.$set(vm.news, 'curPage', news.curre_page);
+                vm.$set(vm.news, 'hasNext', news.has_next);
+
+                vm.$set(vm.task, 'list', task.list);
+                vm.$set(vm.task, 'curPage', task.page);
+                vm.$set(vm.task, 'hasNext', task.page < task.total);
+
+                vm.$set(vm.coupon, 'list', coupon.result_list);
+                vm.$set(vm.coupon, 'curPage', coupon.curre_page);
+                vm.$set(vm.coupon, 'hasNext', coupon.has_next);
+
+                vm.$nextTick(() => {
+                  vm.swiperUpdate();
+                  // 修复动画退出过渡中元素依然点位导致的页面数据不准确的bug
+                  setTimeout(() => {
+                    vm.swiperUpdate();
+                  }, 1000);
+                });
+              });
+            } else {
+              next({path: '/404'});
+              throw result.msg;
+            };
+          };
+        });
+      });
+    } else {
+      next();
+    };
+  },
   watch: {
     $route: function(to, from) {
       if (to.params.keyword) {
-        this.keyword = to.params.keyword;
-        this.fetchData();
+        this.keyword = this.lastKeyword = to.params.keyword;
+
+        Http.fetch('common/search_data', CHANNEL_CODE, AREA_CODE, {
+          keyword: to.params.keyword,
+          flag: 0,
+          page: 1
+        }).then(response => {
+          Http.resolve(response, (error, result) => {
+            if (error) {
+              throw result;
+            } else {
+              if (result.status === 1) {
+                const task = result.data.tao_list;
+                const coupon = result.data.coupon_list;
+                const news = result.data.news_list;
+
+                this.$set(this.news, 'list', news.result_list);
+                this.$set(this.news, 'curPage', news.curre_page);
+                this.$set(this.news, 'hasNext', news.has_next);
+
+                this.$set(this.task, 'list', task.list);
+                this.$set(this.task, 'curPage', task.page);
+                this.$set(this.task, 'hasNext', task.page < task.total);
+
+                this.$set(this.coupon, 'list', coupon.result_list);
+                this.$set(this.coupon, 'curPage', coupon.curre_page);
+                this.$set(this.coupon, 'hasNext', coupon.has_next);
+
+                this.$nextTick(() => {
+                  this.swiperUpdate();
+                  // 修复动画退出过渡中元素依然点位导致的页面数据不准确的bug
+                  setTimeout(() => {
+                    this.swiperUpdate();
+                  }, 1000);
+                });
+              } else {
+                this.$router.replace({path: '/404'});
+                throw result.msg;
+              };
+            };
+          });
+        });
       };
     }
-  },
-  created: function() {
-    if (this.keyword) {
-      this.fetchData();
-    };
   },
   mounted: function() {
     this.createSwiper();
@@ -125,46 +209,6 @@ export default {
         params: {
           keyword: this.keyword
         }
-      });
-    },
-    fetchData() {
-      // 得到最新的关键字
-      this.lastKeyword = this.keyword;
-
-      Http.fetch('common/search_data', CHANNEL_CODE, AREA_CODE, {
-        keyword: this.keyword,
-        flag: 0,
-        page: 1
-      }).then(response => {
-        if (response.ok) {
-          response.json().then(result => {
-            if (result.status === 0) return;
-
-            const task = result.data.tao_list;
-            const coupon = result.data.coupon_list;
-            const news = result.data.news_list;
-
-            this.$set(this.news, 'list', news.result_list);
-            this.$set(this.news, 'curPage', news.curre_page);
-            this.$set(this.news, 'hasNext', news.has_next);
-
-            this.$set(this.task, 'list', task.list);
-            this.$set(this.task, 'curPage', task.page);
-            this.$set(this.task, 'hasNext', task.page < task.total);
-
-            this.$set(this.coupon, 'list', coupon.result_list);
-            this.$set(this.coupon, 'curPage', coupon.curre_page);
-            this.$set(this.coupon, 'hasNext', coupon.has_next);
-
-            this.$nextTick(() => {
-              this.swiperUpdate();
-              // 修复动画退出过渡中元素依然点位导致的页面数据不准确的bug
-              setTimeout(() => {
-                this.swiperUpdate();
-              }, 1000);
-            });
-          });
-        };
       });
     },
     createSwiper: function() {

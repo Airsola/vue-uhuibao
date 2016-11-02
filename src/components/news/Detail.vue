@@ -127,41 +127,74 @@ export default {
       lang: language
     };
   },
-  created: function() {
-    this.fetchData(this.$route.params.news_id);
+  beforeRouteEnter: function(to, from, next) {
+    Http.fetch('news/get_news_detail', {
+      news_id: to.params.news_id
+    }).then(response => {
+      Http.resolve(response, (error, result) => {
+        if (error) {
+          next(false);
+          throw result;
+        } else {
+          if (result.status === 1) {
+            next(vm => {
+              vm.$set(vm, 'newsId', result.data.news_id);
+              vm.$set(vm, 'newsTitle', result.data.news_title);
+              vm.$set(vm, 'newsLogo', result.data.news_small_img);
+              vm.$set(vm, 'newsAuthor', result.data.news_author);
+              vm.$set(vm, 'newsDate', result.data.news_create_date);
+              vm.$set(vm, 'newsContent', result.data.news_content);
+              vm.$set(vm, 'newsCollected', !!result.data.collect_flag);
+              vm.$set(vm, 'readList', result.data.rela_read_list);
+
+              vm.$set(vm, 'shopId', result.data.shop_id);
+              vm.$set(vm, 'shopName', result.data.shop_name);
+              vm.$set(vm, 'shopDesc', result.data.shop_desc);
+              vm.$set(vm, 'shopLogo', result.data.shop_logo_url);
+              vm.$set(vm, 'shopAuth', result.data.shop_auth);
+            });
+          } else {
+            next({path: '/404'});
+            throw result.msg;
+          };
+        };
+      });
+    });
   },
   watch: {
     $route: function(to, from) {
-      this.fetchData(to.params.news_id);
+      Http.fetch('news/get_news_detail', {
+        news_id: to.params.news_id
+      }).then(response => {
+        Http.resolve(response, (error, result) => {
+          if (error) {
+            throw result;
+          } else {
+            if (result.status === 1) {
+              this.$set(this, 'newsId', result.data.news_id);
+              this.$set(this, 'newsTitle', result.data.news_title);
+              this.$set(this, 'newsLogo', result.data.news_small_img);
+              this.$set(this, 'newsAuthor', result.data.news_author);
+              this.$set(this, 'newsDate', result.data.news_create_date);
+              this.$set(this, 'newsContent', result.data.news_content);
+              this.$set(this, 'newsCollected', !!result.data.collect_flag);
+              this.$set(this, 'readList', result.data.rela_read_list);
+
+              this.$set(this, 'shopId', result.data.shop_id);
+              this.$set(this, 'shopName', result.data.shop_name);
+              this.$set(this, 'shopDesc', result.data.shop_desc);
+              this.$set(this, 'shopLogo', result.data.shop_logo_url);
+              this.$set(this, 'shopAuth', result.data.shop_auth);
+            } else {
+              this.$router.replace({path: '/404'});
+              throw result.msg;
+            };
+          };
+        });
+      });
     }
   },
   methods: {
-    fetchData: function(newsId) {
-      Http.fetch('news/get_news_detail', {
-        news_id: newsId
-      }).then(response => {
-        if (response.ok) {
-          response.json().then(result => {
-            if (result.status === 0) return;
-
-            this.$set(this, 'newsId', result.data.news_id);
-            this.$set(this, 'newsTitle', result.data.news_title);
-            this.$set(this, 'newsLogo', result.data.news_small_img);
-            this.$set(this, 'newsAuthor', result.data.news_author);
-            this.$set(this, 'newsDate', result.data.news_create_date);
-            this.$set(this, 'newsContent', result.data.news_content);
-            this.$set(this, 'newsCollected', !!result.data.collect_flag);
-            this.$set(this, 'readList', result.data.rela_read_list);
-
-            this.$set(this, 'shopId', result.data.shop_id);
-            this.$set(this, 'shopName', result.data.shop_name);
-            this.$set(this, 'shopDesc', result.data.shop_desc);
-            this.$set(this, 'shopLogo', result.data.shop_logo_url);
-            this.$set(this, 'shopAuth', result.data.shop_auth);
-          });
-        };
-      });
-    },
     htmlpx2rem: function(value) {
       return Helper.htmlpx2rem(value);
     },

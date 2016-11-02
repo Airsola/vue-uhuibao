@@ -9,6 +9,7 @@ import coupon from './routes/coupon';
 import news from './routes/news';
 import passport from './routes/passport';
 import market from './routes/market';
+import ucenter from './routes/ucenter';
 
 const routes = [
   {
@@ -28,9 +29,9 @@ const routes = [
   ...news,
   ...passport,
   ...market,
+  ...ucenter,
   {
     path: '*',
-    name: '404',
     component: r => System.import('./components/404/Index.vue')
   }
 ];

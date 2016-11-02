@@ -72,37 +72,63 @@ export default {
       show: false
     };
   },
-  created: function() {
-    this.fetchData(this.$route.params.shop_id);
+  beforeRouteEnter(to, from, next) {
+    Http.fetch('shop/get_shop_photo', {
+      shop_id: to.params.shop_id
+    }, CHANNEL_CODE).then(response => {
+      Http.resolve(response, (error, result) => {
+        if (error) {
+          next(false);
+          throw result;
+        } else {
+          if (result.status === 1) {
+            next(vm => {
+              result.data.map(url => {
+                this.photoList.push({
+                  url,
+                  scale: 'normal'
+                });
+              });
+            });
+          } else {
+            next({path: '/404'});
+            throw result.msg;
+          };
+        };
+      });
+    });
   },
   watch: {
     $route: function(to, from) {
-      this.fetchData(to.params.shop_id);
+      Http.fetch('shop/get_shop_photo', {
+        shop_id: to.params.shop_id
+      }, CHANNEL_CODE).then(response => {
+        Http.resolve(response, (error, result) => {
+          if (error) {
+            throw result;
+          } else {
+            if (result.status === 1) {
+              result.data.map(url => {
+                this.photoList.push({
+                  url,
+                  scale: 'normal'
+                });
+              });
+            } else {
+              this.$router.replace({path: '/404'});
+              throw result.msg;
+            };
+          };
+        });
+      });
     }
   },
+  mouted() {
+    this.swiper = new Swiper(this.$el.querySelector('.album-swiper'), {
+      observer: true
+    });
+  },
   methods: {
-    fetchData: function(shopId) {
-      Http.fetch('shop/get_shop_photo', {
-        shop_id: shopId
-      }, CHANNEL_CODE).then(response => {
-        if (response.ok) {
-          response.json().then(result => {
-            if (result.status === 0) return;
-
-            result.data.map(url => {
-              this.photoList.push({
-                url,
-                scale: 'normal'
-              });
-            });
-
-            this.swiper = new Swiper(this.$el.querySelector('.album-swiper'), {
-              observer: true
-            });
-          });
-        };
-      });
-    },
     openPhoto: function(index) {
       this.swiper.slideTo(index);
       this.show = !this.show;

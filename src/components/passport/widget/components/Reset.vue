@@ -55,7 +55,7 @@
             </span>
             <span>
               <a v-if="codeVerifying" class="disabled">{{lang.codeVerifying}}</a>
-              <a v-else class="important" @click="sginUpAction">{{lang.nextStep}}</a>
+              <a v-else class="important" @click="signUpAction">{{lang.nextStep}}</a>
             </span>
           </div>
         </div>
@@ -161,7 +161,7 @@ export default {
         };
       });
     },
-    sginUpAction: function() {
+    signUpAction: function() {
       if (this.codeVerifying) return;
 
       if (!this.telphone) return this.$message(language.noTypePhoneNumber);

@@ -50,6 +50,34 @@ const Language = {
   }
 };
 const language = Language[LANG_TYPE];
+const BMap = window.BMap;
+class CustomOverlay extends BMap.Overlay {
+  constructor(map, point) {
+    super();
+    this._div = document.createElement('div');
+    this._map = map;
+    this._point = point;
+  }
+  initialize(map, point) {
+    const icon = document.createElement('i');
+
+    icon.className = 'iconfont i-location-bfo';
+
+    this._div.className = 'map-marker';
+    this._div.appendChild(icon);
+    map.getPanes().labelPane.appendChild(this._div);
+
+    return this._div;
+  }
+  draw() {
+    const pixel = this._map.pointToOverlayPixel(this._point);
+    const style = this._div.style;
+
+    style.left = pixel.x + 'px';
+    style.top = pixel.y + 'px';
+    style.zIndex = BMap.Overlay.getZIndex(this._point.lat);
+  }
+};
 
 export default {
   components: {
@@ -64,63 +92,60 @@ export default {
       lang: language
     };
   },
-  created: function() {
-    this.fetchData(this.$route.params.shop_id, this.$route.params.store_id);
+  beforeRouteEnter(to, from, next) {
+    Http.fetch('shop/get_location_info', {
+      shop_id: to.params.shop_id,
+      store_id: to.params.store_id
+    }).then(response => {
+      Http.resolve(response, (error, result) => {
+        if (error) {
+          next(false);
+          throw result;
+        } else {
+          if (result.status === 1) {
+            next(vm => {
+              vm.$set(vm, 'storeName', result.data.name);
+              vm.$set(vm, 'storeAddress', result.data.detail_area);
+
+              const map = new BMap.Map('map-container');
+              const point = new BMap.Point(result.data.longitude, result.data.latitude);
+
+              map.centerAndZoom(point, 20);
+              map.addOverlay(new CustomOverlay(map, point));
+            });
+          } else {
+            next({path: '/404'});
+            throw result.msg;
+          };
+        };
+      });
+    });
   },
   watch: {
     $route: function(to, from) {
-      this.fetchData(to.$route.params.shop_id, to.$route.params.store_id);
-    }
-  },
-  methods: {
-    fetchData: function(shopId, storeId) {
       Http.fetch('shop/get_location_info', {
-        shop_id: shopId,
-        store_id: storeId
+        shop_id: to.params.shop_id,
+        store_id: to.params.store_id
       }).then(response => {
-        if (response.ok) {
-          response.json().then(result => {
-            if (result.status === 0) return;
+        Http.resolve(response, (error, result) => {
+          if (error) {
+            throw result;
+          } else {
+            if (result.status === 1) {
+              this.$set(this, 'storeName', result.data.name);
+              this.$set(this, 'storeAddress', result.data.detail_area);
 
-            this.$set(this, 'storeName', result.data.name);
-            this.$set(this, 'storeAddress', result.data.detail_area);
+              const map = new BMap.Map('map-container');
+              const point = new BMap.Point(result.data.longitude, result.data.latitude);
 
-            const BMap = window.BMap;
-            class CustomOverlay extends BMap.Overlay {
-              constructor() {
-                super();
-                this._div = document.createElement('div');
-                this._map = map;
-                this._point = point;
-              }
-              initialize(map, point) {
-                const icon = document.createElement('i');
-
-                icon.className = 'iconfont i-location-bfo';
-
-                this._div.className = 'map-marker';
-                this._div.appendChild(icon);
-                map.getPanes().labelPane.appendChild(this._div);
-
-                return this._div;
-              }
-              draw() {
-                const pixel = this._map.pointToOverlayPixel(this._point);
-                const style = this._div.style;
-
-                style.left = pixel.x + 'px';
-                style.top = pixel.y + 'px';
-                style.zIndex = BMap.Overlay.getZIndex(this._point.lat);
-              }
+              map.centerAndZoom(point, 20);
+              map.addOverlay(new CustomOverlay(map, point));
+            } else {
+              this.$router.replace({path: '/404'});
+              throw result.msg;
             };
-
-            const map = new BMap.Map('map-container');
-            const point = new BMap.Point(result.data.longitude, result.data.latitude);
-
-            map.centerAndZoom(point, 20);
-            map.addOverlay(new CustomOverlay(map, point));
-          });
-        };
+          };
+        });
       });
     }
   }

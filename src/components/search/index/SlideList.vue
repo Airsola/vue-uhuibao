@@ -89,10 +89,8 @@ export default {
         // 加载完成，结束加载状态
         this.data.isLoading = false;
 
-        if (response.ok) {
-          response.json().then(result => {
-            if (result.status === 0) return;
-
+        Http.resolve(response, (error, result) => {
+          if (result.status === 1) {
             const task = result.data.tao_list;
             const coupon = result.data.coupon_list;
             const news = result.data.news_list;
@@ -116,8 +114,10 @@ export default {
             };
 
             this.$nextTick(this.swiperUpdate);
-          });
-        };
+          } else {
+            throw result.msg;
+          };
+        });
       });
     }
   }

@@ -43,7 +43,6 @@
                 <input v-model="verifycode" :placeholder="lang.typeVerifyCode" type="text" maxlength="4">
               </label>
               <span v-if="msgSending">{{lang.verifyCodeSending}}</span>
-              <span v-else ></span>
               <span v-if="timeout === 0 && !msgSending" @click="sendMsgAction">{{lang.getVerifyCode}}</span>
               <span v-if="timeout === 0 && msgSending" class="disabled">{{lang.verifyCodeSending}}</span>
               <span v-if="timeout > 0 && !msgSending" class="disabled">{{timeout}}{{lang.waitSendVerifyCodeAgain}}</span>
@@ -55,7 +54,7 @@
             </span>
             <span>
               <a v-if="codeVerifying" class="disabled">{{lang.codeVerifying}}</a>
-              <a v-else class="important" @click="sginUpAction">{{lang.nextStep}}</a>
+              <a v-else class="important" @click="signUpAction">{{lang.nextStep}}</a>
             </span>
           </div>
         </div>
@@ -161,7 +160,7 @@ export default {
         };
       });
     },
-    sginUpAction: function() {
+    signUpAction: function() {
       if (this.codeVerifying) return;
 
       if (!this.telphone) return this.$message(language.noTypePhoneNumber);

@@ -54,26 +54,44 @@ export default {
       lang: language
     };
   },
-  created: function() {
-    this.fetchData(this.shopId);
+  beforeRouteEnter(to, from, next) {
+    Http.fetch('shop/get_store_list', {
+      shop_id: to.params.shop_id
+    }).then(response => {
+      Http.resolve(response, (error, result) => {
+        if (error) {
+          next(false);
+          throw result;
+        } else {
+          if (result.status === 1) {
+            next(vm => {
+              vm.$set(vm, 'storeList', result.data.data);
+            });
+          } else {
+            next({path: '/404'});
+            throw result.msg;
+          };
+        };
+      });
+    });
   },
   watch: {
     $route: function(to, from) {
-      this.fetchData(to.params.shop_id);
-    }
-  },
-  methods: {
-    fetchData: function(shopId) {
       Http.fetch('shop/get_store_list', {
-        shop_id: shopId
+        shop_id: to.params.shop_id
       }).then(response => {
-        if (response.ok) {
-          response.json().then(result => {
-            if (result.status === 0) return;
-
-            this.$set(this, 'storeList', result.data);
-          });
-        };
+        Http.resolve(response, (error, result) => {
+          if (error) {
+            throw result;
+          } else {
+            if (result.status === 1) {
+              this.$set(this, 'storeList', result.data.data);
+            } else {
+              this.$router.replace({path: '/404'});
+              throw result.msg;
+            };
+          };
+        });
       });
     }
   }

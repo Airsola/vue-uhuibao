@@ -54,6 +54,13 @@ const formDataSource = (...params) => {
 const Http = {
   fetch: (uri, ...params) => {
     return fetch(API_PATH + uri, _.assign({body: formDataSource(...params)}, fetchSettings));
+  },
+  resolve: (response, resolve) => {
+    if (response.ok) {
+      response.json().then(result => resolve(false, result));
+    } else {
+      resolve(true, response.statusText);
+    };
   }
 };
 
@@ -98,7 +105,11 @@ const urlRules = [
   [/#!search\?key=/, '#/search/'],
   [/#!article\?tid=/, '#/news/'],
   [/#!coupon/, '#/coupon'],
-  [/#!store\?id=/, '#/shop/']
+  [/#!store\?id=/, '#/shop/'],
+  [/#!ucenter/, '#/ucenter'],
+  [/#!passport\/login/, '#/passport/signin'],
+  [/#!passport\/register/, '#/passport/signup'],
+  [/#!passport\/forget/, '#/passport/forget']
 ];
 
 // 临时性hash地址重定向
