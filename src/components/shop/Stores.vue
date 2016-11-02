@@ -65,7 +65,7 @@ export default {
         } else {
           if (result.status === 1) {
             next(vm => {
-              vm.$set(vm, 'storeList', result.data.data);
+              vm.$set(vm, 'storeList', result.data);
             });
           } else {
             next({path: '/404'});
@@ -85,12 +85,12 @@ export default {
             throw result;
           } else {
             if (result.status === 1) {
-              this.$set(this, 'storeList', result.data.data);
+              this.$set(this, 'storeList', result.data);
             } else {
               this.$router.replace({path: '/404'});
               throw result.msg;
             };
-          };
+          }
         });
       });
     }
