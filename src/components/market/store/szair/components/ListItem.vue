@@ -1,19 +1,25 @@
-<style lang="stylus" scoped>
-.generic-list
-  dl
-    transition all .5s cubic-bezier(.55,0,.1,1)
-
-.slide-left-enter, .slide-right-leave-active
-  opacity 0
-  transform translate(30px, 0)
-
+<style lang="sass" scoped>
+.generic-list {
+  dl {
+    transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+    & > dd {
+      & > .service-price {
+        bottom: 0;
+      }
+    }
+  }
+}
+.slide-left-enter,
+.slide-right-leave-active {
+  opacity: 0;
+  transform: translate(30px, 0);
+}
 .slide-left-leave-active,
-.slide-right-enter
-  opacity 0
-  transform translate(-30px, 0)
+.slide-right-enter {
+  opacity: 0;
+  transform: translate(-30px, 0);
+}
 
-.generic-list dl>dd>.service-price
-  bottom 0
 </style>
 
 <template>
@@ -30,7 +36,9 @@
         <span class="service-price">
           {{lang.currencySymbol}}<b>{{goodsPrice}}</b>
         </span>
-        <span class="clicked">{{lang.clicked}} {{goodsUv}}</span>
+        <slot>
+          <span class="clicked">{{lang.clicked}} {{goodsUv}}</span>
+        </slot>
       </dd>
     </router-link>
   </transition>

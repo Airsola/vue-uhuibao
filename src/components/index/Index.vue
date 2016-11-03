@@ -3,7 +3,7 @@
     <layout-header :title="title">
       <area-selector slot="head:left"></area-selector>
     </layout-header>
-    <layout-body>
+    <layout-body :style="{paddingBottom: '.5rem'}">
       <custom-banner v-if="banner" :data="banner"></custom-banner>
       <custom-nav :nav="nav" :news="newList" :show="newShow"></custom-nav>
       <custom-item v-for="item in list" :data="item"></custom-item>

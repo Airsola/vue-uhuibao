@@ -1,4 +1,4 @@
-<style scoped>
+<style lang="sass" scoped>
 .passport-popup{position:fixed;left:0;width:100%;background-color:rgba(0,0,0,.8);}
 
 .scale-enter-active{

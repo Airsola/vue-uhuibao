@@ -1,24 +1,84 @@
-<style scoped>
-  .title{padding:.16rem .2rem;font-size:.15rem;line-height:1em;}
-  .title>a{font-size:.12rem;color:#999;position:absolute;right:.2rem;line-height:.15rem;}
-  .title>a:before{margin-right:.05rem;}
-
-  .link-grid{height:1.7rem;padding:0;position:relative;}
-  .link-grid>span{position:absolute;width:50%;height:.85rem;}
-  .link-grid>span.lt{left:0;top:0;}
-  .link-grid>span.lb{left:0;bottom:0;}
-  .link-grid>span.rt{right:0;top:0;}
-  .link-grid>span.rb{right:0;bottom:0;}
-  .link-grid>span>a{display:block;width:100%;height:100%;position:relative;z-index:0;}
-  .link-grid>span>a>img{display:block;width:100%;height:100%;}
-  .link-grid.th3-grid>span:first-of-type{height:100%;}
-
-  .th1-grid{padding:.2rem;}
-  .th1-grid>span{margin-bottom:.1rem;display:block;}
-  .th1-grid>span:last-of-type{margin-bottom:0;}
-  .th1-grid>span>a{position:relative;overflow:hidden;}
-  .th1-grid>span>a,.th1-grid>span>a>img{display:block;}
-  .th1-grid>span>a>img{width:100%;}
+<style lang="sass" scoped>
+.title {
+  padding: .16rem .2rem;
+  font-size: .15rem;
+  line-height: 1em;
+  & > a {
+    font-size: .12rem;
+    color: #999;
+    position: absolute;
+    right: .2rem;
+    line-height: .15rem;
+    &:before {
+      margin-right: .05rem;
+    }
+  }
+}
+.link-grid {
+  height: 1.7rem;
+  padding: 0;
+  position: relative;
+  & > span {
+    position: absolute;
+    width: 50%;
+    height: .85rem;
+    &.lt {
+      left: 0;
+      top: 0;
+    }
+    &.lb {
+      left: 0;
+      bottom: 0;
+    }
+    &.rt {
+      right: 0;
+      top: 0;
+    }
+    &.rb {
+      right: 0;
+      bottom: 0;
+    }
+    & > a {
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      z-index: 0;
+      & > img {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+  &.th3-grid {
+    & > span {
+      &:first-of-type {
+        height: 100%;
+      }
+    }
+  }
+}
+.th1-grid {
+  padding: .2rem;
+  & > span {
+    margin-bottom: .1rem;
+    display: block;
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+    & > a {
+      position: relative;
+      overflow: hidden;
+      & > img {
+        width: 100%;
+      }
+    }
+  }
+}
+.th1-grid>span>a,.th1-grid>span>a>img {
+  display: block;
+}
 </style>
 
 <template>
@@ -112,14 +172,6 @@ export default {
     }
   },
   methods: {
-    redirectTo: (url, serviceId, shopId) => {
-      Http.fetch('common/log', {service_id: serviceId, shop_id: shopId}, CHANNEL_CODE).then(response => {
-        window.location.href = url;
-      });
-    },
-    cutString: function(string, length) {
-      return string.length <= length ? string : string.slice(0, length) + '…';
-    },
     /*
      * 换一换刷新数据
      * data *[Object] 该组数据对象
@@ -132,23 +184,27 @@ export default {
         category_id: data.category,
         page: data.page + 1
       }, CHANNEL_CODE, AREA_CODE).then(response => {
-        if (response.ok) {
-          response.json().then(result => {
-            if (result.status === 0) return;
+        // 数据加载停止
+        data.loading = false;
 
-            // 页数增加
-            data.page ++;
+        Http.resolve(response, (error, result) => {
+          if (error) {
+            throw result;
+          } else {
+            if (result.status === 1) {
+              // 页数增加
+              data.page ++;
 
-            // 数据加载停止
-            data.loading = false;
+              // 清空数据并拉入新的数据
+              data.list.splice(0, data.list.length);
 
-            // 清空数据并拉入新的数据
-            data.list.splice(0, data.list.length);
-
-            // 更换新的数据
-            this.$set(data, 'list', data.list.concat(result.data));
-          });
-        };
+              // 更换新的数据
+              this.$set(data, 'list', data.list.concat(result.data));
+            } else {
+              throw result.msg;
+            };
+          };
+        });
       });
     }
   }

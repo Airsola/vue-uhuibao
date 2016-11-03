@@ -1,13 +1,19 @@
-<style lang="stylus" scoped>
-.generic-list
-  dl
-    transition all .5s cubic-bezier(.55,0,.1,1)
-.slide-left-enter, .slide-right-leave-active
-  opacity 0
-  transform translate(30px, 0)
-.slide-left-leave-active, .slide-right-enter
-  opacity 0
-  transform translate(-30px, 0)
+<style lang="sass" scoped>
+.generic-list {
+  dl {
+    transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+}
+.slide-left-enter,
+.slide-right-leave-active {
+  opacity: 0;
+  transform: translate(30px, 0);
+}
+.slide-left-leave-active,
+.slide-right-enter {
+  opacity: 0;
+  transform: translate(-30px, 0);
+}
 </style>
 
 <template>
@@ -71,15 +77,17 @@ export default {
           service_id: serviceId,
           shop_id: shopId
         }, CHANNEL_CODE).then(response => {
-          if (response.ok) {
-            response.json().then(result => {
-              if (result.status === 0) {
-                this.$message(result.msg);
-              } else {
+          Http.resolve(response, (error, result) => {
+            if (error) {
+              throw result;
+            } else {
+              if (result.status === 1) {
                 window.location.href = url;
+              } else {
+                throw result.msg;
               };
-            });
-          };
+            };
+          });
         });
       };
     }

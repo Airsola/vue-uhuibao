@@ -6,6 +6,18 @@ import fastclick from 'fastclick';
 import shareLogo from 'assets/images/share_logo.jpg';
 import 'whatwg-fetch';
 
+import 'assets/style/nprogress.css';
+import NProgress from 'nprogress';
+
+NProgress.configure({
+  showSpinner: false,
+  trickleRate: 0.1,
+  trickleSpeed: 300,
+  easing: 'ease'
+});
+
+console.log(process);
+
 /* 根据域名设置系统语言 */
 const location = window.location;
 const hostArr = location.host.split('.');
@@ -33,6 +45,8 @@ const CSRF_TOKEN = {};
 // 根据CSRF Meta得到CSRF密钥
 if (location.hostname !== 'localhost' && document.querySelector('meta[name="csrf-param"]') !== null) CSRF_TOKEN[document.querySelector('meta[name="csrf-param"]').content] = document.querySelector('meta[name="csrf-token"]').content;
 
+export {LANG_TYPE, CHANNEL_CODE, CHANNEL_NAME, AREA_CODE, USER_AUTH};
+
 const fetchSettings = {
   method: 'POST',
   headers: {
@@ -51,11 +65,15 @@ const formDataSource = (...params) => {
 
   return data.join('&');
 };
+let FetchCount = 0;
 const Http = {
+  count: 0,
   fetch: (uri, ...params) => {
+    if (FetchCount++ === 0) NProgress.start();
     return fetch(API_PATH + uri, _.assign({body: formDataSource(...params)}, fetchSettings));
   },
   resolve: (response, resolve) => {
+    if (--FetchCount === 0) NProgress.done();
     if (response.ok) {
       response.json().then(result => resolve(false, result));
     } else {
@@ -64,10 +82,13 @@ const Http = {
   }
 };
 
-export {Http, LANG_TYPE, CHANNEL_CODE, CHANNEL_NAME, AREA_CODE, USER_AUTH};
-export {$, _, Helper};
+export {Http, $, _, Helper};
 
-const WechatAPI = new JssdkHelper(API_PATH + 'api/wechat_config', _.assign({body: formDataSource({url: HOME_URL})}, fetchSettings), {
+const WechatAPI = new JssdkHelper(API_PATH + 'api/wechat_config', _.assign({
+  body: formDataSource({
+    url: encodeURIComponent(HOME_URL)
+  })
+}, fetchSettings), {
   title: '游惠宝',
   desc: '游惠宝，分享世界美一刻！',
   link: location.href,
@@ -98,8 +119,7 @@ Helper.setCookie('h5_uhb_language', LANG_TYPE, 365, {
 });
 
 const HASH_CLICK = {};
-
-const urlRules = [
+const URL_RULES = [
   [/#!index/, '#/index'],
   [/#!search/, '#/search'],
   [/#!search\?key=/, '#/search/'],
@@ -109,7 +129,8 @@ const urlRules = [
   [/#!ucenter/, '#/ucenter'],
   [/#!passport\/login/, '#/passport/signin'],
   [/#!passport\/register/, '#/passport/signup'],
-  [/#!passport\/forget/, '#/passport/forget']
+  [/#!passport\/forget/, '#/passport/forget'],
+  [/#!passport\/agreement/, '#/passport/privacy']
 ];
 
 // 临时性hash地址重定向
@@ -124,7 +145,7 @@ $(document.body).on('click', 'a[href^="#!"]', function(evt) {
 
   const hrefAttr = this.getAttribute('href');
 
-  for (let rule of urlRules) {
+  for (let rule of URL_RULES) {
     let ruleStr = rule[0].source.replace(/\\/, '');
     if (hrefAttr.slice(0, ruleStr.length) === ruleStr) {
       location.href = hrefAttr.replace(rule[0], rule[1]);

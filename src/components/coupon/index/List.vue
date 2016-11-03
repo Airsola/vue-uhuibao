@@ -1,6 +1,12 @@
-<style scoped>
-  .service-list{padding-top:.4rem;position:relative;z-index:0;}
-  .generic-list{border-bottom:solid 1px #eaeaea;}
+<style lang="sass" scoped>
+.service-list {
+  padding-top: .4rem;
+  position: relative;
+  z-index: 0;
+}
+.generic-list {
+  border-bottom: solid 1px #eaeaea;
+}
 </style>
 
 <template>
@@ -57,6 +63,8 @@ export default {
   },
   created: function() {
     this.fetchData(this.getUrlParams(1));
+  },
+  mounted() {
     window.document.addEventListener('scroll', this.loadMoreFn);
   },
   beforeDestroy: function() {
@@ -68,15 +76,19 @@ export default {
       Http.fetch('coupon/get_tickets_list', params, CHANNEL_CODE, AREA_CODE).then(response => {
         this.isLoading = false;
 
-        if (response.ok) {
-          response.json().then(result => {
-            if (result.status === 0) return;
-
-            this.$set(this, 'list', this.list.concat(result.data.result_list));
-            this.$set(this, 'hasNext', !!result.data.has_next);
-            this.$set(this, 'curPage', result.data.curre_page);
-          });
-        };
+        Http.resolve(response, (error, result) => {
+          if (error) {
+            throw result;
+          } else {
+            if (result.status === 1) {
+              this.$set(this, 'list', this.list.concat(result.data.result_list));
+              this.$set(this, 'hasNext', !!result.data.has_next);
+              this.$set(this, 'curPage', result.data.curre_page);
+            } else {
+              throw result.msg;
+            };
+          };
+        });
       });
     },
     getUrlParams: function(pageNumber) {

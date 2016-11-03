@@ -1,16 +1,65 @@
-<style scoped>
-  .form-table>li{position:relative;}
-  .form-table>li>label{display:block;padding:.16rem 0 .16rem .3rem;height:.16rem;position:relative;}
-  .form-table>li>label.short{margin-right:1rem;}
-  .form-table>li>label:before{font-size:.16rem;color:#c7d1da;line-height:1em;position:absolute;left:0;top:50%;margin-top:-.5em;}
-  .form-table>li>label>input{border:none;height:.16rem;width:100%;line-height:.16rem;font-size:.14rem;}
-
-  .form-link{font-size:.14rem;color:#ffaa18;padding-top:.2rem;}
-  .form-link>a{text-decoration:underline;}
-
-  .form-submit>a{border-radius:.03rem;margin-top:.2rem;display:block;line-height:.4rem;text-align:center;color:#666;border:solid 1px #f0f0f0;font-size:.14rem;}
-  .form-submit>a.important{background-color:#2dbcff;color:#fff;border:none;}
-  .form-submit>a.disabled{background-color:#eee;color:#ccc;text-shadow:1px 1px 0 rgba(255,255,255,.3);border:none;}
+<style lang="sass" scoped>
+.form-table {
+  & > li {
+    position: relative;
+    & > label {
+      display: block;
+      padding: .16rem 0 .16rem .3rem;
+      height: .16rem;
+      position: relative;
+      &.short {
+        margin-right: 1rem;
+      }
+      &:before {
+        font-size: .16rem;
+        color: #c7d1da;
+        line-height: 1em;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        margin-top: -.5em;
+      }
+      & > input {
+        border: none;
+        height: .16rem;
+        width: 100%;
+        line-height: .16rem;
+        font-size: .14rem;
+      }
+    }
+  }
+}
+.form-link {
+  font-size: .14rem;
+  color: #ffaa18;
+  padding-top: .2rem;
+  & > a {
+    text-decoration: underline;
+  }
+}
+.form-submit {
+  & > a {
+    border-radius: .03rem;
+    margin-top: .2rem;
+    display: block;
+    line-height: .4rem;
+    text-align: center;
+    color: #666;
+    border: solid 1px #f0f0f0;
+    font-size: .14rem;
+    &.important {
+      background-color: #2dbcff;
+      color: #fff;
+      border: none;
+    }
+    &.disabled {
+      background-color: #eee;
+      color: #ccc;
+      text-shadow: 1px 1px 0 rgba(255,255,255,.3);
+      border: none;
+    }
+  }
+}
 </style>
 
 <template>

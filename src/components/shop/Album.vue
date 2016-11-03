@@ -1,18 +1,75 @@
-<style scoped>
-  .album-list{padding:.2rem;}
-  .album-list>ul>li{float:left;width:1.62rem;height:1.2rem;margin-bottom:.1rem;}
-  .album-list>ul>li:nth-of-type(2n){float:right;}
-  .album-list>ul>li>figure{background-color:#f6f6f6;width:100%;height:100%;overflow:hidden;position:relative;}
-  .album-list>ul>li>figure,.album-list>ul>li>figure>img{display:block;}
-  .album-list>ul>li>figure>img{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);transition:transform .3s ease;}
-  .album-list>ul>li>figure>img.normal{min-height:100%;min-width:100%;}
-  .album-list>ul>li>figure>img.portrait{width:100%;}
-  .album-list>ul>li>figure>img.landscape{height:100%;}
-
-  .album-swiper{position:fixed;left:0;top:.5rem;width:100%;height:calc(100% - .5rem);z-index:1;background-color:#000;visibility:hide;opacity:0;transform:scale(0);transition:opacity .3s ease,transform .3s ease;}
-  .album-swiper.active{visibility:visible;opacity:1;transform:scale(1);}
-  .album-swiper .swiper-slide figure, .album-swiper .swiper-slide figure>img{width:100%;display:block;}
-  .album-swiper .swiper-slide figure{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);}
+<style lang="sass" scoped>
+.album-list {
+  padding: .2rem;
+  & > ul {
+    & > li {
+      float: left;
+      width: 1.62rem;
+      height: 1.2rem;
+      margin-bottom: .1rem;
+      &:nth-of-type(2n) {
+        float: right;
+      }
+      & > figure {
+        background-color: #f6f6f6;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        & > img {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%,-50%);
+          transition: transform .3s ease;
+          &.normal {
+            min-height: 100%;
+            min-width: 100%;
+          }
+          &.portrait {
+            width: 100%;
+          }
+          &.landscape {
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+.album-list>ul>li>figure,.album-list>ul>li>figure>img {
+  display: block;
+}
+.album-swiper {
+  position: fixed;
+  left: 0;
+  top: .5rem;
+  width: 100%;
+  height: calc(100% - .5rem);
+  z-index: 1;
+  background-color: #000;
+  visibility: hide;
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity .3s ease,transform .3s ease;
+  &.active {
+    visibility: visible;
+    opacity: 1;
+    transform: scale(1);
+  }
+  .swiper-slide {
+    figure {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+    }
+  }
+}
+.album-swiper .swiper-slide figure, .album-swiper .swiper-slide figure>img {
+  width: 100%;
+  display: block;
+}
 </style>
 <template>
   <layout>

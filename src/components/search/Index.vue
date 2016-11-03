@@ -1,12 +1,31 @@
-<style scoped>
-  .main-nav{background-color:#fff;border-bottom:solid 1px #eaeaea;line-height:.39rem;position:relative;z-index:0;}
-  .main-nav>span{float:left;width:33.333%;position:relative;text-align:center;font-size:.14rem;color:#999;
-    transition:color .2s ease;
-    -webkit-transition:color .2s ease;
+<style lang="sass" scoped>
+.main-nav {
+  background-color: #fff;
+  border-bottom: solid 1px #eaeaea;
+  line-height: .39rem;
+  position: relative;
+  z-index: 0;
+  & > span {
+    float: left;
+    width: 33.333%;
+    position: relative;
+    text-align: center;
+    font-size: .14rem;
+    color: #999;
+    transition: color .2s ease;
+    &.current {
+      color: #222;
+    }
+    &:first-of-type {
+      &:before {
+        display: none;
+      }
+    }
+    &:before {
+      height: 50%;
+    }
   }
-  .main-nav>span.current{color:#222;}
-  .main-nav>span:first-of-type:before{display:none;}
-  .main-nav>span:before{height:50%;}
+}
 </style>
 <template>
   <layout>

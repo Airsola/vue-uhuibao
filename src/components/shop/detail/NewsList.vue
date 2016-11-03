@@ -1,8 +1,24 @@
-<style scoped>
-  .shop-item>h5{padding:.16rem .2rem;line-height:.18rem;font-size:.14rem;}
-  .list-show-more{padding:.16rem 0;text-align:center;}
-  .list-show-more>span{font-size:.14rem;line-height:.14rem;}
-  .list-show-more>span:after{color:#ddd;margin-left:.05rem;}
+<style lang="sass" scoped>
+.shop-item {
+  & > h5 {
+    padding: .16rem .2rem;
+    line-height: .18rem;
+    font-size: .14rem;
+  }
+}
+.list-show-more {
+  padding: .16rem 0;
+  text-align: center;
+  & > span {
+    font-size: .14rem;
+    line-height: .14rem;
+    &:after {
+      color: #ddd;
+      margin-left: .05rem;
+    }
+  }
+}
+
 </style>
 
 <template>

@@ -41,7 +41,7 @@ export default {
     };
   },
   beforeRouteEnter: function(to, from, next) {
-    if (USER_AUTH.user_auth === true) {
+    if (USER_AUTH.user_auth === false) {
       next();
     } else {
       Http.fetch('api/check_islogin').then(response => {

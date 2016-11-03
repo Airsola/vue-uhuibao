@@ -1,45 +1,166 @@
-<style scoped>
-  .shop-info>img{width:.9rem;height:.9rem;position:absolute;}
-  .shop-info>.info-content{margin-left:1.1rem;min-height:.9rem;}
-  .shop-info>.info-content>h4{font-size:.15rem;color:#222;line-height:.21rem;position:relative;top:-.03rem;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    display:-webkit-box;
-    -webkit-line-clamp:2;
-    -webkit-box-orient:vertical;
+<style lang="sass" scoped>
+.shop-info {
+  & > img {
+    width: .9rem;
+    height: .9rem;
+    position: absolute;
   }
-  .shop-info>.info-content>h4>i{margin-left:.04rem;}
-  .shop-info>.info-content>h4>i.i-verified-aft{color:#2ebcff;font-size:.13rem;}
-  .shop-info>.info-content>h4>i.i-coupon-aft,.shop-info>.info-content>h4>i.i-signal-aft{width:.17rem;height:.17rem;display:inline-block;line-height:.17rem;text-align:center;border-radius:.02rem;position:relative;}
-  .shop-info>.info-content>h4>i.i-coupon-aft{background-color:#6fe264;}
-  .shop-info>.info-content>h4>i.i-signal-aft{background-color:#00ddd3;}
-  .shop-info>.info-content>h4>i.i-coupon-aft:after,.shop-info>.info-content>h4>i.i-signal-aft:after{font-size:.11rem;color:#fff;width:100%;height:100%;position:relative;top:-.01rem;}
-  .shop-info>.info-content>p{padding:.06rem 0 .08rem;line-height:.2rem;word-break:break-all;}
+  & > .info-content {
+    margin-left: 1.1rem;
+    min-height: .9rem;
+    & > h4 {
+      font-size: .15rem;
+      color: #222;
+      line-height: .21rem;
+      position: relative;
+      top: -.03rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      & > i {
+        margin-left: .04rem;
+        &.i-verified-aft {
+          color: #2ebcff;
+          font-size: .13rem;
+        }
+        &.i-coupon-aft {
+          background-color: #6fe264;
+        }
+        &.i-signal-aft {
+          background-color: #00ddd3;
+        }
+      }
+    }
+    & > p {
+      padding: .06rem 0 .08rem;
+      line-height: .2rem;
+      word-break: break-all;
+    }
+  }
+}
+.shop-info>.info-content>h4>i.i-coupon-aft,.shop-info>.info-content>h4>i.i-signal-aft {
+  width: .17rem;
+  height: .17rem;
+  display: inline-block;
+  line-height: .17rem;
+  text-align: center;
+  border-radius: .02rem;
+  position: relative;
+}
+.shop-info>.info-content>h4>i.i-coupon-aft:after,.shop-info>.info-content>h4>i.i-signal-aft:after {
+  font-size: .11rem;
+  color: #fff;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  top: -.01rem;
+}
+.shop-album {
+  padding-top: .2rem;
+  & > ul {
+    & > li {
+      float: left;
+      width: 1.05rem;
+      height: .8rem;
+      &:nth-of-type(2) {
+        margin: 0 .1rem;
+      }
+      & > a {
+        background-color: #f6f6f6;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        & > img {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          transition: transform .3s ease;
+          &.normal {
+            min-height: 100%;
+            min-width: 100%;
+          }
+          &.portrait {
+            width: 100%;
+          }
+          &.landscape {
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+.shop-album>ul>li>a,.shop-album>ul>li>a>img {
+  display: block;
+}
+.info-content {
+  & > .pay-type {
+    height: .16rem;
+    line-height: .16rem;
+    & > * {
+      float: left;
+    }
+    & > i {
+      height: .16rem;
+      display: inline-block;
+      background-repeat: no-repeat;
+      background-position: 0 0;
+      background-size: auto 100%;
+      margin-right: .04rem;
+      &.alipay {
+        width: .16rem;
+        background-image: url(../../assets/images/pay_alipay.png);
+        border-radius: .02rem;
+      }
+      &.weipay {
+        width: .16rem;
+        background-image: url(../../assets/images/pay_wxpay.png);
+        border-radius: .02rem;
+      }
+      &.unionpay {
+        width: .26rem;
+        background-image: url(../../assets/images/pay_union.png);
+      }
+      &.visa {
+        width: .21rem;
+        background-image: url(../../assets/images/pay_visa.png);
+      }
+      &.mastercard {
+        width: .27rem;
+        background-image: url(../../assets/images/pay_mastercard.png);
+      }
+    }
+  }
+}
+.shop-contact {
+  & > ul {
+    & > li {
+      border-bottom: solid 1px rgba(0,0,0,0.1);
+      &:last-of-type {
+        border-bottom: none;
+      }
+    }
+  }
+}
+.shop-contact>ul>li>p,.shop-contact>ul>li>a {
+  padding: .16rem .2rem;
+  line-height: .18rem;
+  font-size: .14rem;
+  position: relative;
+  display: block;
+}
+.shop-contact>ul>li>p:before,.shop-contact>ul>li>a:before {
+  font-size: .15rem;
+  color: #ccc;
+  margin-right: .1rem;
+}
+.shop-contact>ul>li>p:last-of-type:after,.shop-contact>ul>li>a:last-of-type:after {
+  position: absolute;
+  right: .2rem;
+  color: #ccc;
+}
 
-  .shop-album{padding-top:.2rem;}
-  .shop-album>ul>li{float:left;width:1.05rem;height:.8rem;}
-  .shop-album>ul>li:nth-of-type(2){margin:0 .1rem;}
-  .shop-album>ul>li>a{background-color:#f6f6f6;width:100%;height:100%;overflow:hidden;position:relative;}
-  .shop-album>ul>li>a,.shop-album>ul>li>a>img{display:block;}
-  .shop-album>ul>li>a>img{position:absolute;left:50%;top:50%;transform:translate(-50%, -50%);transition:transform .3s ease;}
-  .shop-album>ul>li>a>img.normal{min-height:100%;min-width:100%;}
-  .shop-album>ul>li>a>img.portrait{width:100%;}
-  .shop-album>ul>li>a>img.landscape{height:100%;}
-
-  .info-content>.pay-type{height:.16rem;line-height:.16rem;}
-  .info-content>.pay-type>*{float:left;}
-  .info-content>.pay-type>i{height:.16rem;display:inline-block;background-repeat:no-repeat;background-position:0 0;background-size:auto 100%;margin-right:.04rem;}
-  .info-content>.pay-type>i.alipay{width:.16rem;background-image:url(../../assets/images/pay_alipay.png);border-radius:.02rem;}
-  .info-content>.pay-type>i.weipay{width:.16rem;background-image:url(../../assets/images/pay_wxpay.png);border-radius:.02rem;}
-  .info-content>.pay-type>i.unionpay{width:.26rem;background-image:url(../../assets/images/pay_union.png);}
-  .info-content>.pay-type>i.visa{width:.21rem;background-image:url(../../assets/images/pay_visa.png);}
-  .info-content>.pay-type>i.mastercard{width:.27rem;background-image:url(../../assets/images/pay_mastercard.png);}
-
-  .shop-contact>ul>li{border-bottom:solid 1px rgba(0,0,0,0.1);}
-  .shop-contact>ul>li>p,.shop-contact>ul>li>a{padding:.16rem .2rem;line-height:.18rem;font-size:.14rem;position:relative;display:block;}
-  .shop-contact>ul>li:last-of-type{border-bottom:none;}
-  .shop-contact>ul>li>p:before,.shop-contact>ul>li>a:before{font-size:.15rem;color:#ccc;margin-right:.1rem;}
-  .shop-contact>ul>li>p:last-of-type:after,.shop-contact>ul>li>a:last-of-type:after{position:absolute;right:.2rem;color:#ccc;}
 </style>
 <template>
   <layout>

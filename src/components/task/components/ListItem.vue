@@ -1,13 +1,19 @@
-<style lang="stylus" scoped>
-.generic-list
-  dl
-    transition all .5s cubic-bezier(.55,0,.1,1)
-.slide-left-enter, .slide-right-leave-active
-  opacity 0
-  transform translate(30px, 0)
-.slide-left-leave-active, .slide-right-enter
-  opacity 0
-  transform translate(-30px, 0)
+<style lang="sass" scoped>
+.generic-list {
+  dl {
+    transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+  }
+}
+.slide-left-enter,
+.slide-right-leave-active {
+  opacity: 0;
+  transform: translate(30px, 0);
+}
+.slide-left-leave-active,
+.slide-right-enter {
+  opacity: 0;
+  transform: translate(-30px, 0);
+}
 </style>
 
 <template>

@@ -1,6 +1,9 @@
-<style scoped>
-.layout-body{padding-top:.5rem;position:relative;z-index:0;}
-.layout-body.show-footer{padding-bottom:.5rem;}
+<style lang="sass" scoped>
+.layout-body {
+  padding-top: .5rem;
+  position: relative;
+  z-index: 0;
+}
 </style>
 
 <template>

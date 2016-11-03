@@ -1,61 +1,74 @@
-<style lang="stylus" scoped>
-  .service-img
-    display block
-    width 100%
+<style lang="sass" scoped>
+.service-img {
+  display: block;
+  width: 100%;
+}
+.service-info {
+  position: relative;
+  h4 {
+    font-size: 0.16rem;
+    line-height: 0.22rem;
+    margin-bottom: 0.1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  span {
+    &.service-price {
+      color: #2cbcff;
+      font-size: 0.1rem;
+      b {
+        font-size: 0.17rem;
+      }
+      s {
+        color: #999;
+        font-size: 0.12rem;
+        display: inline-block;
+        margin-left: 0.05rem;
+        :first-letter {
+          font-size: 0.1rem;
+        }
+        i {
+          text-decoration: line-through;
+        }
+      }
+    }
+    &.clicked {
+      font-size: 0.12rem;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      color: #999;
+    }
+  }
+  div {
+    &.tags {
+      padding-top: 0.05rem;
+      span {
+        line-height: 0.15rem;
+        padding: 0 0.04rem;
+        border: solid 1px #2cbcff;
+        border-radius: 0.015rem;
+        display: inline-block;
+        font-size: 0.1rem;
+        color: #2cbcff;
+        text-align: center;
+        float: left;
+        margin-right: 0.05rem;
+      }
+    }
+  }
+}
+.shop-info {
+  padding: 0 0.2rem 0.2rem 0.2rem;
+}
+.service-notes {
+  .title {
+    padding: 0.16rem 0.2rem;
+    font-size: 0.15rem;
+    line-height: 1em;
+  }
+}
 
-  .service-info
-    position relative
-    h4
-      font-size .16rem
-      line-height .22rem
-      margin-bottom .1rem
-      overflow hidden
-      text-overflow ellipsis
-      display -webkit-box
-      -webkit-line-clamp 2
-      -webkit-box-orient vertical
-    span.service-price
-      color #2cbcff
-      font-size .1rem
-      b
-        font-size .17rem;
-      s
-        color #999
-        font-size .12rem
-        display inline-block
-        margin-left .05rem
-        :first-letter
-          font-size .1rem
-        i
-         text-decoration line-through
-    span.clicked
-      font-size .12rem
-      position absolute
-      right 0
-      bottom 0
-      color #999
-    div.tags
-      padding-top .05rem
-      span
-        line-height .15rem
-        padding 0 .04rem
-        border solid 1px #2cbcff
-        border-radius .015rem
-        display inline-block
-        font-size .1rem
-        color #2cbcff
-        text-align center
-        float left
-        margin-right .05rem
-
-  .shop-info
-    padding 0 .2rem .2rem .2rem
-
-  .service-notes
-    .title
-      padding .16rem .2rem
-      font-size .15rem
-      line-height 1em
 </style>
 <template>
   <layout>
@@ -84,10 +97,10 @@
         <h5 class="title ui-card-underline">
           <span class="t-bold">{{lang.buyNotes}}</span>
         </h5>
-        <div class="ui-card-padd" v-html="htmlpx2rem(serviceInfo)"></div>
+        <div class="html-content ui-card-padd" v-html="htmlpx2rem(serviceInfo)"></div>
       </div>
       <div class="ui-card ui-card-overline ui-card-underline ui-card-mar-btm">
-        <div class="ui-card-padd" v-html="htmlpx2rem(serviceReason)"></div>
+        <div class="html-content ui-card-padd" v-html="htmlpx2rem(serviceReason)"></div>
       </div>
       <div class="clearfix"></div>
     </layout-body>

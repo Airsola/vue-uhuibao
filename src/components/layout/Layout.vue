@@ -1,11 +1,11 @@
-<style scoped>
-.layout{min-height:100vh;background-color:#f6f6f6;}
-.filter-blur{
-  transition:filter .3s ease;
-  -webkit-transition:-webkit-filter .3s ease;
-
-  filter:blur(.05rem);
-  -webkit-filter:blur(.05rem);
+<style lang="sass" scoped>
+.layout {
+  min-height: 100vh;
+  background-color: #f6f6f6;
+}
+.filter-blur {
+  transition: filter 0.3s ease;
+  filter: blur(0.05rem);
 }
 </style>
 

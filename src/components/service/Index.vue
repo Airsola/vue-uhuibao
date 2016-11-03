@@ -1,11 +1,25 @@
-<style scoped>
-  .masker{position:fixed;left:0;top:0;z-index:1;width:100%;height:100%;background-color:rgba(0,0,0,.7);opacity:0;transition:opacity .2s ease;pointer-events:none;}
-  .masker.active{opacity:1;pointer-events:auto;}
+<style lang="sass" scoped>
+.masker {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  &.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
 </style>
 <template>
   <layout>
     <layout-header :title="lang.title"></layout-header>
-    <layout-body>
+    <layout-body :style="{paddingBottom: '.5rem'}">
       <div @click="showCateMenu = showAreaMenu = false" :class="['masker', showCateMenu || showAreaMenu ? 'active' : '']"></div>
       <drop-menu :showCateMenu="showCateMenu" :showAreaMenu="showAreaMenu" :slideToggle="slideToggle"></drop-menu>
       <list></list>

@@ -1,13 +1,33 @@
-<style scoped>
-  .banner-swiper img,.banner-swiper a{display:block;width:100%;}
+<style lang="sass" scoped>
+.banner-swiper img,.banner-swiper a {
+  display: block;
+  width: 100%;
+}
 </style>
-<style>
-  .swiper-pagination{position:absolute;width:100%;left:0;bottom:.1rem;z-index:2;text-align:center;font-size:0;}
-  .swiper-pagination-bullet{height:.07rem;width:.07rem;display:inline-block;background-color:#fff;border-radius:50%;margin:0 .05rem;opacity:.3;
-      transition:opacity .2s ease,transform .2s ease;
-      -webkit-transition:opacity .2s ease,-webkit-transform .2s ease;
+<style lang="sass">
+.swiper-pagination {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: .1rem;
+  z-index: 2;
+  text-align: center;
+  font-size: 0;
+}
+.swiper-pagination-bullet {
+  height: .07rem;
+  width: .07rem;
+  display: inline-block;
+  background-color: #fff;
+  border-radius: 50%;
+  margin: 0 .05rem;
+  opacity: .3;
+  transition: opacity .2s ease,transform .2s ease;
+  &.swiper-pagination-bullet-active {
+    opacity: .5;
+    transform: scale(1.3);
   }
-  .swiper-pagination-bullet.swiper-pagination-bullet-active{opacity:.5;transform:scale(1.3);-webkit-transform:scale(1.3);}
+}
 </style>
 
 <template>

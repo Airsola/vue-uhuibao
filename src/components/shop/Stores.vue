@@ -1,5 +1,10 @@
-<style scoped>
-  .branch-store>p{padding:.2rem .2rem .1rem .2rem;font-size:.14rem;}
+<style lang="sass" scoped>
+.branch-store {
+  & > p {
+    padding: .2rem .2rem .1rem .2rem;
+    font-size: .14rem;
+  }
+}
 </style>
 <template>
   <layout>

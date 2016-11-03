@@ -1,12 +1,50 @@
-<style scoped>
-  .page-404{min-height:80vh;}
-  .page-content{text-align:center;color:#aaa;position:absolute;left:50%;top:50%;margin-top:.25rem;transform:translate(-50%,-50%);-webkit-transform:translate(-50%,-50%);}
-  .page-content:before{font-size:.6rem;line-height:1em;display:block;}
-  .page-content>p{font-size:.16rem;line-height:1.2em;padding:.2rem 0;}
-  .link-to{white-space:nowrap;}
-  .link-to>span{padding:0 .05rem;display:inline-block;font-size:0;}
-  .link-to>span>a{font-size:.14rem;color:#2cbcff;line-height:.24rem;border:solid 1px #2cbcff;padding:0 .08rem 0 .2rem;display:inline-block;border-radius:.02rem;position:relative;}
-  .link-to>span>a:before{font-size:.12rem;position:absolute;left:.04rem;}
+<style lang="sass" scoped>
+.page-404 {
+  min-height: 80vh;
+}
+.page-content {
+  text-align: center;
+  color: #aaa;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-top: .25rem;
+  transform: translate(-50%,-50%);
+  &:before {
+    font-size: .6rem;
+    line-height: 1em;
+    display: block;
+  }
+  & > p {
+    font-size: .16rem;
+    line-height: 1.2em;
+    padding: .2rem 0;
+  }
+}
+.link-to {
+  white-space: nowrap;
+  & > span {
+    padding: 0 .05rem;
+    display: inline-block;
+    font-size: 0;
+    & > a {
+      font-size: .14rem;
+      color: #2cbcff;
+      line-height: .24rem;
+      border: solid 1px #2cbcff;
+      padding: 0 .08rem 0 .2rem;
+      display: inline-block;
+      border-radius: .02rem;
+      position: relative;
+      &:before {
+        font-size: .12rem;
+        position: absolute;
+        left: .04rem;
+      }
+    }
+  }
+}
+
 </style>
 <template>
   <layout>

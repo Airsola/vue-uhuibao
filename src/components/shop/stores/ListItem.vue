@@ -1,16 +1,38 @@
-<style scoped>
-  li{position:relative;padding:.15rem .2rem;}
-  li:last-of-type:after{display:none;}
-  li>a{display:block;}
-  li h5{font-size:.16rem;line-height:.22rem;overflow:hidden;
-    text-overflow:ellipsis;
-    display:-webkit-box;
-    -webkit-line-clamp:2;
-    -webkit-box-orient:vertical;
+<style lang="sass" scoped>
+li {
+  position: relative;
+  padding: .15rem .2rem;
+  &:last-of-type {
+    &:after {
+      display: none;
+    }
   }
-  li a{padding-left:.25rem;position:relative;font-size:.14rem;line-height:.24rem;min-height:.24rem;}
-  li a:first-of-type{margin-top:.1rem;}
-  li a:before{font-size:.15rem;color:#ccc;position:absolute;left:0;}
+  & > a {
+    display: block;
+  }
+  h5 {
+    font-size: .16rem;
+    line-height: .22rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  a {
+    padding-left: .25rem;
+    position: relative;
+    font-size: .14rem;
+    line-height: .24rem;
+    min-height: .24rem;
+    &:first-of-type {
+      margin-top: .1rem;
+    }
+    &:before {
+      font-size: .15rem;
+      color: #ccc;
+      position: absolute;
+      left: 0;
+    }
+  }
+}
 </style>
 <template>
   <li class="underline">

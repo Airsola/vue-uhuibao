@@ -1,40 +1,114 @@
-<style scoped>
-  .news-info{position:relative;padding-bottom:.36rem;}
-  .news-info>h1{font-size:.18rem;color:#222;line-height:.22rem;}
-  .news-info>.author{position:absolute;bottom:0;color:#999;font-size:.12rem;line-height:1em;}
-  .news-info>.collectBtn{position:absolute;bottom:0;font-size:.13rem;right:0;display:inline-block;padding:0 .08rem;height:.23rem;line-height:.23rem;text-align:center;color:#2cbcff;border-radius:.02rem;border:solid 1px #2cbcff;transition:background-color .2s ease, color .2s ease;}
-  .news-info>.collectBtn.collected{background-color:#2cbcff;color:#fff;}
-  .news-info>.collectBtn.disabled{border-color:#bbb;color:#999;background-color:#fff;}
-
-  /* 商家信息 */
-  .shop-info{padding-top:.3rem;}
-
-  /* 文章内容 */
-  .news-content{font-size:.14rem;color:#333;line-height:1.8em;word-break:break-word;padding-top:.3rem;user-select:text;}
-
-  /* 相关阅读 */
-  .related{margin-top:.3rem;}
-  .related>h4{color:#2dbcff;font-size:.14rem;padding-bottom:.1rem;}
-  .related>ul>li{line-height:.22rem;position:relative;padding:.02rem 0 .02rem .12rem;}
-  .related>ul>li>a{color:#222;font-size:.14rem;}
-  .related>ul>li:before{background-color:#222;width:.03rem;height:.03rem;display:block;content:'';border-radius:50%;position:absolute;left:0;top:.125rem;}
-
-  /* 文章分享 */
-  .share-link>a{width:.3rem;height:.3rem;display:inline-block;float:left;margin-right:.2rem;position:relative;border-radius:.02rem;}
-  .share-link>a:last-of-type{margin-right:0;}
-  .share-link>a.weibo{background-color:#ffa740;}
-  .share-link>a.qq{background-color:#4e9ac8;}
-  .share-link>a:after{color:#fff;position:absolute;left:50%;top:50%;line-height:1em;
-    transform:translate(-50%, -50%);
+<style lang="sass" scoped>
+.news-info {
+  position: relative;
+  padding-bottom: .36rem;
+  & > h1 {
+    font-size: .18rem;
+    color: #222;
+    line-height: .22rem;
   }
-  .share-link>a.weibo:after{font-size:.2rem;}
-  .share-link>a.qq:after{font-size:.18rem;}
-</style>
-<style>
-  .news-content a{text-decoration:underline;color:#2cbcff;}
-  .news-content img{max-width:100%;}
-  .news-content table{width:100%;border-collapse:collapse;border:solid 1px #f0f0f0;margin:.1rem 0;}
-  .news-content table td{border:solid 1px #f0f0f0;padding:.06rem;}
+  & > .author {
+    position: absolute;
+    bottom: 0;
+    color: #999;
+    font-size: .12rem;
+    line-height: 1em;
+  }
+  & > .collectBtn {
+    position: absolute;
+    bottom: 0;
+    font-size: .13rem;
+    right: 0;
+    display: inline-block;
+    padding: 0 .08rem;
+    height: .23rem;
+    line-height: .23rem;
+    text-align: center;
+    color: #2cbcff;
+    border-radius: .02rem;
+    border: solid 1px #2cbcff;
+    transition: background-color .2s ease, color .2s ease;
+    &.collected {
+      background-color: #2cbcff;
+      color: #fff;
+    }
+    &.disabled {
+      border-color: #bbb;
+      color: #999;
+      background-color: #fff;
+    }
+  }
+}
+/* 商家信息 */
+.shop-info {
+  padding-top: .3rem;
+}
+/* 相关阅读 */
+.related {
+  margin-top: .3rem;
+  & > h4 {
+    color: #2dbcff;
+    font-size: .14rem;
+    padding-bottom: .1rem;
+  }
+  & > ul {
+    & > li {
+      line-height: .22rem;
+      position: relative;
+      padding: .02rem 0 .02rem .12rem;
+      & > a {
+        color: #222;
+        font-size: .14rem;
+      }
+      &:before {
+        background-color: #222;
+        width: .03rem;
+        height: .03rem;
+        display: block;
+        content: '';
+        border-radius: 50%;
+        position: absolute;
+        left: 0;
+        top: .125rem;
+      }
+    }
+  }
+}
+/* 文章分享 */
+.share-link {
+  & > a {
+    width: .3rem;
+    height: .3rem;
+    display: inline-block;
+    float: left;
+    margin-right: .2rem;
+    position: relative;
+    border-radius: .02rem;
+    &:last-of-type {
+      margin-right: 0;
+    }
+    &.weibo {
+      background-color: #ffa740;
+      &:after {
+        font-size: .2rem;
+      }
+    }
+    &.qq {
+      background-color: #4e9ac8;
+      &:after {
+        font-size: .18rem;
+      }
+    }
+    &:after {
+      color: #fff;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      line-height: 1em;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
 </style>
 
 <template>
@@ -53,7 +127,7 @@
         <div class="shop-info" v-if="shopName">
           <id-card :shopId="shopId" :shopName="shopName" :shopLogo="shopLogo" :shopDesc="shopDesc" :shopAuth="shopAuth"></id-card>
         </div>
-        <article class="news-content" v-html="htmlpx2rem(newsContent)"></article>
+        <article class="html-content" v-html="htmlpx2rem(newsContent)"></article>
         <div class="related">
           <h4 class="t-bold">{{lang.relatedRead}}</h4>
           <ul>
@@ -77,7 +151,7 @@ import {Layout, LayoutHeader, LayoutBody} from '../layout';
 import IdCard from '../shop/components/IdCard.vue';
 
 import Helper from 'helper';
-import {Http, LANG_TYPE, CHANNEL_CODE} from 'config';
+import {Http, LANG_TYPE, CHANNEL_CODE, USER_AUTH} from 'config';
 
 const Language = {
   'zh-cn': {
@@ -219,29 +293,38 @@ export default {
     collectNews: function(status) {
       this.collectStatus = status;
 
-      Http.fetch('api/save_attend', {
-        thing_id: this.newsId,
-        type: 8,
-        status,
-        url: encodeURIComponent(window.location.href)
-      }, CHANNEL_CODE).then(response => {
-        this.collectStatus = -1;
+      if (USER_AUTH.user_auth === false) {
+        this.$login(() => {
+          this.collectNews(status);
+        });
+      } else {
+        Http.fetch('api/save_attend', {
+          thing_id: this.newsId,
+          type: 8,
+          status,
+          url: encodeURIComponent(window.location.href)
+        }, CHANNEL_CODE).then(response => {
+          this.collectStatus = -1;
 
-        if (response.ok) {
-          response.json().then(result => {
-            if (result.status === 0) {
-              this.$message(result.msg);
-            } else if (result.status === -2) {
-              this.$login(() => {
-                this.collectNews(status);
-              });
-            } else if (result.status === 1) {
-              this.newsCollected = !this.newsCollected;
-              this.$message(language.collectResult[status]);
+          Http.resolve(response, (error, result) => {
+            if (error) {
+              throw result;
+            } else {
+              if (result.status === 1) {
+                this.newsCollected = !this.newsCollected;
+                this.$message(language.collectResult[status]);
+              } else if (result.status === -2) {
+                this.$login(() => {
+                  this.collectNews(status);
+                });
+              } else {
+                this.$message(result.msg);
+                throw result.msg;
+              };
             };
           });
-        };
-      });
+        });
+      };
     }
   }
 };

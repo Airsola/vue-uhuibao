@@ -1,22 +1,99 @@
-<style scoped>
-.popup-animate{position:absolute;width:85%;top:50%;left:50%;background-color:#fff;box-shadow:0 .01rem .03rem rgba(0,0,0,.2);z-index:2;border-radius:.03rem;transition:all .5s cubic-bezier(.55,0,.1,1);transform:translate(-50%, -50%);}
-.slide-up-enter{opacity:0;transform:translate(-50%, -45%);}
-.slide-up-leave-active{opacity:0;transform:translate(-50%, -45%);}
+<style lang="sass" scoped>
+.popup-animate {
+  position: absolute;
+  width: 85%;
+  top: 50%;
+  left: 50%;
+  background-color: #fff;
+  box-shadow: 0 .01rem .03rem rgba(0,0,0,.2);
+  z-index: 2;
+  border-radius: .03rem;
+  transition: all .5s cubic-bezier(.55,0,.1,1);
+  transform: translate(-50%, -50%);
+}
+.slide-up-enter {
+  opacity: 0;
+  transform: translate(-50%, -45%);
+}
+.slide-up-leave-active {
+  opacity: 0;
+  transform: translate(-50%, -45%);
+}
+.from-wrap {
+  padding: .2rem;
+}
+.form-title {
+  font-size: .16rem;
+  text-align: center;
+  padding-bottom: .1rem;
+}
+.form-table {
+  & > li {
+    position: relative;
+    & > label {
+      display: block;
+      padding: .16rem 0 .16rem .3rem;
+      height: .16rem;
+      position: relative;
+      &.short {
+        margin-right: 1rem;
+      }
+      &:before {
+        font-size: .16rem;
+        color: #c7d1da;
+        line-height: 1em;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        margin-top: -.5em;
+      }
+      & > input {
+        border: none;
+        height: .16rem;
+        width: 100%;
+        line-height: .16rem;
+        font-size: .14rem;
+      }
+    }
+    & > span {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      line-height: .3rem;
+      padding: 0 .1rem;
+      font-size: .14rem;
+      border-radius: .03rem;
+      background-color: #2dbcff;
+      color: #fff;
+      z-index: 1;
+    }
+  }
+}
+.form-submit {
+  padding-top: .2rem;
+  a {
+    border-radius: .03rem;
+    text-align: center;
+    line-height: .4rem;
+    font-size: .14rem;
+    display: block;
+    color: #666;
+    border: solid 1px #f2f2f2;
+    transition: background-color .2s ease,border-color .2s ease,color .2s ease;
+    &.disabled {
+      background-color: #f2f2f2;
+      border-color: #f2f2f2;
+      color: #ccc;
+    }
+    &.important {
+      background-color: #5fb8f1;
+      border-color: #5fb8f1;
+      color: #fff;
+    }
+  }
+}
 
-.from-wrap{padding:.2rem;}
-.form-title{font-size:.16rem;text-align:center;padding-bottom:.1rem;}
-
-.form-table>li{position:relative;}
-.form-table>li>label{display:block;padding:.16rem 0 .16rem .3rem;height:.16rem;position:relative;}
-.form-table>li>label.short{margin-right:1rem;}
-.form-table>li>label:before{font-size:.16rem;color:#c7d1da;line-height:1em;position:absolute;left:0;top:50%;margin-top:-.5em;}
-.form-table>li>label>input{border:none;height:.16rem;width:100%;line-height:.16rem;font-size:.14rem;}
-.form-table>li>span{position:absolute;right:0;top:50%;transform:translateY(-50%);line-height:.3rem;padding:0 .1rem;font-size:.14rem;border-radius:.03rem;background-color:#2dbcff;color:#fff;z-index:1;}
-
-.form-submit{padding-top:.2rem;}
-.form-submit a{border-radius:.03rem;text-align:center;line-height:.4rem;font-size:.14rem;display:block;color:#666;border:solid 1px #f2f2f2;transition:background-color .2s ease,border-color .2s ease,color .2s ease;}
-.form-submit a.disabled{background-color:#f2f2f2;border-color:#f2f2f2;color:#ccc;}
-.form-submit a.important{background-color:#5fb8f1;border-color:#5fb8f1;color:#fff;}
 </style>
 
 <template>
@@ -103,22 +180,25 @@ export default {
       Http.fetch('api/register', {
         password: this.password
       }).then(response => {
-        if (response.ok) {
-          response.json().then(result => {
-            this.submiting = false;
+        this.submiting = false;
 
-            if (result.status === 0) {
-              this.$message(result.msg);
-            } else {
+        Http.resolve(response, (error, result) => {
+          if (error) {
+            throw result;
+          } else {
+            if (result.status === 1) {
               this.timeout = 3;
               this.timer = window.setInterval(() => {
                 this.timeout --;
                 if (this.timeout === 0) window.clearInterval(this.timer);
                 this.swipeTo(0);
               }, 1000);
+            } else {
+              this.$message(result.msg);
+              throw result.msg;
             };
-          });
-        };
+          };
+        });
       });
     }
   },

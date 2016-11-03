@@ -1,58 +1,161 @@
-<style lang="stylus" scoped>
-  .page-container{padding-bottom:.6rem;}
-
-  .m-userInfo{margin-top:0;border-top:none;padding-bottom:.15rem;}
-  .m-userInfo>dl{height:.5rem;}
-  .m-userInfo>dl>dt,.m-userInfo>dl>dt>a{width:.5rem;height:.5rem;}
-  .m-userInfo>dl>dt{position:absolute;}
-  .m-userInfo>dl>dt>a,.m-userInfo>dl>dt>a>img{display:block;border-radius:50%;overflow:hidden;}
-  .m-userInfo>dl>dt>a>img{width:100%;height:100%;}
-  .m-userInfo>dl>dd{margin-left:.7rem;position:relative;min-height:.5rem;}
-  .m-userInfo>dl>dd>h4{font-size:.16rem;display:block;}
-  .m-userInfo>dl>dd>h4>a{color:#222;}
-  .m-userInfo>dl>dd>span,.m-userInfo>dl>dd>a{position:absolute;}
-  .m-userInfo>dl>dd>span{color:#222;bottom:0;left:0;font-size:.13rem;}
-  .m-userInfo>dl>dd>a{color:#bfbfbf;right:0;top:0;font-size:.12rem;}
-  .m-userInfo>dl>dd>a:after{font-size:.1rem;color:#ddd;margin-left:.05rem;
-    transform:rotate(180deg);
-    -webkit-transform:rotate(180deg);
+<style lang="sass" scoped>
+.user-info {
+  position: relative;
+  & > dl {
+    height: .5rem;
+    & > dt {
+      position: absolute;
+      & > a {
+        & > img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+    & > dd {
+      margin-left: .7rem;
+      position: relative;
+      min-height: .5rem;
+      & > h4 {
+        font-size: .16rem;
+        display: block;
+        & > a {
+          color: #222;
+        }
+      }
+      & > span {
+        color: #222;
+        bottom: 0;
+        left: 0;
+        font-size: .13rem;
+      }
+      & > a {
+        color: #bfbfbf;
+        right: 0;
+        top: 0;
+        font-size: .12rem;
+        &:after {
+          font-size: .1rem;
+          color: #ddd;
+          margin-left: .05rem;
+          transform: rotate(180deg);
+        }
+      }
+    }
   }
-
-  .m-taskList{padding:0;}
-  .m-taskList>ul>li{position:relative;line-height:.18rem;padding:0 .45rem;border-bottom:solid 1px #f5f5f5;}
-  .m-taskList>ul>li:last-of-type{border-bottom:none;}
-  .m-taskList>ul>li,.m-taskList>ul>li>a{color:#222;font-size:.14rem;}
-  .m-taskList>ul>li>a{padding:.16rem 0;display:block;position:relative;}
-  .m-taskList>ul>li>a>b.new-coupon{height:.2rem;line-height:.2rem;padding:0 .1rem;border-radius:.1rem;background-color:#ff7800;color:#fff;font-size:.12rem;position:absolute;right:0;top:50%;margin-top:-.1rem;}
-  .m-taskList>ul>li>a>b.new-order{width:.1rem;height:.1rem;border-radius:50%;background-color:#ff7800;display:block;position:absolute;right:0;top:50%;margin-top:-.05rem;}
-  .m-taskList>ul>li:before{font-size:.16rem;line-height:1em;color:#2cbcff;display:block;position:absolute;left:.2rem;top:50%;margin-top:-.08rem;}
-  .m-taskList>ul>li:after{font-size:.14rem;color:#ddd;display:block;position:absolute;right:.175rem;top:50%;margin-top:-.08rem;}
-
-  .logout{padding:0;}
-  .logout>a{line-height:.48rem;font-size:.14rem;text-align:center;display:block;}
+}
+.user-info>dl>dt,.user-info>dl>dt>a {
+  width: .5rem;
+  height: .5rem;
+}
+.user-info>dl>dt>a,.user-info>dl>dt>a>img {
+  display: block;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.user-info>dl>dd>span,.user-info>dl>dd>a {
+  position: absolute;
+}
+.task-list {
+  & > ul {
+    & > li {
+      position: relative;
+      line-height: .18rem;
+      padding: 0 .45rem;
+      border-bottom: solid 1px #f5f5f5;
+      &:last-of-type {
+        border-bottom: none;
+      }
+      & > a {
+        padding: .16rem 0;
+        display: block;
+        position: relative;
+        & > b {
+          &.new-coupon {
+            height: .2rem;
+            line-height: .2rem;
+            padding: 0 .1rem;
+            border-radius: .1rem;
+            background-color: #ff7800;
+            color: #fff;
+            font-size: .12rem;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            margin-top: -.1rem;
+          }
+          &.new-order {
+            width: .1rem;
+            height: .1rem;
+            border-radius: 50%;
+            background-color: #ff7800;
+            display: block;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            margin-top: -.05rem;
+          }
+        }
+      }
+      &:before {
+        font-size: .16rem;
+        line-height: 1em;
+        color: #2cbcff;
+        display: block;
+        position: absolute;
+        left: .2rem;
+        top: 50%;
+        margin-top: -.08rem;
+      }
+      &:after {
+        font-size: .14rem;
+        color: #ddd;
+        display: block;
+        position: absolute;
+        right: .175rem;
+        top: 50%;
+        margin-top: -.08rem;
+      }
+    }
+  }
+}
+.task-list>ul>li,.task-list>ul>li>a {
+  color: #222;
+  font-size: .14rem;
+}
+.signout {
+  & > a {
+    line-height: .48rem;
+    font-size: .14rem;
+    text-align: center;
+    display: block;
+  }
+}
 </style>
 <template>
   <layout>
     <layout-header :title="lang.title"></layout-header>
-    <layout-body>
-      <div class="user-info">
-        <dl>
-          <dt>
-            <a>
-              <img src="avatar.jpg">
-            </a>
-          </dt>
-          <dd>
-            <h4 class="t-bold">
-              <a v-if="userNickName" href="/#!ucenter/modifynickname">{{userNickName}}</a>
-              <a v-else href="/#!ucenter/modifynickname">{{lang.setNickname}}</a>
-            </h4>
-            <span>{{lang.myFlowCoin}}<b>{{flowCoin}}</b></span>
-            <a href="/#!ucenter/modifypass" class="iconfont i-arrow-right-aft">{{lang.modifyPassword}}</a>
-          </dd>
-        </dl>
+    <layout-body :style="{paddingButtom: '.5rem'}">
+      <div class="ui-card ui-card-padd ui-card-underline ui-card-mar-btm">
+        <div class="user-info">
+          <dl>
+            <dt>
+              <a>
+                <img :src="userAvatar">
+              </a>
+            </dt>
+            <dd>
+              <h4 class="t-bold">
+                <a v-if="userNickName" href="/#!ucenter/modifynickname">{{userNickName}}</a>
+                <a v-else href="/#!ucenter/modifynickname">{{lang.setNickname}}</a>
+              </h4>
+              <span>{{lang.myFlowCoin}}<b>{{flowCoin}}</b></span>
+              <a href="/#!ucenter/modifypass" class="iconfont i-arrow-right-aft">{{lang.modifyPassword}}</a>
+            </dd>
+          </dl>
+        </div>
       </div>
-      <div class="m-taskList g-segment">
+      <div class="task-list ui-card ui-card-overline ui-card-underline ui-card-mar-btm">
         <ul>
           <li class="coupon iconfont i-coupon-bfo i-arrow-right-aft">
             <a href="/#!ucenter/coupon">{{lang.myCoupon}}<b class="new-coupon" v-if="couponCount">{{couponCount}}</b></a>
@@ -80,9 +183,11 @@
           </li>
         </ul>
       </div>
-      <div class="logout">
-        <a>{{lang.logout}}</a>
+      <div class="signout ui-card ui-card-overline ui-card-underline ui-card-mar-btm">
+        <a v-if="signouting">{{lang.signouting}}</a>
+        <a else @click="signoutAction">{{lang.signout}}</a>
       </div>
+      <div class="clearfix"></div>
     </layout-body>
     <layout-footer></layout-footer>
   </layout>
@@ -107,8 +212,8 @@ const Language = {
     mySim: '我的上网卡',
     myOrder: '我的订单',
     myExpress: '我的收货地址',
-    logout: '退出登录',
-    logouting: '注销中…',
+    signout: '退出登录',
+    signouting: '注销中…',
     logoutSuccess: '登录注销成功，即将跳转到首页'
   },
   'zh-tw': {
@@ -124,8 +229,8 @@ const Language = {
     mySim: '我的上網卡',
     myOrder: '我的訂單',
     myExpress: '我的收貨地址',
-    logout: '退出登錄',
-    logouting: '註銷中…',
+    signout: '退出登錄',
+    signouting: '註銷中…',
     logoutSuccess: '登錄註銷成功，即將跳轉到首頁'
   }
 };
@@ -140,44 +245,68 @@ export default {
   },
   data() {
     return {
-      userAvatar: avatarImg,
+      userAvatar: '',
       userNickName: '',
       flowCoin: 0,
       couponCount: 0,
       orderCount: 0,
+      signouting: false,
       lang: language
     };
   },
   beforeRouteEnter: function(to, from, next) {
     if (USER_AUTH.user_auth === false) {
       next({name: 'passport:signin'});
-      return;
-    };
-
-    Http.fetch('api/get_user_info').then(response => {
-      Http.resolve(response, (error, result) => {
-        if (error) {
-          next(false);
-          throw result;
-        } else {
-          if (result.status === 1) {
-            next(vm => {
-              vm.$set(vm, 'userAvatar', result.data.service_name);
-              vm.$set(vm, 'userNickName', result.data.service_price);
-              vm.$set(vm, 'flowCoin', result.data.flowcoin);
-              vm.$set(vm, 'couponCount', result.data.user_ticket_count);
-              vm.$set(vm, 'orderCount', result.data.order_count);
-            });
-          } else if (result.status === -2) {
-            next({name: 'passport:signin'});
-            throw result.msg;
+    } else {
+      Http.fetch('api/get_user_info').then(response => {
+        Http.resolve(response, (error, result) => {
+          if (error) {
+            next(false);
+            throw result;
           } else {
-            next({path: '/404'});
-            throw result.msg;
+            if (result.status === 1) {
+              next(vm => {
+                vm.$set(vm, 'userAvatar', result.data.user_head_url || avatarImg);
+                vm.$set(vm, 'userNickName', result.data.user_nick);
+                vm.$set(vm, 'flowCoin', result.data.flowcoin);
+                vm.$set(vm, 'couponCount', result.data.user_ticket_count);
+                vm.$set(vm, 'orderCount', result.data.order_count);
+              });
+            } else if (result.status === -2) {
+              next({name: 'passport:signin'});
+              throw result.msg;
+            } else {
+              next({path: '/404'});
+              throw result.msg;
+            };
           };
-        };
+        });
       });
-    });
+    };
+  },
+  methods: {
+    signoutAction: function() {
+      this.signouting = true;
+
+      Http.fetch('api/logout').then(response => {
+        this.signouting = false;
+
+        Http.resolve(response, (error, result) => {
+          if (error) {
+            throw result;
+          } else {
+            if (result.status === 1) {
+              USER_AUTH.user_auth = false;
+              this.$router.replace({
+                name: 'index'
+              });
+            } else {
+              throw result.msg;
+            };
+          };
+        });
+      });
+    }
   }
 };
 </script>

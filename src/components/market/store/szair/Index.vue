@@ -1,19 +1,20 @@
-<style lang="stylus" scoped>
-  .banner-image
-    width 100%
-    display block
-
-  .generic-list
-    border-bottom solid 1px #eaeaea;
+<style lang="sass" scoped>
+.banner-image {
+  width: 100%;
+  display: block;
+}
+.generic-list {
+  border-bottom: solid 1px #eaeaea;
+}
 </style>
 
 <template>
   <layout>
     <layout-header :title="lang.title">
-      <router-link :to="{name: 'user:order'}" slot="head:right" class="link">{{lang.myOrder}}</router-link>
+      <a slot="head:right" class="link" @click="redirectTo">{{lang.myOrder}}</a>
     </layout-header>
     <layout-body>
-      <img src="http://img1.uhuibao.com//M00/08/C3/wKgIFlgQ0tuAPWMcAAC5gV7tYQQ737.jpg" class="banner-image">
+      <img :src="bannerImg" class="banner-image">
       <div class="goods-list">
         <p v-if="curPage > 0 && list.length === 0 && isLoading" class="no-data">{{lang.moreLoading}}</p>
         <p v-if="curPage > 0 && list.length === 0 && !isLoading" class="no-data">{{lang.noData}}</p>
@@ -31,8 +32,9 @@
 import {Layout, LayoutHeader, LayoutBody} from '../../../layout';
 import ListItem from './components/ListItem.vue';
 
-import {Http, LANG_TYPE} from 'config';
+import {Http, LANG_TYPE, CHANNEL_CODE, AREA_CODE} from 'config';
 import Helper from 'helper';
+import bannerImg from 'assets/images/szair/banner.jpg';
 
 const Language = {
   'zh-cn': {
@@ -67,6 +69,7 @@ export default {
       hasNext: false,
       curPage: 0,
       isLoading: false,
+      bannerImg,
       lang: language
     };
   },
@@ -127,6 +130,9 @@ export default {
     loadMoreFn: function(evt) {
       if (this.hasNext === false || this.isLoading === true) return;
       if (Helper.isPageBottom(Helper.rem2px(1))) this.loadMoreData();
+    },
+    redirectTo: function() {
+      window.location.href = '/?channel=' + CHANNEL_CODE.channel_code + '&area=' + AREA_CODE.area_code + '#!ucenter/order';
     }
   }
 };

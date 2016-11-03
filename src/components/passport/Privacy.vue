@@ -1,4 +1,4 @@
-<style>
+<style lang="sass">
   .privacy-article{padding:.2rem;background-color:#fff;}
   .privacy-article>h2{font-size:.16rem;line-height:.4rem;}
   .privacy-article>h3{font-size:.14rem;line-height:.2rem;padding:.05rem 0;}

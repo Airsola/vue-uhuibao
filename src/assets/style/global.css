@@ -76,3 +76,9 @@ p.no-next-data{padding:.2rem 0;}
 .generic-list dl>dd>div.taoflow>span{border:solid 1px #ff7801;border-radius:.02rem;color:#ff7801;display:inline-block;line-height:.195rem;padding:0 .05rem;}
 .generic-list dl>dd>span.publish-time{position:absolute;bottom:0;color:#bfbfbf;font-size:.12rem;line-height:.12rem;}
 .generic-list dl>dd>span.publish-time:before{margin-right:.05rem;}
+
+.html-content{font-size:.14rem;color:#333;line-height:1.8em;word-break:break-word;padding-top:.3rem;user-select:text;}
+.html-content a{text-decoration:underline;color:#2cbcff;}
+.html-content img{max-width:100%;}
+.html-content table{width:100%;border-collapse:collapse;border:solid 1px #f0f0f0;margin:.1rem 0;}
+.html-content table td{border:solid 1px #f0f0f0;padding:.06rem;}

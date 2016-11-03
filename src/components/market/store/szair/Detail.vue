@@ -1,116 +1,120 @@
-<style lang="stylus" scoped>
-  .swiper-slide img
-    display block
-    width 100%
-
-  .goods-info
-    position relative
-
-    h4
-      font-size .16rem
-      line-height .22rem
-      margin-bottom .1rem
-      overflow hidden
-      text-overflow ellipsis
-      display -webkit-box
-      -webkit-line-clamp 2
-      -webkit-box-orient vertical
-
-    span.goods-price
-      color #2cbcff
-      font-size .1rem
-
-      b
-        font-size .17rem;
-
-      s
-        color #999
-        font-size .12rem
-        display inline-block
-        margin-left .05rem
-        :first-letter
-          font-size .1rem
-
-        i
-          text-decoration line-through
-
-    span.clicked
-      font-size .12rem
-      position absolute
-      right 0
-      bottom 0
-      color #999
-
-  .sale-bar
-    position fixed
-    height .49rem
-    left 0
-    bottom 0
-    width 100%
-    background-color #fff
-
-    &:before
-      background-color rgba(0,0,0,.05)
-
-    span
-      border-radius .03rem
-      width .8rem
-      height .24rem
-      border solid 1px #bfbfbf
-      position absolute
-      left .2rem
-      top .12rem
-      overflow hidden
-      font-size .14rem
-      line-height .24rem
-      text-align center
-
-      i
-        width .24rem
-        height .24rem
-        position absolute
-        top 0
-
-        &:first-of-type
-          left 0
-
-        &:last-of-type
-          right 0
-
-        &:before
-          font-size .1rem
-          color #222
-          line-height 1em
-          position absolute
-          left 50%
-          top 50%
-          transition color .2s ease
-          transform translate(-50%, -50%)
-
-      i.disable
-        &:before
-          color #ccc
-
-    b
-      display block
-      border-left solid 1px #bfbfbf
-      border-right solid 1px #bfbfbf
-      margin 0 auto
-      width .32rem
-      height 100%
-
-    a
-      width 1.2rem
-      height 100%
-      position absolute
-      right 0
-      top 0
-      background-color #ff7800
-      color #fff
-      font-size .16rem
-      text-align center
-      line-height .49rem
-      transition background-color .2s ease,color .2s ease
+<style lang="sass" scoped>
+.swiper-slide {
+  img {
+    display: block;
+    width: 100%;
+  }
+}
+.goods-info {
+  position: relative;
+  h4 {
+    font-size: 0.16rem;
+    line-height: 0.22rem;
+    margin-bottom: 0.1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  span {
+    &.goods-price {
+      color: #2cbcff;
+      font-size: 0.1rem;
+      b {
+        font-size: 0.17rem;
+      }
+      s {
+        color: #999;
+        font-size: 0.12rem;
+        display: inline-block;
+        margin-left: 0.05rem;
+        :first-letter {
+          font-size: 0.1rem;
+        }
+        i {
+          text-decoration: line-through;
+        }
+      }
+    }
+    &.clicked {
+      font-size: 0.12rem;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      color: #999;
+    }
+  }
+}
+.sale-bar {
+  position: fixed;
+  height: 0.49rem;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #fff;
+  &:before {
+    background-color: rgba(0,0,0,0.05);
+  }
+  span {
+    border-radius: 0.03rem;
+    width: 0.8rem;
+    height: 0.24rem;
+    border: solid 1px #bfbfbf;
+    position: absolute;
+    left: 0.2rem;
+    top: 0.12rem;
+    overflow: hidden;
+    font-size: 0.14rem;
+    line-height: 0.24rem;
+    text-align: center;
+    i {
+      width: 0.24rem;
+      height: 0.24rem;
+      position: absolute;
+      top: 0;
+      &:first-of-type {
+        left: 0;
+      }
+      &:last-of-type {
+        right: 0;
+      }
+      &:before {
+        font-size: 0.1rem;
+        color: #222;
+        line-height: 1em;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transition: color 0.2s ease;
+        transform: translate(-50%, -50%);
+      }
+      &.disable {
+        &:before {
+          color: #ccc;
+        }
+      }
+    }
+  }
+  b {
+    display: block;
+    border-left: solid 1px #bfbfbf;
+    border-right: solid 1px #bfbfbf;
+    margin: 0 auto;
+    width: 0.32rem;
+    height: 100%;
+  }
+  a {
+    width: 1.2rem;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: #ff7800;
+    color: #fff;
+    font-size: 0.16rem;
+    text-align: center;
+    line-height: 0.49rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+}
 </style>
 
 <template>
@@ -118,7 +122,7 @@
     <layout-header :title="lang.title">
       <router-link :to="{name: 'user:order'}" slot="head:right" class="link">{{lang.myOrder}}</router-link>
     </layout-header>
-    <layout-body>
+    <layout-body :style="{paddingBottom: '.5rem'}">
       <div class="swiper-container" v-if="bannerList.length">
         <div class="swiper-wrapper">
           <div class="swiper-slide" v-for="item in bannerList">
@@ -137,7 +141,7 @@
         </div>
       </div>
       <div class="ui-card ui-card-overline ui-card-underline ui-card-mar-btm">
-        <div class="ui-card-padd" v-html="htmlpx2rem(goodsDesc)"></div>
+        <div class="html-content ui-card-padd" v-html="htmlpx2rem(goodsDesc)"></div>
       </div>
       <div class="clearfix"></div>
       <div class="sale-bar overline">
@@ -266,7 +270,13 @@ export default {
       this.count ++;
     },
     submitOrder(goodsId, count) {
-      console.log(goodsId, count);
+      this.$router.push({
+        name: 'market:store@szair:order',
+        params: {
+          goods_id: goodsId,
+          count
+        }
+      });
     }
   }
 };

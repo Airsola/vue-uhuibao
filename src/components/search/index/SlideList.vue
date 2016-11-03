@@ -1,5 +1,7 @@
-<style scoped>
-  .generic-list{border-bottom:solid 1px #eaeaea;}
+<style lang="sass" scoped>
+.generic-list {
+  border-bottom: solid 1px #eaeaea;
+}
 </style>
 
 <template>
@@ -51,7 +53,7 @@ export default {
       lang: language
     };
   },
-  created: function() {
+  mounted: function() {
     window.document.addEventListener('scroll', this.loadMoreFn);
   },
   beforeDestroy: function() {
