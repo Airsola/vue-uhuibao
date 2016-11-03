@@ -30,6 +30,9 @@
         top: -.03rem;
         overflow: hidden;
         text-overflow: ellipsis;
+        display:-webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
         & > span {
           &:after {
             color: #2ebcff;
@@ -43,6 +46,9 @@
         line-height: .18rem;
         overflow: hidden;
         text-overflow: ellipsis;
+        display:-webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
       }
       & > span {
         position: absolute;

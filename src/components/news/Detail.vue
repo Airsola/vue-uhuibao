@@ -6,6 +6,7 @@
     font-size: .18rem;
     color: #222;
     line-height: .22rem;
+    word-break: break-all;
   }
   & > .author {
     position: absolute;

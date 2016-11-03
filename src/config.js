@@ -16,8 +16,6 @@ NProgress.configure({
   easing: 'ease'
 });
 
-console.log(process);
-
 /* 根据域名设置系统语言 */
 const location = window.location;
 const hostArr = location.host.split('.');

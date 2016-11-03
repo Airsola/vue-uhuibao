@@ -11,6 +11,9 @@
     font-size: .16rem;
     margin-bottom: .06rem;
     text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
   }
   p {
     color: #999;

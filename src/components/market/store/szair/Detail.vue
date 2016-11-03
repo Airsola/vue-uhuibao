@@ -13,6 +13,9 @@
     margin-bottom: 0.1rem;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
   span {
     &.goods-price {

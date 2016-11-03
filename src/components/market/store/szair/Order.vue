@@ -91,6 +91,9 @@
       line-height: 0.22rem;
       overflow: hidden;
       text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
     }
     a {
       padding-left: 0.25rem;
