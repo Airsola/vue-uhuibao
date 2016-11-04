@@ -161,7 +161,7 @@ export default {
     syncTelphone(evt) {
       this.telphone = evt.target.value.replace(/ /g, '');
     },
-    sendMsgAction: function(telphone) {
+    sendMsgAction(telphone) {
       if (this.msgSending) return;
 
       if (!telphone) return this.$message(language.noTypePhoneNumber);
@@ -193,7 +193,7 @@ export default {
         });
       });
     },
-    signUpAction: function(telphone, verifycode) {
+    signUpAction(telphone, verifycode) {
       if (this.codeVerifying) return;
 
       if (!telphone) return this.$message(language.noTypePhoneNumber);

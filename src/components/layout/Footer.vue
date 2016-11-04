@@ -124,7 +124,7 @@ export default {
       current: 0
     };
   },
-  created: function() {
+  created() {
     Http.fetch('common/get_footer_data', CHANNEL_CODE).then(response => {
       Http.resolve(response, (error, result) => {
         if (error) {
@@ -140,11 +140,11 @@ export default {
     });
   },
   watch: {
-    current: function(newVal) {
+    current(newVal) {
       HASH_CLICK[this.uuid] = !!newVal;
     }
   },
-  mounted: function() {
+  mounted() {
     window.document.body.addEventListener('click', (evt) => {
       if (this.current !== 0 && !Helper.isChildNode(evt.target, this.$el)) {
         evt.preventDefault();

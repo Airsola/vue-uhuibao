@@ -53,18 +53,18 @@ export default {
       lang: language
     };
   },
-  mounted: function() {
+  mounted() {
     window.document.addEventListener('scroll', this.loadMoreFn);
   },
-  beforeDestroy: function() {
+  beforeDestroy() {
     window.document.removeEventListener('scroll', this.loadMoreFn);
   },
   methods: {
-    loadMoreFn: function(evt) {
+    loadMoreFn(evt) {
       if (this.data.hasNext === false || this.data.isLoading === true) return;
       if (Helper.isPageBottom(Helper.rem2px(1))) this.fetchData(this.index, this.data.curPage + 1);
     },
-    fetchData: function(flag, page) {
+    fetchData(flag, page) {
       switch (this.active) {
         case 0 :
           if (this.index !== 4) return;

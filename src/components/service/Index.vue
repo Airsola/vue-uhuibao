@@ -62,7 +62,7 @@ export default {
     };
   },
   methods: {
-    slideToggle: function(cateMenu, areaMenu) {
+    slideToggle(cateMenu, areaMenu) {
       this.showCateMenu = cateMenu;
       this.showAreaMenu = areaMenu;
     }

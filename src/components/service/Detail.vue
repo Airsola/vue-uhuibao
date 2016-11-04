@@ -12,6 +12,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
+    display: box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
@@ -160,7 +161,7 @@ export default {
       lang: language
     };
   },
-  beforeRouteEnter: function(to, from, next) {
+  beforeRouteEnter(to, from, next) {
     Http.fetch('service/get_server_detail', {
       service_id: to.params.service_id
     }).then(response => {
@@ -195,7 +196,7 @@ export default {
     });
   },
   watch: {
-    $route: function(to, from) {
+    $route(to, from) {
       Http.fetch('service/get_server_detail', {
         service_id: to.params.service_id
       }).then(response => {
@@ -228,7 +229,7 @@ export default {
     }
   },
   methods: {
-    htmlpx2rem: function(value) {
+    htmlpx2rem(value) {
       return Helper.htmlpx2rem(value);
     }
   }

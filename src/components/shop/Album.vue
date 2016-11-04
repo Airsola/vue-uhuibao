@@ -156,7 +156,7 @@ export default {
     });
   },
   watch: {
-    $route: function(to, from) {
+    $route(to, from) {
       Http.fetch('shop/get_shop_photo', {
         shop_id: to.params.shop_id
       }, CHANNEL_CODE).then(response => {
@@ -186,18 +186,18 @@ export default {
     });
   },
   methods: {
-    openPhoto: function(index) {
+    openPhoto(index) {
       this.swiper.slideTo(index);
       this.show = !this.show;
     },
-    hidePhoto: function() {
+    hidePhoto() {
       this.show = !this.show;
     },
-    imgResize: function(evt, index) {
+    imgResize(evt, index) {
       this.photoList[index].scale = evt.target.height >= evt.target.width ? 'portrait' : 'landscape';
     }
   },
-  beforeDestroy: function() {
+  beforeDestroy() {
     this.swiper.destroy();
   }
 };

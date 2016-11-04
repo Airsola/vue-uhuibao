@@ -1,20 +1,11 @@
+import 'assets/style/nprogress.css';
 import $ from 'jquery';
 import _ from 'lodash';
 import Helper from 'helper';
 import JssdkHelper from 'jssdk-helper';
 import fastclick from 'fastclick';
-import shareLogo from 'assets/images/share_logo.jpg';
 import 'whatwg-fetch';
-
-import 'assets/style/nprogress.css';
 import NProgress from 'nprogress';
-
-NProgress.configure({
-  showSpinner: false,
-  trickleRate: 0.1,
-  trickleSpeed: 300,
-  easing: 'ease'
-});
 
 /* 根据域名设置系统语言 */
 const location = window.location;
@@ -23,7 +14,6 @@ const hostName = hostArr.length === 4 ? location.host : hostArr[0];
 const hostDomain = location.host.slice(hostName.length + 1);
 
 /* 系统常量 */
-const HOME_URL = location.href.split('#')[0];
 const API_PATH = '/res/';
 const LANG_TYPE = hostName.slice(0, 2) === 'tw' ? 'zh-tw' : 'zh-cn';
 const CHANNEL_CODE = {
@@ -43,7 +33,23 @@ const CSRF_TOKEN = {};
 // 根据CSRF Meta得到CSRF密钥
 if (location.hostname !== 'localhost' && document.querySelector('meta[name="csrf-param"]') !== null) CSRF_TOKEN[document.querySelector('meta[name="csrf-param"]').content] = document.querySelector('meta[name="csrf-token"]').content;
 
-export {LANG_TYPE, CHANNEL_CODE, CHANNEL_NAME, AREA_CODE, USER_AUTH};
+export {LANG_TYPE, CSRF_TOKEN, CHANNEL_CODE, CHANNEL_NAME, AREA_CODE, USER_AUTH};
+
+// 记录语言cookie
+Helper.setCookie('h5_uhb_language', LANG_TYPE, 365, {
+  domain: hostDomain,
+  path: '/'
+});
+
+// 自动处理REM单位
+Helper.autoRootEM(375);
+
+NProgress.configure({
+  showSpinner: false,
+  trickleRate: 0.1,
+  trickleSpeed: 300,
+  easing: 'ease'
+});
 
 const fetchSettings = {
   method: 'POST',
@@ -80,11 +86,10 @@ const Http = {
   }
 };
 
-export {Http, $, _, Helper};
-
+import shareLogo from 'assets/images/share_logo.jpg';
 const WechatAPI = new JssdkHelper(API_PATH + 'api/wechat_config', _.assign({
   body: formDataSource({
-    url: encodeURIComponent(HOME_URL)
+    url: encodeURIComponent(location.href.split('#')[0])
   })
 }, fetchSettings), {
   title: '游惠宝',
@@ -103,17 +108,6 @@ const WechatAPI = new JssdkHelper(API_PATH + 'api/wechat_config', _.assign({
 }, {
   api: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'showOptionMenu', 'hideOptionMenu', 'hideMenuItems', 'showMenuItems', 'hideAllNonBaseMenuItem', 'showAllNonBaseMenuItem', 'scanQRCode'],
   showItem: ['menuItem:share:appMessage', 'menuItem:share:timeline', 'menuItem:share:qq', 'menuItem:share:QZone', 'menuItem:favorite', 'menuItem:openWithSafari', 'menuItem:copyUrl']
-});
-
-export {WechatAPI};
-
-// 自动处理REM单位
-Helper.autoRootEM(375);
-
-// 记录语言cookie
-Helper.setCookie('h5_uhb_language', LANG_TYPE, 365, {
-  domain: hostDomain,
-  path: '/'
 });
 
 const HASH_CLICK = {};
@@ -156,4 +150,4 @@ $(document.body).on('click', 'a[href^="#!"]', function(evt) {
 
 fastclick.attach(document.body);
 
-export {HASH_CLICK};
+export {Http, WechatAPI, HASH_CLICK};

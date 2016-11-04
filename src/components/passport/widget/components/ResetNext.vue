@@ -167,7 +167,7 @@ export default {
     };
   },
   methods: {
-    resetPassword: function() {
+    resetPassword() {
       if (this.submiting) return;
 
       if (!this.password) return this.$message(language.noTypePassword);
@@ -202,7 +202,7 @@ export default {
       });
     }
   },
-  beforeDestroy: function() {
+  beforeDestroy() {
     window.clearInterval(this.timer);
   }
 };

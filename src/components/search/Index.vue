@@ -168,7 +168,7 @@ export default {
     };
   },
   watch: {
-    $route: function(to, from) {
+    $route(to, from) {
       if (to.params.keyword) {
         this.keyword = this.lastKeyword = to.params.keyword;
 
@@ -215,7 +215,7 @@ export default {
       };
     }
   },
-  mounted: function() {
+  mounted() {
     this.createSwiper();
   },
   methods: {
@@ -230,7 +230,7 @@ export default {
         }
       });
     },
-    createSwiper: function() {
+    createSwiper() {
       this.swiper = new Swiper(this.$refs['swiper'], {
         autoHeight: true,
         observer: true,
@@ -239,10 +239,10 @@ export default {
         }
       });
     },
-    slideTo: function(index) {
+    slideTo(index) {
       this.swiper.slideTo(index);
     },
-    swiperUpdate: function() {
+    swiperUpdate() {
       this.swiper.update();
     }
   }

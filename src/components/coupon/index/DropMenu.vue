@@ -173,7 +173,7 @@ export default {
       lang: language
     };
   },
-  created: function() {
+  created() {
     Http.fetch('coupon/get_cate', CHANNEL_CODE, AREA_CODE).then(response => {
       Http.resolve(response, (error, result) => {
         if (error) {
@@ -225,14 +225,14 @@ export default {
       });
     });
   },
-  mounted: function() {
+  mounted() {
     this.createSwiper();
   },
-  beforeDestroy: function() {
+  beforeDestroy() {
     this.destroySwiper();
   },
   methods: {
-    fliterShop: function(shopName, shopId) {
+    fliterShop(shopName, shopId) {
       // 隐藏下拉菜单
       this.slideToggle(!this.showCateMenu, false);
 
@@ -245,7 +245,7 @@ export default {
 
       this.updateRoute('coupon@filter:subcategory');
     },
-    updateTempCate: function(index, cateName, cateId) {
+    updateTempCate(index, cateName, cateId) {
       // 更新分类数据
       this.tempCateName = cateName;
       this.tempCateId = cateId;
@@ -253,7 +253,7 @@ export default {
       // 更新子分类信息
       this.curSubCate = this.category[index].shop_list;
     },
-    updateRoute: function(routeName) {
+    updateRoute(routeName) {
       // 更改路由
       this.$router.replace({
         name: routeName,
@@ -263,7 +263,7 @@ export default {
         }
       });
     },
-    createSwiper: function() {
+    createSwiper() {
       const categorySwiper = this.$el.querySelector('.category-swiper');
       const shopSwiper = this.$el.querySelector('.shop-swiper');
 
@@ -281,7 +281,7 @@ export default {
         slidesPerView: 'auto'
       });
     },
-    destroySwiper: function() {
+    destroySwiper() {
       this.categorySwiper.destroy();
       this.shopSwiper.destroy();
     }

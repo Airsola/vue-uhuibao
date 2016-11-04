@@ -12,6 +12,7 @@
     margin-bottom: .06rem;
     text-overflow: ellipsis;
     display: -webkit-box;
+    display: box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
   }
@@ -43,7 +44,10 @@
 }
 </style>
 <style lang="sass">
-.anchorBL,.BMap_cpyCtrl,.pano_pc_indoor_exit,.pano_close {
+.anchorBL,
+.BMap_cpyCtrl,
+.pano_pc_indoor_exit,
+.pano_close {
   display: none !important;
 }
 .map-marker {
@@ -85,7 +89,7 @@
 </style>
 <template>
   <layout>
-    <layout-header :title="shopName" :search="false"></layout-header>
+    <layout-header :title="lang.title" :search="false"></layout-header>
     <layout-body>
       <div id="map-container" class="location-map"></div>
       <div class="location-bar ui-card-overline">
@@ -153,6 +157,8 @@ export default {
     return {
       storeName: '',
       storeAddress: '',
+      longitude: '',
+      latitude: '',
       lang: language
     };
   },
@@ -170,9 +176,11 @@ export default {
             next(vm => {
               vm.$set(vm, 'storeName', result.data.name);
               vm.$set(vm, 'storeAddress', result.data.detail_area);
+              vm.$set(vm, 'longitude', result.data.longitude);
+              vm.$set(vm, 'latitude', result.data.latitude);
 
               const map = new BMap.Map('map-container');
-              const point = new BMap.Point(result.data.longitude, result.data.latitude);
+              const point = new BMap.Point(vm.longitude, vm.latitude);
 
               map.centerAndZoom(point, 20);
               map.addOverlay(new CustomOverlay(map, point));
@@ -186,7 +194,7 @@ export default {
     });
   },
   watch: {
-    $route: function(to, from) {
+    $route(to, from) {
       Http.fetch('shop/get_location_info', {
         shop_id: to.params.shop_id,
         store_id: to.params.store_id

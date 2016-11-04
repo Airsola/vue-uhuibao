@@ -92,6 +92,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
+      display: box;
       -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
     }
@@ -325,7 +326,7 @@ export default {
     });
   },
   watch: {
-    $route: function(to, from) {
+    $route(to, from) {
       Http.fetch('goods/detail', {
         goods_id: to.params.goods_id
       }).then(response => {
@@ -355,7 +356,7 @@ export default {
     syncTelphone(evt) {
       this.telphone = evt.target.value.replace(/ /g, '');
     },
-    sendMsgAction: function(telphone) {
+    sendMsgAction(telphone) {
       if (this.msgSending) return;
 
       if (!telphone) return this.$message(language.noTypePhoneNumber);
@@ -387,7 +388,7 @@ export default {
         });
       });
     },
-    submitOrder: function(goodsId, goodsCount, username, telphone, verifycode) {
+    submitOrder(goodsId, goodsCount, username, telphone, verifycode) {
       if (this.codeVerifying) return;
 
       if (!username) return this.$message(language.noTypeUserName);

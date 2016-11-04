@@ -39,7 +39,7 @@ export default {
       lang: language
     };
   },
-  beforeRouteEnter: function(to, from, next) {
+  beforeRouteEnter(to, from, next) {
     Http.fetch('api/get_registration_agreement').then(response => {
       Http.resolve(response, (error, result) => {
         if (error) {

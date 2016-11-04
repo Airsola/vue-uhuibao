@@ -2,7 +2,7 @@
   <layout>
     <layout-header :title="lang.title" :search="false"></layout-header>
     <layout-body>
-      <sign-in></sign-in>
+      <sign-in :url="url"></sign-in>
     </layout-body>
   </layout>
 </template>
@@ -35,7 +35,7 @@ export default {
       lang: language
     };
   },
-  beforeRouteEnter: function(to, from, next) {
+  beforeRouteEnter(to, from, next) {
     if (USER_AUTH.user_auth === false) {
       next();
     } else {

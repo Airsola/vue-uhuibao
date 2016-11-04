@@ -57,22 +57,22 @@ export default {
     };
   },
   watch: {
-    $route: function(to, from) {
+    $route(to, from) {
       this.list.splice(0, this.list.length);
       this.fetchData(this.getUrlParams(1));
     }
   },
-  created: function() {
+  created() {
     this.fetchData(this.getUrlParams(1));
   },
   mounted() {
     window.document.addEventListener('scroll', this.loadMoreFn);
   },
-  beforeDestroy: function() {
+  beforeDestroy() {
     window.document.removeEventListener('scroll', this.loadMoreFn);
   },
   methods: {
-    fetchData: function(params) {
+    fetchData(params) {
       this.isLoading = true;
 
       Http.fetch('service/list', params, CHANNEL_CODE).then(response => {
@@ -93,10 +93,10 @@ export default {
         });
       });
     },
-    cutString: function(string, length) {
+    cutString(string, length) {
       return string.length <= length ? string : string.slice(0, length) + '…';
     },
-    getUrlParams: function(pageNumber) {
+    getUrlParams(pageNumber) {
       const params = this.$route.params;
 
       return {
@@ -106,11 +106,11 @@ export default {
         page: pageNumber || this.curPage + 1
       };
     },
-    loadMoreFn: function(evt) {
+    loadMoreFn(evt) {
       if (this.hasNext === false || this.isLoading === true) return;
       if (Helper.isPageBottom(Helper.rem2px(1))) this.loadMoreData();
     },
-    loadMoreData: function() {
+    loadMoreData() {
       this.fetchData(this.getUrlParams(0));
     }
   }

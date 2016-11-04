@@ -75,7 +75,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     Http.fetch('goods/list', {
-      category_id: 29
+      category_id: 'szair'
     }).then(response => {
       Http.resolve(response, (error, result) => {
         if (error) {
@@ -107,7 +107,7 @@ export default {
       this.isLoading = true;
 
       Http.fetch('goods/list', {
-        category_id: 29
+        category_id: 'szair'
       }).then(response => {
         // 加载结束
         this.isLoading = false;
@@ -127,11 +127,11 @@ export default {
         });
       });
     },
-    loadMoreFn: function(evt) {
+    loadMoreFn(evt) {
       if (this.hasNext === false || this.isLoading === true) return;
       if (Helper.isPageBottom(Helper.rem2px(1))) this.loadMoreData();
     },
-    redirectTo: function() {
+    redirectTo() {
       window.location.href = '/?channel=' + CHANNEL_CODE.channel_code + '&area=' + AREA_CODE.area_code + '#!ucenter/order';
     }
   }

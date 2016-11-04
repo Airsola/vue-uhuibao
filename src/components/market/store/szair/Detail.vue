@@ -14,6 +14,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
+    display: box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
@@ -235,7 +236,7 @@ export default {
     });
   },
   watch: {
-    $route: function(to, from) {
+    $route(to, from) {
       Http.fetch('goods/detail', {
         goods_id: to.params.goods_id
       }).then(response => {
@@ -261,7 +262,7 @@ export default {
     }
   },
   methods: {
-    htmlpx2rem: function(html) {
+    htmlpx2rem(html) {
       return Helper.htmlpx2rem(html);
     },
     countLess() {

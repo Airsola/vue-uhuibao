@@ -131,6 +131,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
+      display: box;
       -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
     }
@@ -169,11 +170,11 @@ export default {
       langType: LANG_TYPE
     };
   },
-  beforeDestroy: function() {
+  beforeDestroy() {
     if (this.show) this.swiper.destroy();
   },
   watch: {
-    show: function(value) {
+    show(value) {
       this.$nextTick(() => {
         this.swiper = new Swiper(this.$refs['news-topic'], {
           direction: 'vertical',

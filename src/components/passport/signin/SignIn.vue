@@ -77,12 +77,12 @@
       </li>
     </ul>
     <div class="form-link">
-      <router-link :to="{name: 'passport:forgot'}">{{lang.forgotPassword}}</router-link>
+      <router-link :to="{name: 'passport:forgot', query: {url: url}}">{{lang.forgotPassword}}</router-link>
     </div>
     <div class="form-submit clearfix">
       <a v-if="submiting" class="disabled">{{lang.signIng}}</a>
       <a v-else @click="loginAction(telphone, password, url)" class="important">{{lang.signIn}}</a>
-      <router-link :to="{name: 'passport:signup'}" class="submit-btn">{{lang.signUp}}</router-link>
+      <router-link :to="{name: 'passport:signup', query: {url: url}}" class="submit-btn">{{lang.signUp}}</router-link>
     </div>
   </div>
 </template>
@@ -172,7 +172,8 @@ export default {
 
               // 如果有来源地址，则返回来源地址，否则则回到用户中心页面！
               if (url) {
-                window.location.href = url;
+                window.history.replaceState(null, null, url);
+                window.location.reload();
               } else {
                 this.$router.replace({
                   name: 'ucenter'

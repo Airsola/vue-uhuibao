@@ -64,7 +64,7 @@ const language = Language[LANG_TYPE];
 export default {
   props: ['serviceId', 'serviceName', 'serviceLogo', 'discountTag', 'serviceType', 'serviceLink', 'discountPrice', 'servicePrice', 'serviceUv', 'tags', 'shopId', 'shopName', 'shopAuth', 'productName'],
   methods: {
-    redirectTo: function(type, url, serviceId, shopId) {
+    redirectTo(type, url, serviceId, shopId) {
       if (type === 1) {
         this.$router.push({
           name: 'service:detail',

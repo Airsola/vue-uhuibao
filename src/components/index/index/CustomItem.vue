@@ -176,7 +176,7 @@ export default {
      * 换一换刷新数据
      * data *[Object] 该组数据对象
      */
-    refreshData: function(data) {
+    refreshData(data) {
       // 变更了数据加载中
       data.loading = true;
 

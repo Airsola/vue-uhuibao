@@ -17,6 +17,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
+      display: box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       & > i {
@@ -327,7 +328,7 @@ export default {
     });
   },
   watch: {
-    $route: function(to, from) {
+    $route(to, from) {
       Http.fetch('shop/get_shop_index', {
         shop_id: to.params.shop_id
       }, CHANNEL_CODE).then(response => {
@@ -372,11 +373,11 @@ export default {
     }
   },
   methods: {
-    slideToggle: function(cateMenu, areaMenu) {
+    slideToggle(cateMenu, areaMenu) {
       this.showCateMenu = cateMenu;
       this.showAreaMenu = areaMenu;
     },
-    imgResize: function(evt, index) {
+    imgResize(evt, index) {
       this.photoList[index].scale = evt.target.height >= evt.target.width ? 'portrait' : 'landscape';
     }
   }

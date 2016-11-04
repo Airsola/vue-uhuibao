@@ -135,7 +135,7 @@
 <template>
   <layout>
     <layout-header :title="lang.title"></layout-header>
-    <layout-body :style="{paddingButtom: '.5rem'}">
+    <layout-body :style="{paddingBottom: '.5rem'}">
       <div class="ui-card ui-card-padd ui-card-underline ui-card-mar-btm">
         <div class="user-info">
           <dl>
@@ -254,7 +254,7 @@ export default {
       lang: language
     };
   },
-  beforeRouteEnter: function(to, from, next) {
+  beforeRouteEnter(to, from, next) {
     if (USER_AUTH.user_auth === false) {
       next({name: 'passport:signin'});
     } else {
@@ -285,7 +285,7 @@ export default {
     };
   },
   methods: {
-    signoutAction: function() {
+    signoutAction() {
       this.signouting = true;
 
       Http.fetch('api/logout').then(response => {

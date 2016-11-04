@@ -171,7 +171,7 @@ export default {
     };
   },
   methods: {
-    setPasswordAction: function(password, repassword) {
+    setPasswordAction(password, repassword) {
       if (this.submiting) return;
 
       if (!password) return this.$message(language.noTypePassword);

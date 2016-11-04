@@ -202,7 +202,7 @@ export default {
       lang: language
     };
   },
-  beforeRouteEnter: function(to, from, next) {
+  beforeRouteEnter(to, from, next) {
     Http.fetch('news/get_news_detail', {
       news_id: to.params.news_id
     }).then(response => {
@@ -237,7 +237,7 @@ export default {
     });
   },
   watch: {
-    $route: function(to, from) {
+    $route(to, from) {
       Http.fetch('news/get_news_detail', {
         news_id: to.params.news_id
       }).then(response => {
@@ -270,10 +270,10 @@ export default {
     }
   },
   methods: {
-    htmlpx2rem: function(value) {
+    htmlpx2rem(value) {
       return Helper.htmlpx2rem(value);
     },
-    getShareParams: function(params) {
+    getShareParams(params) {
       const url = window.location.href;
       const title = this.newsTitle;
       const config = {url, title, ...params};
@@ -285,13 +285,13 @@ export default {
 
       return data.join('&');
     },
-    QQShare: function() {
+    QQShare() {
       window.location.href = 'http://connect.qq.com/widget/shareqq/index.html?' + this.getShareParams({pics: this.newsLogo});
     },
-    WeiboShare: function() {
+    WeiboShare() {
       window.location.href = 'http://v.t.sina.com.cn/share/share.php?' + this.getShareParams({appkey: 433903842});
     },
-    collectNews: function(status) {
+    collectNews(status) {
       this.collectStatus = status;
 
       if (USER_AUTH.user_auth === false) {

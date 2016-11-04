@@ -228,15 +228,15 @@ export default {
     };
   },
   watch: {
-    telphone: function(newVal) {
+    telphone(newVal) {
       this.formated = Helper.formatStr(newVal, newVal.slice(0, 2) === '09' ? 'xx;xxxx;xxxx' : 'xxx;xxxx;xxxx');
     }
   },
   methods: {
-    syncTelphone: function(evt) {
+    syncTelphone(evt) {
       this.telphone = evt.target.value.replace(/ /g, '');
     },
-    sendMsgAction: function() {
+    sendMsgAction() {
       if (this.msgSending) return;
 
       if (!this.telphone) return this.$message(language.noTypePhoneNumber);
@@ -269,7 +269,7 @@ export default {
         });
       });
     },
-    signUpAction: function() {
+    signUpAction() {
       if (this.codeVerifying) return;
 
       if (!this.telphone) return this.$message(language.noTypePhoneNumber);
@@ -301,7 +301,7 @@ export default {
       });
     }
   },
-  beforeDestroy: function() {
+  beforeDestroy() {
     window.clearInterval(this.timer);
   }
 };

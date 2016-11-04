@@ -107,7 +107,7 @@ export default {
       visible: false
     };
   },
-  created: function() {
+  created() {
     Http.fetch('common/get_area_list').then(response => {
       Http.resolve(response, (error, result) => {
         if (error) {
@@ -134,12 +134,12 @@ export default {
     window.document.body.removeEventListener('click', this.close);
   },
   watch: {
-    visible: function(newVal) {
+    visible(newVal) {
       HASH_CLICK[this.uuid] = newVal;
     }
   },
   methods: {
-    changeArea: function(areaCode, areaName) {
+    changeArea(areaCode, areaName) {
       this.visible = false;
 
       // 如果城市没有变化，则退出
@@ -165,13 +165,13 @@ export default {
         });
       });
     },
-    updateAreaCode: function(areaCode, areaName) {
+    updateAreaCode(areaCode, areaName) {
       this.areaCode = areaCode;
       this.areaName = areaName;
 
       AREA_CODE.area_code = areaCode;
     },
-    close: function(evt) {
+    close(evt) {
       if (!Helper.isChildNode(evt.target, this.$el) && this.visible) {
         evt.preventDefault();
         this.visible = false;

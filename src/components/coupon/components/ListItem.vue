@@ -59,7 +59,7 @@ export default {
     };
   },
   methods: {
-    redirectTo: function(couponId) {
+    redirectTo(couponId) {
       window.location.href = '/?channel=' + CHANNEL_CODE.channel_code + '&area=' + AREA_CODE.area_code + '#!coupon?id=' + couponId;
     }
   }

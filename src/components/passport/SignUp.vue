@@ -40,7 +40,7 @@ export default {
       lang: language
     };
   },
-  beforeRouteEnter: function(to, from, next) {
+  beforeRouteEnter(to, from, next) {
     if (USER_AUTH.user_auth === false) {
       next();
     } else {

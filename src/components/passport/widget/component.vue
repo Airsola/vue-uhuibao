@@ -52,7 +52,7 @@ export default {
     };
   },
   watch: {
-    closed: function(newVal) {
+    closed(newVal) {
       if (newVal === true) {
         this.visible = false;
         if (typeof this.onHide === 'function') this.onHide(this);
@@ -64,13 +64,13 @@ export default {
     }
   },
   methods: {
-    swipeTo: function(index) {
+    swipeTo(index) {
       this.active = index;
     },
-    close: function() {
+    close() {
       this.closed = true;
     },
-    signInSuccess: function() {
+    signInSuccess() {
       if (typeof this.onSginIn === 'function') this.onSginIn(this);
       this.close();
     }

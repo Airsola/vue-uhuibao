@@ -61,7 +61,7 @@ export default {
     };
   },
   methods: {
-    redirectTo: function(taskId) {
+    redirectTo(taskId) {
       window.location.href = '/?channel=' + CHANNEL_CODE.channel_code + '&area=' + AREA_CODE.area_code + '#!taoflow/task?id=' + taskId;
     }
   }

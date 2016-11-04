@@ -26,13 +26,13 @@ export default {
     UnicomBar
   },
   computed: {
-    topbar: function() {
+    topbar() {
       return !!unicom17wo;
     },
-    jsessionid: function() {
+    jsessionid() {
       if (unicom17wo) return unicom17wo.jsessionid;
     },
-    mobile: function() {
+    mobile() {
       if (unicom17wo) return unicom17wo.mobile;
     }
   },
@@ -42,28 +42,28 @@ export default {
     };
   },
   methods: {
-    blurIn: function() {
+    blurIn() {
       this.blur = true;
     },
-    blurOut: function() {
+    blurOut() {
       this.blur = false;
     },
-    blurToggle: function() {
+    blurToggle() {
       this.blur = !this.blur;
     }
   },
-  mounted: function() {
-    this.$root.$on('blur:in', function() {
+  mounted() {
+    this.$root.$on('blur:in', () => {
       this.blurIn();
-    }.bind(this));
+    });
 
-    this.$root.$on('blur:out', function() {
+    this.$root.$on('blur:out', () => {
       this.blurOut();
-    }.bind(this));
+    });
 
-    this.$root.$on('blur:toggle', function() {
+    this.$root.$on('blur:toggle', () => {
       this.blurToggle();
-    }.bind(this));
+    });
   }
 };
 </script>

@@ -49,7 +49,7 @@ export default {
     ListItem
   },
   computed: {
-    shopId: function() {
+    shopId() {
       return this.$route.params.shop_id;
     }
   },
@@ -81,7 +81,7 @@ export default {
     });
   },
   watch: {
-    $route: function(to, from) {
+    $route(to, from) {
       Http.fetch('shop/get_store_list', {
         shop_id: to.params.shop_id
       }).then(response => {

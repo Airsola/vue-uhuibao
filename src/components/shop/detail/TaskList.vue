@@ -62,7 +62,7 @@ export default {
     };
   },
   watch: {
-    list: function() {
+    list() {
       this.showList.splice(0, this.showList.length);
       this.hideList.splice(0, this.hideList.length);
 
@@ -76,7 +76,7 @@ export default {
     }
   },
   methods: {
-    showMore: function() {
+    showMore() {
       this.$set(this, 'showList', this.showList.concat(this.hideList));
       this.hideList.splice(0, this.hideList.length);
     }

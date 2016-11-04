@@ -69,11 +69,11 @@ export default {
     });
   },
   methods: {
-    update: function() {
+    update() {
       this.swiper.update(true);
     }
   },
-  beforeDestroy: function() {
+  beforeDestroy() {
     this.swiper.destroy();
   }
 };

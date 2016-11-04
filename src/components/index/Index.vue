@@ -43,7 +43,7 @@ export default {
       title: CHANNEL_NAME.channel_name
     };
   },
-  beforeRouteEnter: function(to, from, next) {
+  beforeRouteEnter(to, from, next) {
     Http.fetch('main/get_data', CHANNEL_CODE, AREA_CODE).then(response => {
       Http.resolve(response, (error, result) => {
         if (error) {

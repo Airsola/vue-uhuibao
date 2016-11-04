@@ -220,12 +220,12 @@ export default {
     };
   },
   watch: {
-    telphone: function(newVal) {
+    telphone(newVal) {
       this.formated = Helper.formatStr(newVal, newVal.slice(0, 2) === '09' ? 'xx;xxxx;xxxx' : 'xxx;xxxx;xxxx');
     }
   },
   methods: {
-    loginAction: function() {
+    loginAction() {
       if (this.submiting) return;
 
       if (!this.telphone) return this.$message(language.noTypePhoneNumber);
@@ -256,7 +256,7 @@ export default {
         });
       });
     },
-    syncTelphone: function(evt) {
+    syncTelphone(evt) {
       this.telphone = evt.target.value.replace(/ /g, '');
     }
   }

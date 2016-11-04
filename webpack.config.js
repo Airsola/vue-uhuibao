@@ -3,8 +3,8 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: {
-    app: './src/main.js',
-    vendor: ['es6-promise/auto', 'lodash', 'jquery', 'swiper', 'helper', 'whatwg-fetch']
+    app: ['./src/main.js', './src/components/layout'],
+    vendor: ['es6-promise/auto', 'lodash', 'jquery', 'swiper', 'helper', 'whatwg-fetch', 'config']
   },
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -61,8 +61,8 @@ module.exports = {
   devtool: '#eval-source-map',
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: 'vendor.bundle.js'
+      name: ['vendor'],
+      filename: '[name].bundle.js'
     }),
     new webpack.LoaderOptionsPlugin({
       vue: {
