@@ -1,17 +1,36 @@
 <style lang="sass" scoped>
-.passport-popup {
+.ui-popup {
   position: fixed;
   left: 0;
   width: 100%;
   background-color: rgba(0, 0, 0, .6);
 }
-.passport-popup-animate {
+.ui-popup-animate {
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
+  & > p {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border-radius: .03rem;
+    box-shadow: 0 .01rem .03rem rgba(0,0,0,.2);
+    overflow: hidden;
+    font-size: .14rem;
+    color: #333;
+    padding: .12rem;
+    white-space: nowrap;
+    word-break: break-all;
+    max-width: 90%;
+    line-height: .24rem;
+    text-align: center;
+  }
 }
+
 .fade-enter-active{
   animation: fadeIn .4s ease;
 }
@@ -60,14 +79,10 @@
 
 <template>
   <transition name="fade">
-    <div class="passport-popup ui-content-size ui-content-fixed ui-content-fixed" v-show="visible" @animationend="destroy($event)">
+    <div class="ui-popup ui-content-size ui-content-fixed ui-content-fixed" v-show="visible" @animationend="destroy($event)">
       <transition name="zoom">
-        <div class="passport-popup-animate" v-show="visible">
-          <sign-in v-if="active === 0" :swipeTo="swipeTo" :close="close"></sign-in>
-          <sign-up v-if="active === 1" :swipeTo="swipeTo" :close="close"></sign-up>
-          <sign-up-next v-if="active === 2" :swipeTo="swipeTo"></sign-up-next>
-          <reset v-if="active === 3" :swipeTo="swipeTo" :close="close"></reset>
-          <reset-next v-if="active === 4" :swipeTo="swipeTo"></reset-next>
+        <div class="ui-popup-animate" v-show="visible">
+          <p>{{message}}</p>
         </div>
       </transition>
     </div>
@@ -75,24 +90,13 @@
 </template>
 
 <script>
-import SignIn from './components/SignIn.vue';
-import SignUp from './components/SignUp.vue';
-import SignUpNext from './components/SignUpNext.vue';
-import Reset from './components/Reset.vue';
-import ResetNext from './components/ResetNext.vue';
-
 export default {
-  components: {
-    SignIn,
-    SignUp,
-    SignUpNext,
-    Reset,
-    ResetNext
-  },
   data() {
     return {
+      message: '',
       visible: false,
-      active: 0,
+      timeout: 3000,
+      timer: null,
       closed: false
     };
   },
@@ -105,23 +109,26 @@ export default {
     }
   },
   methods: {
-    swipeTo(index) {
-      this.active = index;
-    },
-    close(error) {
-      this.closed = true;
-      if (error) {
-        if (typeof this.onForgone === 'function') this.onForgone(this);
-      } else {
-        if (typeof this.onSuccess === 'function') this.onSuccess(this);
-      };
-    },
     destroy(evt) {
       if (this.closed && evt.target === this.$el) {
         this.$el.parentNode.removeChild(this.$el);
         this.$destroy(true);
       };
+    },
+    clearTimer() {
+      clearTimeout(this.timer);
+    },
+    startTimer() {
+      if (this.timeout > 0) {
+        this.timer = setTimeout(() => {
+          this.closed = !this.closed;
+        }, this.timeout);
+      }
     }
+  },
+  mounted() {
+    if (typeof this.onShow === 'function') this.onShow();
+    this.startTimer();
   }
 };
 </script>

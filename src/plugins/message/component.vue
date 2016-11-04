@@ -18,7 +18,7 @@
 </style>
 <template>
   <transition name="scale">
-    <div v-if="visible" :class="['ui-message']">
+    <div v-if="visible" :class="['ui-message']" @animationend="destroy">
       <p class="ui-message-desc">
         {{message}}
       </p>
@@ -30,11 +30,11 @@
 export default {
   data() {
     return {
+      message: '',
       visible: false,
       timeout: 3000,
       timer: null,
-      closed: false,
-      message: ''
+      closed: false
     };
   },
   watch: {
@@ -42,10 +42,6 @@ export default {
       if (newVal) {
         this.visible = false;
         if (typeof this.onHide === 'function') this.onHide(this);
-        this.$el.addEventListener('webkitAnimationEnd', () => {
-          this.$destroy(true);
-          this.$el.parentNode.removeChild(this.$el);
-        });
       };
     }
   },
@@ -59,6 +55,12 @@ export default {
           this.closed = !this.closed;
         }, this.timeout);
       }
+    },
+    destroy() {
+      if (this.closed) {
+        this.$el.parentNode.removeChild(this.$el);
+        this.$destroy(true);
+      };
     }
   },
   mounted() {

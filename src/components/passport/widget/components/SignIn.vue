@@ -128,13 +128,12 @@
     }
   }
 }
-
 </style>
 
 <template>
   <transition name="slide-up">
     <div class="popup-animate">
-      <a class="iconfont i-close-bfo" @click="close"></a>
+      <a class="iconfont i-close-bfo" @click="close(true)"></a>
       <div class="from-wrap">
         <div class="form-box">
           <h5 class="form-title">{{lang.title}}</h5>
@@ -156,7 +155,7 @@
           <div class="form-submit clearfix">
             <span>
               <a v-if="submiting" class="disabled">{{lang.signIng}}</a>
-              <a v-else @click="loginAction" class="important">{{lang.signIn}}</a>
+              <a v-else @click="loginAction(telphone, password)" class="important">{{lang.signIn}}</a>
             </span>
             <span>
               <a @click="swipeTo(1)">{{lang.signUp}}</a>
@@ -209,7 +208,7 @@ const isTWPhone = function(string) {
 };
 
 export default {
-  props: ['swipeTo', 'signInSuccess', 'close'],
+  props: ['swipeTo', 'close'],
   data() {
     return {
       lang: language,
@@ -225,19 +224,19 @@ export default {
     }
   },
   methods: {
-    loginAction() {
+    loginAction(telphone, password) {
       if (this.submiting) return;
 
-      if (!this.telphone) return this.$message(language.noTypePhoneNumber);
-      if (!Helper.is('cell', this.telphone) && !isTWPhone(this.telphone)) return this.$message(language.phoneNumberError);
-      if (!this.password) return this.$message(language.noTypePassword);
-      if (this.password.length < 6 || this.password.length > 16) return this.$message(language.passwordLengthError);
+      if (!telphone) return this.$message(language.noTypePhoneNumber);
+      if (!Helper.is('cell', telphone) && !isTWPhone(telphone)) return this.$message(language.phoneNumberError);
+      if (!password) return this.$message(language.noTypePassword);
+      if (password.length < 6 || password.length > 16) return this.$message(language.passwordLengthError);
 
       this.submiting = true;
 
       Http.fetch('api/check_login', {
-        mobile: this.telphone,
-        password: this.password
+        mobile: telphone,
+        password: password
       }).then(response => {
         this.submiting = false;
 
@@ -247,7 +246,7 @@ export default {
           } else {
             if (result.status === 1) {
               USER_AUTH.user_auth = true;
-              this.signInSuccess();
+              this.close(false);
             } else {
               this.$message(language.signInEorror);
               throw result.msg;

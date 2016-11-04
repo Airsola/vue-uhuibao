@@ -133,7 +133,7 @@
 <template>
   <transition name="slide-up">
     <div class="popup-animate">
-      <a class="iconfont i-close-bfo" @click="close"></a>
+      <a class="iconfont i-close-bfo" @click="close(true)"></a>
       <div class="from-wrap">
         <div class="form-box">
           <h5 class="form-title">{{lang.title}}</h5>

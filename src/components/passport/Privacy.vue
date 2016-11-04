@@ -1,8 +1,22 @@
 <style lang="sass">
-  .privacy-article{padding:.2rem;background-color:#fff;}
-  .privacy-article>h2{font-size:.16rem;line-height:.4rem;}
-  .privacy-article>h3{font-size:.14rem;line-height:.2rem;padding:.05rem 0;}
-  .privacy-article p{line-height:.2rem;font-size:.12rem;color:#666;}
+.privacy-article {
+  padding: .2rem;
+  background-color: #fff;
+  & > h2 {
+    font-size: .16rem;
+    line-height: .4rem;
+  }
+  & > h3 {
+    font-size: .14rem;
+    line-height: .2rem;
+    padding: .05rem 0;
+  }
+  p {
+    line-height: .2rem;
+    font-size: .12rem;
+    color: #666;
+  }
+}
 </style>
 <template>
   <layout>

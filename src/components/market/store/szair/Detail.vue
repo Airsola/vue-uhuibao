@@ -54,6 +54,7 @@
   bottom: 0;
   width: 100%;
   background-color: #fff;
+  z-index: 2;
   &:before {
     background-color: rgba(0,0,0,0.05);
   }
@@ -117,6 +118,11 @@
     text-align: center;
     line-height: 0.49rem;
     transition: background-color 0.2s ease, color 0.2s ease;
+    &.disable {
+      background-color: #eee;
+      color: #ccc;
+      text-shadow: 1px 1px 0 rgba(255,255,255,.3);
+    }
   }
 }
 </style>
@@ -154,8 +160,9 @@
           <i :class="['iconfont', 'i-plus-bfo', count >= goodsStoreNum ? 'disable' : '']" @click="countPlus"></i>
           <b>{{count}}</b>
         </span>
-        <a class="t-bold" v-if="goodsStoreNum" @click="submitOrder(goodsId, count)">{{lang.buyNow}}</a>
-        <a class="t-bold" v-else>{{lang.storeEmpty}}</a>
+        <a class="t-bold" v-if="goodsStoreNum && !buying" @click="submitOrder(goodsId, count)">{{lang.buyNow}}</a>
+        <a class="t-bold disable" v-if="goodsStoreNum && buying">{{lang.buyNowing}}</a>
+        <a class="t-bold disable" v-if="!goodsStoreNum">{{lang.storeEmpty}}</a>
       </div>
     </layout-body>
   </layout>
@@ -175,6 +182,7 @@ const Language = {
     tooLittle: '购买数量至少为',
     tooMuch: '库存不足！',
     buyNow: '立即购买',
+    buyNowing: '加载中…',
     storeEmpty: '已售罄'
   },
   'zh-tw': {
@@ -184,6 +192,7 @@ const Language = {
     tooLittle: '購買數量至少為',
     tooMuch: '庫存不足！',
     buyNow: '立即購買',
+    buyNowing: '加載中…',
     storeEmpty: '已售罄'
   }
 };
@@ -205,6 +214,7 @@ export default {
       goodsSellNum: 0,
       goodsStoreNum: 0,
       count: 1,
+      buying: false,
       lang: language
     };
   },
@@ -274,6 +284,8 @@ export default {
       this.count ++;
     },
     submitOrder(goodsId, count) {
+      this.buying = true;
+
       this.$router.push({
         name: 'market:store@szair:order',
         params: {

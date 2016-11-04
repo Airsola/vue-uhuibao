@@ -125,6 +125,7 @@
   bottom: 0;
   width: 100%;
   background-color: #fff;
+  z-index: 2;
   &:before {
     background-color: rgba(0,0,0,0.05);
   }
@@ -192,7 +193,7 @@
           <li class="underline">
             <h5 class="t-bold">{{lang.addressName}}</h5>
             <a class="iconfont i-location-bfo">{{lang.addressDetail}}</a>
-            <a class="iconfont i-telphone-bfo">0755-28538888</a>
+            <a class="iconfont i-telphone-bfo" href="tel:0755-23451892">0755-23451892</a>
           </li>
         </ul>
       </div>
@@ -230,8 +231,8 @@ const Language = {
     verifyCodeSending: '验证信息发送中…',
     waitSendVerifyCodeAgain: '秒后重新获取',
     getSIMAddress: '领卡地点',
-    addressName: '深圳湾机场',
-    addressDetail: '深圳宝安机场T3航站楼5号门，E道深航柜处',
+    addressName: '深圳宝安国际机场',
+    addressDetail: '深圳市宝安国际机场T3航站楼5号门，E岛深航柜处',
     mapNav: '地图导航',
     orderCount: ['共', '张'],
     orderTotal: '合计：',
@@ -242,7 +243,8 @@ const Language = {
     phoneNumberError: '亲，手机号码写错了，改一改！',
     noTypeVerifyCode: '请输入短信验证码！',
     verifyCodeError: '验证码为四位数字',
-    verifyCodeSendSuccess: '验证信息已经发送至该手机号码'
+    verifyCodeSendSuccess: '验证信息已经发送至该手机号码',
+    orderSuccess: '订单提交成功，即将跳转到订单详情！'
   },
   'zh-tw': {
     title: '填寫領取信息',
@@ -253,8 +255,8 @@ const Language = {
     verifyCodeSending: '驗證信息發送中…',
     waitSendVerifyCodeAgain: '秒後重新獲取',
     getSIMAddress: '領卡地點',
-    addressName: '深圳灣機場',
-    addressDetail: '深圳寶安機場T3航站樓5號門，E道深航櫃處',
+    addressName: '深圳寶安國際機場',
+    addressDetail: '深圳市寶安國際機場T3航站樓5號門，E島深航櫃處',
     mapNav: '地圖導航',
     orderCount: ['共', '張'],
     orderTotal: '合計：',
@@ -265,7 +267,8 @@ const Language = {
     phoneNumberError: '親，手機號碼寫錯了，改一改！ ',
     noTypeVerifyCode: '請輸入短信驗證碼！ ',
     verifyCodeError: '驗證碼為四位數字',
-    verifyCodeSendSuccess: '驗證信息已經發送至該手機號碼'
+    verifyCodeSendSuccess: '驗證信息已經發送至該手機號碼',
+    orderSuccess: '訂單提交成功，即將跳轉到訂單詳情！'
   }
 };
 const language = Language[LANG_TYPE];
@@ -417,7 +420,16 @@ export default {
             if (result.status === 0) {
               this.$message(result.msg);
             } else {
-              window.location.href = '/?channel=' + CHANNEL_CODE.channel_code + '&area=' + AREA_CODE.area_code + '#!ucenter/order?id=' + result.data.order_number;
+              this.$notice(language.orderSuccess, {
+                container: this.$el,
+                onShow: () => {
+                  this.$root.$emit('blur:toggle');
+                },
+                onHide: () => {
+                  this.$root.$emit('blur:toggle');
+                  window.location.href = '/?channel=' + CHANNEL_CODE.channel_code + '&area=' + AREA_CODE.area_code + '#!ucenter/order?id=' + result.data.order_number;
+                }
+              });
             };
           };
         });

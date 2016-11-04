@@ -141,7 +141,7 @@ export default {
           if (result.status === 1) {
             next(vm => {
               result.data.map(url => {
-                this.photoList.push({
+                vm.photoList.push({
                   url,
                   scale: 'normal'
                 });
@@ -180,7 +180,7 @@ export default {
       });
     }
   },
-  mouted() {
+  mounted() {
     this.swiper = new Swiper(this.$el.querySelector('.album-swiper'), {
       observer: true
     });

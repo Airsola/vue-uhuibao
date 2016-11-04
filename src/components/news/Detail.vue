@@ -295,9 +295,7 @@ export default {
       this.collectStatus = status;
 
       if (USER_AUTH.user_auth === false) {
-        this.$login(() => {
-          this.collectNews(status);
-        });
+        this.userSignIn();
       } else {
         Http.fetch('api/save_attend', {
           thing_id: this.newsId,
@@ -315,9 +313,7 @@ export default {
                 this.newsCollected = !this.newsCollected;
                 this.$message(language.collectResult[status]);
               } else if (result.status === -2) {
-                this.$login(() => {
-                  this.collectNews(status);
-                });
+                this.userSignIn();
               } else {
                 this.$message(result.msg);
                 throw result.msg;
@@ -326,6 +322,23 @@ export default {
           });
         });
       };
+    },
+    userSignIn() {
+      this.$login({
+        container: this.$el,
+        onShow: () => {
+          this.$root.$emit('blur:toggle');
+        },
+        onSuccess: () => {
+          this.collectNews(status);
+        },
+        onForgone: () => {
+          this.collectStatus = -1;
+        },
+        onHide: () => {
+          this.$root.$emit('blur:toggle');
+        }
+      });
     }
   }
 };

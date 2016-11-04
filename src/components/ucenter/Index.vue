@@ -296,9 +296,19 @@ export default {
             throw result;
           } else {
             if (result.status === 1) {
-              USER_AUTH.user_auth = false;
-              this.$router.replace({
-                name: 'index'
+
+              this.$notice(language.logoutSuccess, {
+                container: this.$el,
+                onShow: () => {
+                  this.$root.$emit('blur:toggle');
+                  USER_AUTH.user_auth = false;
+                },
+                onHide: () => {
+                  this.$root.$emit('blur:toggle');
+                  this.$router.replace({
+                    name: 'index'
+                  });
+                }
               });
             } else {
               throw result.msg;
