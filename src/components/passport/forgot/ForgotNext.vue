@@ -29,54 +29,6 @@
     }
   }
 }
-.form-link {
-  padding-top: .2rem;
-}
-label {
-  &.privacy {
-    line-height: .16rem;
-    display: inline-block;
-    padding-left: .2rem;
-    position: relative;
-    &:before {
-      content: '';
-      display: block;
-      width: .14rem;
-      height: .14rem;
-      position: absolute;
-      left: 0;
-      top: 50%;
-      margin-top: -.07rem;
-      border-radius: .03rem;
-      z-index: 0;
-      border: solid .01rem rgba(0,0,0,0.1);
-      background-color: #eee;
-      transition: background-color .2s ease;
-    }
-    &:after {
-      position: absolute;
-      left: .03rem;
-      top: .04rem;
-      z-index: 1;
-      line-height: 1em;
-      font-size: .1rem;
-      color: #fff;
-      opacity: 0;
-      transition: opacity .2s ease;
-    }
-    &.agreed {
-      &:before {
-        background-color: #2dbcff;
-      }
-      &:after {
-        opacity: 1;
-      }
-    }
-    & > a {
-      color: #2dbcff;
-    }
-  }
-}
 .form-submit {
   & > a {
     border-radius: .03rem;
@@ -115,14 +67,10 @@ label {
         </label>
       </li>
     </ul>
-    <div class="form-link">
-      <label :class="['privacy', 'iconfont', 'i-success-aft', agreed ? 'agreed' : '']" @click="agreed = !agreed">已阅读并同意<router-link :to="{name: 'passport:privacy'}">《游惠宝用户协议》</router-link></label>
-    </div>
     <div class="form-submit">
       <a v-if="timeout > 0" class="disabled">{{lang.signUpSuccess[0]}}{{timeout}}{{lang.signUpSuccess[1]}}</a>
       <a v-if="submiting && timeout === 0" class="disabled">{{lang.passwordSaveIng}}</a>
-      <a v-if="!agreed && !submiting && timeout === 0" class="disabled" @click="$message(lang.noAgreePrivacy)">{{lang.resetPassword}}</a>
-      <a v-if="agreed && !submiting && timeout === 0" @click="setPasswordAction(password, repassword)" class="important">{{lang.resetPassword}}</a>
+      <a v-if="!submiting && timeout === 0" @click="setPasswordAction(password, repassword)" class="important">{{lang.resetPassword}}</a>
     </div>
   </div>
 </template>
@@ -181,9 +129,7 @@ export default {
 
       this.submiting = true;
 
-      Http.fetch('api/reset_pwd', {
-        password: password
-      }).then(response => {
+      Http.fetch('api/reset_pwd', {password).then(response => {
         this.submiting = false;
 
         Http.resolve(response, (error, result) => {

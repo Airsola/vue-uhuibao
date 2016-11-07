@@ -116,7 +116,7 @@
           </ul>
           <div class="form-submit">
             <a v-if="timeout > 0 && !submiting" class="disabled">{{lang.signUpSuccess[0]}}{{timeout}}{{lang.signUpSuccess[1]}}</a>
-            <a v-if="timeout === 0 && !submiting" @click="setPassword" class="important">{{lang.title}}</a>
+            <a v-if="timeout === 0 && !submiting" @click="setPassword(password, repassword)" class="important">{{lang.title}}</a>
             <a v-if="timeout === 0 && submiting" class="disabled">{{lang.title}}</a>
           </div>
         </div>
@@ -167,19 +167,17 @@ export default {
     };
   },
   methods: {
-    setPassword() {
+    setPassword(password, repassword) {
       if (this.submiting) return;
 
-      if (!this.password) return this.$message(language.noTypePassword);
-      if (this.password.length < 6 || this.password.length > 16) return this.$message(language.passwordLengthError);
-      if (!this.repassword) return this.$message(language.noTypeConfirmPassword);
-      if (this.password !== this.repassword) return this.$message(language.passwordDiff);
+      if (!password) return this.$message(language.noTypePassword);
+      if (password.length < 6 || password.length > 16) return this.$message(language.passwordLengthError);
+      if (!repassword) return this.$message(language.noTypeConfirmPassword);
+      if (password !== repassword) return this.$message(language.passwordDiff);
 
       this.submiting = true;
 
-      Http.fetch('api/register', {
-        password: this.password
-      }).then(response => {
+      Http.fetch('api/register', {password}).then(response => {
         this.submiting = false;
 
         Http.resolve(response, (error, result) => {
