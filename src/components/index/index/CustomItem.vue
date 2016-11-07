@@ -187,23 +187,17 @@ export default {
         // 数据加载停止
         data.loading = false;
 
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            throw result;
-          } else {
-            if (result.status === 1) {
-              // 页数增加
-              data.page ++;
+        Http.resolve(response).then(result => {
+          // 页数增加
+          data.page ++;
 
-              // 清空数据并拉入新的数据
-              data.list.splice(0, data.list.length);
+          // 清空数据并拉入新的数据
+          data.list.splice(0, data.list.length);
 
-              // 更换新的数据
-              this.$set(data, 'list', data.list.concat(result.data));
-            } else {
-              throw result.msg;
-            };
-          };
+          // 更换新的数据
+          this.$set(data, 'list', data.list.concat(result.data));
+        }).catch(error => {
+          throw new Error(error);
         });
       });
     }

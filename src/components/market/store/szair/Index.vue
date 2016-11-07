@@ -77,21 +77,14 @@ export default {
     Http.fetch('goods/list', {
       category_id: 'szair'
     }).then(response => {
-      Http.resolve(response, (error, result) => {
-        if (error) {
-          next(false);
-          throw result;
-        } else {
-          if (result.status === 1) {
-            next(vm => {
-              vm.$set(vm, 'list', vm.list.concat(result.data.list));
-              vm.$set(vm, 'hasNext', !!result.data.next);
-            });
-          } else {
-            next({path: '/404'});
-            throw result.msg;
-          };
-        };
+      Http.resolve(response).then(result => {
+        next(vm => {
+          vm.$set(vm, 'list', vm.list.concat(result.data.list));
+          vm.$set(vm, 'hasNext', !!result.data.next);
+        });
+      }).catch(error => {
+        next({path: '/404'});
+        throw new Error(error);
       });
     });
   },
@@ -112,18 +105,12 @@ export default {
         // 加载结束
         this.isLoading = false;
 
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            throw result;
-          } else {
-            if (result.status === 1) {
-              this.$set(this, 'list', this.list.concat(result.data.list));
-              this.$set(this, 'hasNext', !!result.data.next);
-            } else {
-              this.$router.replace({path: '/404'});
-              throw result.msg;
-            };
-          };
+        Http.resolve(response).then(result => {
+          this.$set(this, 'list', this.list.concat(result.data.list));
+          this.$set(this, 'hasNext', !!result.data.next);
+        }).catch(error => {
+          this.$router.replace({path: '/404'});
+          throw new Error(error);
         });
       });
     },

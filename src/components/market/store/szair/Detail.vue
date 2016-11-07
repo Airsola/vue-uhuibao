@@ -222,26 +222,19 @@ export default {
     Http.fetch('goods/detail', {
       goods_id: to.params.goods_id
     }).then(response => {
-      Http.resolve(response, (error, result) => {
-        if (error) {
-          next(false);
-          throw result;
-        } else {
-          if (result.status === 1) {
-            next(vm => {
-              vm.$set(vm, 'goodsId', result.data.goods_id);
-              vm.$set(vm, 'goodsName', result.data.goods_name);
-              vm.$set(vm, 'goodsPrice', result.data.goods_price);
-              vm.$set(vm, 'goodsDesc', result.data.goods_desc);
-              vm.$set(vm, 'goodsSellNum', parseInt(result.data.sell_num));
-              vm.$set(vm, 'goodsStoreNum', parseInt(result.data.store_num));
-              vm.$set(vm, 'bannerList', result.data.goods_imgs_list);
-            });
-          } else {
-            next({path: '/404'});
-            throw result.msg;
-          };
-        };
+      Http.resolve(response).then(result => {
+        next(vm => {
+          vm.$set(vm, 'goodsId', result.data.goods_id);
+          vm.$set(vm, 'goodsName', result.data.goods_name);
+          vm.$set(vm, 'goodsPrice', result.data.goods_price);
+          vm.$set(vm, 'goodsDesc', result.data.goods_desc);
+          vm.$set(vm, 'goodsSellNum', parseInt(result.data.sell_num));
+          vm.$set(vm, 'goodsStoreNum', parseInt(result.data.store_num));
+          vm.$set(vm, 'bannerList', result.data.goods_imgs_list);
+        });
+      }).catch(error => {
+        next({path: '/404'});
+        throw new Error(error);
       });
     });
   },
@@ -250,23 +243,17 @@ export default {
       Http.fetch('goods/detail', {
         goods_id: to.params.goods_id
       }).then(response => {
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            throw result;
-          } else {
-            if (result.status === 1) {
-              this.$set(this, 'goodsId', result.data.goods_id);
-              this.$set(this, 'goodsName', result.data.goods_name);
-              this.$set(this, 'goodsPrice', result.data.goods_price);
-              this.$set(this, 'goodsDesc', result.data.goods_desc);
-              this.$set(this, 'goodsSellNum', parseInt(result.data.sell_num));
-              this.$set(this, 'goodsStoreNum', parseInt(result.data.store_num));
-              this.$set(this, 'bannerList', result.data.goods_imgs_list);
-            } else {
-              this.$router.replace({path: '/404'});
-              throw result.msg;
-            };
-          };
+        Http.resolve(response).then(result => {
+          this.$set(this, 'goodsId', result.data.goods_id);
+          this.$set(this, 'goodsName', result.data.goods_name);
+          this.$set(this, 'goodsPrice', result.data.goods_price);
+          this.$set(this, 'goodsDesc', result.data.goods_desc);
+          this.$set(this, 'goodsSellNum', parseInt(result.data.sell_num));
+          this.$set(this, 'goodsStoreNum', parseInt(result.data.store_num));
+          this.$set(this, 'bannerList', result.data.goods_imgs_list);
+        }).catch(error => {
+          this.$router.replace({path: '/404'});
+          throw new Error(error);
         });
       });
     }

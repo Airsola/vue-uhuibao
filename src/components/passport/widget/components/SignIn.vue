@@ -240,18 +240,12 @@ export default {
       }).then(response => {
         this.submiting = false;
 
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            throw result;
-          } else {
-            if (result.status === 1) {
-              USER_AUTH.user_auth = true;
-              this.close(false);
-            } else {
-              this.$message(language.signInEorror);
-              throw result.msg;
-            };
-          };
+        Http.resolve(response).then(result => {
+          USER_AUTH.user_auth = true;
+          this.close(false);
+        }).catch(error => {
+          if (response.ok) this.$message(language.signInEorror);
+          throw new Error(error);
         });
       });
     },

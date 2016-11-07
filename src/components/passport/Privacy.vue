@@ -55,20 +55,13 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     Http.fetch('api/get_registration_agreement').then(response => {
-      Http.resolve(response, (error, result) => {
-        if (error) {
-          next(false);
-          throw result;
-        } else {
-          if (result.status === 1) {
-            next(vm => {
-              vm.$set(vm, 'paramRemark', result.data.param_remark);
-            });
-          } else {
-            next({path: '/404'});
-            throw result.msg;
-          };
-        };
+      Http.resolve(response).then(result => {
+        next(vm => {
+          vm.$set(vm, 'paramRemark', result.data.param_remark);
+        });
+      }).catch(error => {
+        next({path: '/404'});
+        throw new Error(error);
       });
     });
   }

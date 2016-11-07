@@ -126,16 +126,10 @@ export default {
   },
   created() {
     Http.fetch('common/get_footer_data', CHANNEL_CODE).then(response => {
-      Http.resolve(response, (error, result) => {
-        if (error) {
-          throw result;
-        } else {
-          if (result.status === 1) {
-            this.$set(this, 'data', result.data.type2);
-          } else {
-            throw result.msg;
-          };
-        };
+      Http.resolve(response).then(result => {
+        this.$set(this, 'data', result.data.type2);
+      }).catch(error => {
+        throw new Error(error);
       });
     });
   },

@@ -167,29 +167,22 @@ export default {
       shop_id: to.params.shop_id,
       store_id: to.params.store_id
     }).then(response => {
-      Http.resolve(response, (error, result) => {
-        if (error) {
-          next(false);
-          throw result;
-        } else {
-          if (result.status === 1) {
-            next(vm => {
-              vm.$set(vm, 'storeName', result.data.name);
-              vm.$set(vm, 'storeAddress', result.data.detail_area);
-              vm.$set(vm, 'longitude', result.data.longitude);
-              vm.$set(vm, 'latitude', result.data.latitude);
+      Http.resolve(response).then(result => {
+        next(vm => {
+          vm.$set(vm, 'storeName', result.data.name);
+          vm.$set(vm, 'storeAddress', result.data.detail_area);
+          vm.$set(vm, 'longitude', result.data.longitude);
+          vm.$set(vm, 'latitude', result.data.latitude);
 
-              const map = new BMap.Map('map-container');
-              const point = new BMap.Point(vm.longitude, vm.latitude);
+          const map = new BMap.Map('map-container');
+          const point = new BMap.Point(vm.longitude, vm.latitude);
 
-              map.centerAndZoom(point, 20);
-              map.addOverlay(new CustomOverlay(map, point));
-            });
-          } else {
-            next({path: '/404'});
-            throw result.msg;
-          };
-        };
+          map.centerAndZoom(point, 20);
+          map.addOverlay(new CustomOverlay(map, point));
+        });
+      }).catch(error => {
+        next({path: '/404'});
+        throw new Error(error);
       });
     });
   },
@@ -199,24 +192,18 @@ export default {
         shop_id: to.params.shop_id,
         store_id: to.params.store_id
       }).then(response => {
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            throw result;
-          } else {
-            if (result.status === 1) {
-              this.$set(this, 'storeName', result.data.name);
-              this.$set(this, 'storeAddress', result.data.detail_area);
+        Http.resolve(response).then(result => {
+          this.$set(this, 'storeName', result.data.name);
+          this.$set(this, 'storeAddress', result.data.detail_area);
 
-              const map = new BMap.Map('map-container');
-              const point = new BMap.Point(result.data.longitude, result.data.latitude);
+          const map = new BMap.Map('map-container');
+          const point = new BMap.Point(result.data.longitude, result.data.latitude);
 
-              map.centerAndZoom(point, 20);
-              map.addOverlay(new CustomOverlay(map, point));
-            } else {
-              this.$router.replace({path: '/404'});
-              throw result.msg;
-            };
-          };
+          map.centerAndZoom(point, 20);
+          map.addOverlay(new CustomOverlay(map, point));
+        }).catch(error => {
+          this.$router.replace({path: '/404'});
+          throw new Error(error);
         });
       });
     }

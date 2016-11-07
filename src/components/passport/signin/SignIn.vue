@@ -99,11 +99,11 @@ const Language = {
     signIn: '登录',
     signIng: '登录中…',
     signUp: '注册',
-    noTypePhoneNumber: '嘿，要先输入手机号码！',
-    phoneNumberError: '亲，手机号码写错了，改一改！',
-    noTypePassword: '嘿，你还没有输入密码！',
-    passwordLengthError: '密码的长度为6-16位字符！',
-    signInEorror: '您输入的账号或密码不正确！'
+    noTypePhoneNumber: '嘿，要先输入手机号码！ ',
+    phoneNumberError: '亲，手机号码写错了，改一改！ ',
+    noTypePassword: '嘿，你还没有输入密码！ ',
+    passwordLengthError: '密码的长度为6-16位字符！ ',
+    signInEorror: '您输入的账号或密码不正确！ '
   },
   'zh-tw': {
     typePhoneNumber: '請輸入手機號',
@@ -161,26 +161,21 @@ export default {
       }).then(response => {
         this.submiting = false;
 
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            throw result;
-          } else {
-            if (result.status === 0) {
-              this.$message(language.signInEorror);
-            } else if (result.status === 1) {
-              USER_AUTH.user_auth = true;
+        Http.resolve(response).then(result => {
+          USER_AUTH.user_auth = true;
 
-              // 如果有来源地址，则返回来源地址，否则则回到用户中心页面！
-              if (url) {
-                window.history.replaceState(null, null, url);
-                window.location.reload();
-              } else {
-                this.$router.replace({
-                  name: 'ucenter'
-                });
-              };
-            };
+          // 如果有来源地址，则返回来源地址，否则则回到用户中心页面！
+          if (url) {
+            window.history.replaceState(null, null, url);
+            window.location.reload();
+          } else {
+            this.$router.replace({
+              name: 'ucenter'
+            });
           };
+        }).catch(error => {
+          if (response.ok) this.$message(language.signInEorror);
+          throw new Error(error);
         });
       });
     }

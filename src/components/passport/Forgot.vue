@@ -45,21 +45,16 @@ export default {
       next();
     } else {
       Http.fetch('api/check_islogin').then(response => {
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            next(false);
-            throw result;
-          } else {
-            if (result.status === -2) {
-              next();
-            } else if (result.status === 1) {
-              next({name: 'ucenter'});
-              throw result.msg;
-            } else {
-              next({path: '/404'});
-              throw result.msg;
-            };
+        Http.resolve(response).then(result => {
+          if (result.status === -2) {
+            next();
+          } else if (result.status === 1) {
+            next({name: 'ucenter'});
+            throw new Error(result.msg);
           };
+        }).catch(error => {
+          next({path: '/404'});
+          throw new Error(error);
         });
       });
     };

@@ -76,13 +76,24 @@ const Http = {
     if (FetchCount++ === 0) NProgress.start();
     return fetch(API_PATH + uri, _.assign({body: formDataSource(...params)}, fetchSettings));
   },
-  resolve: (response, resolve) => {
+  resolve: (response) => {
     if (--FetchCount === 0) NProgress.done();
-    if (response.ok) {
-      response.json().then(result => resolve(false, result));
-    } else {
-      resolve(true, response.statusText);
-    };
+
+    const promise = new Promise((resolve, reject) => {
+      if (response.ok) {
+        response.json().then(result => {
+          if (result.status === 0) {
+            reject(result.msg);
+          } else {
+            resolve(result);
+          };
+        });
+      } else {
+        reject(response.statusText);
+      };
+    });
+
+    return promise;
   }
 };
 

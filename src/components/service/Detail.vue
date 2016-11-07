@@ -165,33 +165,26 @@ export default {
     Http.fetch('service/get_server_detail', {
       service_id: to.params.service_id
     }).then(response => {
-      Http.resolve(response, (error, result) => {
-        if (error) {
-          next(false);
-          throw result;
-        } else {
-          if (result.status === 1) {
-            next(vm => {
-              vm.$set(vm, 'serviceName', result.data.service_name);
-              vm.$set(vm, 'servicePrice', result.data.service_price);
-              vm.$set(vm, 'discountPrice', result.data.discount_price);
-              vm.$set(vm, 'serviceTags', result.data.tags);
-              vm.$set(vm, 'serviceUV', result.data.service_uv);
-              vm.$set(vm, 'serviceImg', result.data.service_img);
-              vm.$set(vm, 'serviceReason', result.data.service_reason);
-              vm.$set(vm, 'serviceInfo', result.data.service_info);
+      Http.resolve(response).then(result => {
+        next(vm => {
+          vm.$set(vm, 'serviceName', result.data.service_name);
+          vm.$set(vm, 'servicePrice', result.data.service_price);
+          vm.$set(vm, 'discountPrice', result.data.discount_price);
+          vm.$set(vm, 'serviceTags', result.data.tags);
+          vm.$set(vm, 'serviceUV', result.data.service_uv);
+          vm.$set(vm, 'serviceImg', result.data.service_img);
+          vm.$set(vm, 'serviceReason', result.data.service_reason);
+          vm.$set(vm, 'serviceInfo', result.data.service_info);
 
-              vm.$set(vm, 'shopId', result.data.shop_id);
-              vm.$set(vm, 'shopName', result.data.shop_name);
-              vm.$set(vm, 'shopLogo', result.data.shop_logo_url);
-              vm.$set(vm, 'shopDesc', result.data.shop_desc);
-              vm.$set(vm, 'shopAuth', result.data.shop_auth);
-            });
-          } else {
-            next({path: '/404'});
-            throw result.msg;
-          };
-        };
+          vm.$set(vm, 'shopId', result.data.shop_id);
+          vm.$set(vm, 'shopName', result.data.shop_name);
+          vm.$set(vm, 'shopLogo', result.data.shop_logo_url);
+          vm.$set(vm, 'shopDesc', result.data.shop_desc);
+          vm.$set(vm, 'shopAuth', result.data.shop_auth);
+        });
+      }).catch(error => {
+        next({path: '/404'});
+        throw new Error(error);
       });
     });
   },
@@ -200,30 +193,24 @@ export default {
       Http.fetch('service/get_server_detail', {
         service_id: to.params.service_id
       }).then(response => {
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            throw result;
-          } else {
-            if (result.status === 1) {
-              this.$set(this, 'serviceName', result.data.service_name);
-              this.$set(this, 'servicePrice', result.data.service_price);
-              this.$set(this, 'discountPrice', result.data.discount_price);
-              this.$set(this, 'serviceTags', result.data.tags);
-              this.$set(this, 'serviceUV', result.data.service_uv);
-              this.$set(this, 'serviceImg', result.data.service_img);
-              this.$set(this, 'serviceReason', result.data.service_reason);
-              this.$set(this, 'serviceInfo', result.data.service_info);
+        Http.resolve(response).then(result => {
+          this.$set(this, 'serviceName', result.data.service_name);
+          this.$set(this, 'servicePrice', result.data.service_price);
+          this.$set(this, 'discountPrice', result.data.discount_price);
+          this.$set(this, 'serviceTags', result.data.tags);
+          this.$set(this, 'serviceUV', result.data.service_uv);
+          this.$set(this, 'serviceImg', result.data.service_img);
+          this.$set(this, 'serviceReason', result.data.service_reason);
+          this.$set(this, 'serviceInfo', result.data.service_info);
 
-              this.$set(this, 'shopId', result.data.shop_id);
-              this.$set(this, 'shopName', result.data.shop_name);
-              this.$set(this, 'shopLogo', result.data.shop_logo_url);
-              this.$set(this, 'shopDesc', result.data.shop_desc);
-              this.$set(this, 'shopAuth', result.data.shop_auth);
-            } else {
-              this.$router.replace({path: '/404'});
-              throw result.msg;
-            };
-          };
+          this.$set(this, 'shopId', result.data.shop_id);
+          this.$set(this, 'shopName', result.data.shop_name);
+          this.$set(this, 'shopLogo', result.data.shop_logo_url);
+          this.$set(this, 'shopDesc', result.data.shop_desc);
+          this.$set(this, 'shopAuth', result.data.shop_auth);
+        }).catch(error => {
+          this.$router.replace({path: '/404'});
+          throw new Error(error);
         });
       });
     }

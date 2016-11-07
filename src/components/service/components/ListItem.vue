@@ -77,16 +77,10 @@ export default {
           service_id: serviceId,
           shop_id: shopId
         }, CHANNEL_CODE).then(response => {
-          Http.resolve(response, (error, result) => {
-            if (error) {
-              throw result;
-            } else {
-              if (result.status === 1) {
-                window.location.href = url;
-              } else {
-                throw result.msg;
-              };
-            };
+          Http.resolve(response).then(result => {
+            window.location.href = url;
+          }).catch(error => {
+            throw new Error(error);
           });
         });
       };

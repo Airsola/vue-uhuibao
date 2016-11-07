@@ -109,20 +109,14 @@ export default {
   },
   created() {
     Http.fetch('common/get_area_list').then(response => {
-      Http.resolve(response, (error, result) => {
-        if (error) {
-          throw result;
-        } else {
-          if (result.status === 1) {
-            this.$set(this, 'list', this.list.concat(result.data.area_list));
+      Http.resolve(response).then(result => {
+        this.$set(this, 'list', this.list.concat(result.data.area_list));
 
-            for (let area of this.list) {
-              if (area.area_code.toString() === AREA_CODE.area_code.toString()) return this.updateAreaCode(area.area_code, area.area_name);
-            };
-          } else {
-            throw result.msg;
-          };
+        for (let area of this.list) {
+          if (area.area_code.toString() === AREA_CODE.area_code.toString()) return this.updateAreaCode(area.area_code, area.area_name);
         };
+      }).catch(error => {
+        throw new Error(error);
       });
     });
   },
@@ -147,21 +141,15 @@ export default {
 
       // 更新地区session
       Http.fetch('common/record_session', {area_code: areaCode}, CHANNEL_CODE).then(response => {
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            throw result;
-          } else {
-            if (result.status === 1) {
-              // 得到当前地址栏的地址
-              const query = Helper.query2json();
-              // 更新地址栏地址，防止刷新重置
-              if (query && query.area) window.history.replaceState(null, null, window.location.href.replace(new RegExp('area=' + query.area), 'area=' + areaCode));
+        Http.resolve(response).then(result => {
+          // 得到当前地址栏的地址
+          const query = Helper.query2json();
+          // 更新地址栏地址，防止刷新重置
+          if (query && query.area) window.history.replaceState(null, null, window.location.href.replace(new RegExp('area=' + query.area), 'area=' + areaCode));
 
-              this.updateAreaCode(areaCode, areaName);
-            } else {
-              throw result.msg;
-            };
-          };
+          this.updateAreaCode(areaCode, areaName);
+        }).catch(error => {
+          throw new Error(error);
         });
       });
     },

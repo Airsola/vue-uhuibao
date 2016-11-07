@@ -238,76 +238,64 @@ export default {
   },
   created() {
     Http.fetch('service/get_cate', CHANNEL_CODE).then(response => {
-      Http.resolve(response, (error, result) => {
-        if (error) {
-          throw result;
-        } else {
-          if (result.status === 1) {
-            let index = 0;
+      Http.resolve(response).then(result => {
+        let index = 0;
 
-            result.data.forEach((item) => {
-              item.shop_list.unshift({
-                shop_id: 0,
-                shop_name: language.allSubCategory
-              });
-            });
+        result.data.forEach((item) => {
+          item.shop_list.unshift({
+            shop_id: 0,
+            shop_name: language.allSubCategory
+          });
+        });
 
-            // 设计分类
-            this.$set(this, 'category', this.category.concat(result.data));
+        // 设计分类
+        this.$set(this, 'category', this.category.concat(result.data));
 
-            // 根据页面url地址得到当前选中的数据
-            for (let i = 0; i < this.category.length; i++) {
-              if (this.curCateId === this.category[i].category_id) {
-                index = i;
-                break;
-              };
-            };
-
-            // 得到子分类列表
-            this.$set(this, 'curSubCate', this.category[index].shop_list);
-
-            // 如果选中的子分类不了全部，得到显示选中的子分类名称
-            if (this.curSubCateId > 0) {
-              for (let subCate of this.curSubCate) {
-                if (this.curSubCateId === subCate.shop_id) {
-                  this.$set(this, 'curCateName', subCate.shop_name);
-                  break;
-                };
-              };
-            } else {
-              this.$set(this, 'curCateName', this.category[index].cate_name);
-            };
-
-            // 临时数据与当前数据保持一致
-            this.tempCateName = this.curCateName;
-            this.tempCateId = this.curCateId;
-          } else {
-            throw result.msg;
+        // 根据页面url地址得到当前选中的数据
+        for (let i = 0; i < this.category.length; i++) {
+          if (this.curCateId === this.category[i].category_id) {
+            index = i;
+            break;
           };
         };
+
+        // 得到子分类列表
+        this.$set(this, 'curSubCate', this.category[index].shop_list);
+
+        // 如果选中的子分类不了全部，得到显示选中的子分类名称
+        if (this.curSubCateId > 0) {
+          for (let subCate of this.curSubCate) {
+            if (this.curSubCateId === subCate.shop_id) {
+              this.$set(this, 'curCateName', subCate.shop_name);
+              break;
+            };
+          };
+        } else {
+          this.$set(this, 'curCateName', this.category[index].cate_name);
+        };
+
+        // 临时数据与当前数据保持一致
+        this.tempCateName = this.curCateName;
+        this.tempCateId = this.curCateId;
+      }).catch(error => {
+        throw new Error(error);
       });
     });
 
     // 得到地区列表
     Http.fetch('service/get_area_list').then(response => {
-      Http.resolve(response, (error, result) => {
-        if (error) {
-          throw result;
-        } else {
-          if (result.status === 1) {
-            this.$set(this, 'area', this.area.concat(result.data.area_list));
+      Http.resolve(response).then(result => {
+        this.$set(this, 'area', this.area.concat(result.data.area_list));
 
-            // 变更显示的地区名
-            for (let item of this.area) {
-              if (this.curAreaCode === item.area_code) {
-                this.$set(this, 'curAreaName', item.area_name);
-                break;
-              };
-            };
-          } else {
-            throw result.msg;
+        // 变更显示的地区名
+        for (let item of this.area) {
+          if (this.curAreaCode === item.area_code) {
+            this.$set(this, 'curAreaName', item.area_name);
+            break;
           };
         };
+      }).catch(error => {
+        throw new Error(error);
       });
     });
   },

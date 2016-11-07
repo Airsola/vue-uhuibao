@@ -125,42 +125,35 @@ export default {
         flag: 0,
         page: 1
       }).then(response => {
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            next(false);
-            throw result;
-          } else {
-            if (result.status === 1) {
-              next(vm => {
-                const task = result.data.tao_list;
-                const coupon = result.data.coupon_list;
-                const news = result.data.news_list;
+        Http.resolve(response).then(result => {
+          next(vm => {
+            const task = result.data.tao_list;
+            const coupon = result.data.coupon_list;
+            const news = result.data.news_list;
 
-                vm.$set(vm.news, 'list', news.result_list);
-                vm.$set(vm.news, 'curPage', news.curre_page);
-                vm.$set(vm.news, 'hasNext', news.has_next);
+            vm.$set(vm.news, 'list', news.result_list);
+            vm.$set(vm.news, 'curPage', news.curre_page);
+            vm.$set(vm.news, 'hasNext', news.has_next);
 
-                vm.$set(vm.task, 'list', task.list);
-                vm.$set(vm.task, 'curPage', task.page);
-                vm.$set(vm.task, 'hasNext', task.page < task.total);
+            vm.$set(vm.task, 'list', task.list);
+            vm.$set(vm.task, 'curPage', task.page);
+            vm.$set(vm.task, 'hasNext', task.page < task.total);
 
-                vm.$set(vm.coupon, 'list', coupon.result_list);
-                vm.$set(vm.coupon, 'curPage', coupon.curre_page);
-                vm.$set(vm.coupon, 'hasNext', coupon.has_next);
+            vm.$set(vm.coupon, 'list', coupon.result_list);
+            vm.$set(vm.coupon, 'curPage', coupon.curre_page);
+            vm.$set(vm.coupon, 'hasNext', coupon.has_next);
 
-                vm.$nextTick(() => {
-                  vm.swiperUpdate();
-                  // 修复动画退出过渡中元素依然点位导致的页面数据不准确的bug
-                  setTimeout(() => {
-                    vm.swiperUpdate();
-                  }, 1000);
-                });
-              });
-            } else {
-              next({path: '/404'});
-              throw result.msg;
-            };
-          };
+            vm.$nextTick(() => {
+              vm.swiperUpdate();
+              // 修复动画退出过渡中元素依然点位导致的页面数据不准确的bug
+              setTimeout(() => {
+                vm.swiperUpdate();
+              }, 1000);
+            });
+          });
+        }).then(error => {
+          next({path: '/404'});
+          throw new Error(error);
         });
       });
     } else {
@@ -177,39 +170,33 @@ export default {
           flag: 0,
           page: 1
         }).then(response => {
-          Http.resolve(response, (error, result) => {
-            if (error) {
-              throw result;
-            } else {
-              if (result.status === 1) {
-                const task = result.data.tao_list;
-                const coupon = result.data.coupon_list;
-                const news = result.data.news_list;
+          Http.resolve(response).then(result => {
+            const task = result.data.tao_list;
+            const coupon = result.data.coupon_list;
+            const news = result.data.news_list;
 
-                this.$set(this.news, 'list', news.result_list);
-                this.$set(this.news, 'curPage', news.curre_page);
-                this.$set(this.news, 'hasNext', news.has_next);
+            this.$set(this.news, 'list', news.result_list);
+            this.$set(this.news, 'curPage', news.curre_page);
+            this.$set(this.news, 'hasNext', news.has_next);
 
-                this.$set(this.task, 'list', task.list);
-                this.$set(this.task, 'curPage', task.page);
-                this.$set(this.task, 'hasNext', task.page < task.total);
+            this.$set(this.task, 'list', task.list);
+            this.$set(this.task, 'curPage', task.page);
+            this.$set(this.task, 'hasNext', task.page < task.total);
 
-                this.$set(this.coupon, 'list', coupon.result_list);
-                this.$set(this.coupon, 'curPage', coupon.curre_page);
-                this.$set(this.coupon, 'hasNext', coupon.has_next);
+            this.$set(this.coupon, 'list', coupon.result_list);
+            this.$set(this.coupon, 'curPage', coupon.curre_page);
+            this.$set(this.coupon, 'hasNext', coupon.has_next);
 
-                this.$nextTick(() => {
-                  this.swiperUpdate();
-                  // 修复动画退出过渡中元素依然点位导致的页面数据不准确的bug
-                  setTimeout(() => {
-                    this.swiperUpdate();
-                  }, 1000);
-                });
-              } else {
-                this.$router.replace({path: '/404'});
-                throw result.msg;
-              };
-            };
+            this.$nextTick(() => {
+              this.swiperUpdate();
+              // 修复动画退出过渡中元素依然点位导致的页面数据不准确的bug
+              setTimeout(() => {
+                this.swiperUpdate();
+              }, 1000);
+            });
+          }).catch(error => {
+            this.$router.replace({path: '/404'});
+            throw new Error(error);
           });
         });
       };

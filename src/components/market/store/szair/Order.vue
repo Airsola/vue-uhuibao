@@ -307,24 +307,17 @@ export default {
     Http.fetch('goods/detail', {
       goods_id: to.params.goods_id
     }).then(response => {
-      Http.resolve(response, (error, result) => {
-        if (error) {
-          next(false);
-          throw result;
-        } else {
-          if (result.status === 1) {
-            next(vm => {
-              vm.$set(vm, 'goodsId', result.data.goods_id);
-              vm.$set(vm, 'goodsName', result.data.goods_name);
-              vm.$set(vm, 'goodsLogo', result.data.img_url);
-              vm.$set(vm, 'goodsCount', to.params.count);
-              vm.$set(vm, 'goodsPrice', to.params.count * result.data.goods_price);
-            });
-          } else {
-            next({path: '/404'});
-            throw result.msg;
-          };
-        };
+      Http.resolve(response).then(result => {
+        next(vm => {
+          vm.$set(vm, 'goodsId', result.data.goods_id);
+          vm.$set(vm, 'goodsName', result.data.goods_name);
+          vm.$set(vm, 'goodsLogo', result.data.img_url);
+          vm.$set(vm, 'goodsCount', to.params.count);
+          vm.$set(vm, 'goodsPrice', to.params.count * result.data.goods_price);
+        });
+      }).catch(error => {
+        next({path: '/404'});
+        throw new Error(error);
       });
     });
   },
@@ -333,21 +326,15 @@ export default {
       Http.fetch('goods/detail', {
         goods_id: to.params.goods_id
       }).then(response => {
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            throw result;
-          } else {
-            if (result.status === 1) {
-              this.$set(this, 'goodsId', result.data.goods_id);
-              this.$set(this, 'goodsName', result.data.goods_name);
-              this.$set(this, 'goodsLogo', result.data.img_url);
-              this.$set(this, 'goodsCount', to.params.count);
-              this.$set(this, 'goodsPrice', to.params.count * result.data.goods_price);
-            } else {
-              this.$router.replace({path: '/404'});
-              throw result.msg;
-            };
-          };
+        Http.resolve(response).then(result => {
+          this.$set(this, 'goodsId', result.data.goods_id);
+          this.$set(this, 'goodsName', result.data.goods_name);
+          this.$set(this, 'goodsLogo', result.data.img_url);
+          this.$set(this, 'goodsCount', to.params.count);
+          this.$set(this, 'goodsPrice', to.params.count * result.data.goods_price);
+        }).catch(error => {
+          this.$router.replace({path: '/404'});
+          throw new Error(error);
         });
       });
     },
@@ -373,21 +360,16 @@ export default {
       }).then(response => {
         this.msgSending = false;
 
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            throw result;
-          } else {
-            if (result.status === 0) {
-              this.$message(result.msg);
-            } else {
-              this.$message(language.verifyCodeSendSuccess);
-              this.timeout = 60;
-              this.timer = window.setInterval(() => {
-                this.timeout --;
-                if (this.timeout === 0) window.clearInterval(this.timer);
-              }, 1000);
-            };
-          };
+        Http.resolve(response).then(result => {
+          this.$message(language.verifyCodeSendSuccess);
+          this.timeout = 60;
+          this.timer = window.setInterval(() => {
+            this.timeout --;
+            if (this.timeout === 0) window.clearInterval(this.timer);
+          }, 1000);
+        }).catch(error => {
+          if (response.ok) this.$message(error);
+          throw new Error(error);
         });
       });
     },
@@ -413,25 +395,20 @@ export default {
       }, CHANNEL_CODE).then(response => {
         this.codeVerifying = false;
 
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            throw result;
-          } else {
-            if (result.status === 0) {
-              this.$message(result.msg);
-            } else {
-              this.$notice(language.orderSuccess, {
-                container: this.$el,
-                onShow: () => {
-                  this.$root.$emit('blur:toggle');
-                },
-                onHide: () => {
-                  this.$root.$emit('blur:toggle');
-                  window.location.href = '/?channel=' + CHANNEL_CODE.channel_code + '&area=' + AREA_CODE.area_code + '#!ucenter/order?id=' + result.data.order_number;
-                }
-              });
-            };
-          };
+        Http.resolve(response).then(result => {
+          this.$notice(language.orderSuccess, {
+            container: this.$el,
+            onShow: () => {
+              this.$root.$emit('blur:toggle');
+            },
+            onHide: () => {
+              this.$root.$emit('blur:toggle');
+              window.location.href = '/?channel=' + CHANNEL_CODE.channel_code + '&area=' + AREA_CODE.area_code + '#!ucenter/order?id=' + result.data.order_number;
+            }
+          });
+        }).catch(error => {
+          if (response.ok) this.$message(error);
+          throw new Error(error);
         });
       });
     }

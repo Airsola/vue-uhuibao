@@ -83,11 +83,11 @@ const Language = {
     typePassword: '请输入密码',
     typePasswordAgain: '请再次输入密码',
     resetPassword: '重置密码重置',
-    noTypePassword: '嘿，你还没有输入密码！',
-    passwordLengthError: '密码的长度为6-16位字符！',
-    noTypeConfirmPassword: '请再次输入确认密码！',
-    passwordDiff: '两次密码不一样啊！',
-    signUpSuccess: ['密码重置成功，', '秒后回到登录窗！'],
+    noTypePassword: '嘿，你还没有输入密码！ ',
+    passwordLengthError: '密码的长度为6-16位字符！ ',
+    noTypeConfirmPassword: '请再次输入确认密码！ ',
+    passwordDiff: '两次密码不一样啊！ ',
+    signUpSuccess: ['密码重置成功，', '秒后回到登录窗！ '],
     passwordSaveIng: '密码重置中…'
   },
   'zh-tw': {
@@ -129,30 +129,26 @@ export default {
 
       this.submiting = true;
 
-      Http.fetch('api/reset_pwd', {password).then(response => {
+      Http.fetch('api/reset_pwd', {password}).then(response => {
         this.submiting = false;
 
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            throw result;
-          } else {
-            if (result.status === 1) {
-              this.timeout = 3;
-              this.timer = window.setInterval(() => {
-                this.timeout --;
-                if (this.timeout === 0) window.clearInterval(this.timer);
-                this.$router.replace({
-                  name: 'passport:signin',
-                  query: {
-                    url: this.url
-                  }
-                });
-              }, 1000);
-            } else {
-              this.$message(result.msg);
-              throw result.msg;
+        Http.resolve(response).then(result => {
+          this.timeout = 3;
+          this.timer = window.setInterval(() => {
+            this.timeout --;
+            if (this.timeout === 0) {
+              window.clearInterval(this.timer);
+              this.$router.replace({
+                name: 'passport:signin',
+                query: {
+                  url: this.url
+                }
+              });
             };
-          };
+          }, 1000);
+        }).catch(error => {
+          if (response.ok) this.$message(error);
+          throw new Error(error);
         });
       });
     }

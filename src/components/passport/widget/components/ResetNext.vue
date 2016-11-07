@@ -180,22 +180,18 @@ export default {
       Http.fetch('api/reset_pwd', {password}).then(response => {
         this.submiting = false;
 
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            throw result;
-          } else {
-            if (result.status === 1) {
-              this.timeout = 3;
-              this.timer = window.setInterval(() => {
-                this.timeout --;
-                if (this.timeout === 0) window.clearInterval(this.timer);
-                this.swipeTo(0);
-              }, 1000);
-            } else {
-              this.$message(result.msg);
-              throw result.msg;
+        Http.resolve(response).then(result => {
+          this.timeout = 3;
+          this.timer = window.setInterval(() => {
+            this.timeout --;
+            if (this.timeout === 0) {
+              window.clearInterval(this.timer);
+              this.swipeTo(0);
             };
-          };
+          }, 1000);
+        }).catch(error => {
+          if (response.ok) this.$message(error);
+          throw new Error(error);
         });
       });
     }

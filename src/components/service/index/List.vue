@@ -78,18 +78,12 @@ export default {
       Http.fetch('service/list', params, CHANNEL_CODE).then(response => {
         this.isLoading = false;
 
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            throw result;
-          } else {
-            if (result.status === 1) {
-              this.$set(this, 'list', this.list.concat(result.data.result_list));
-              this.$set(this, 'hasNext', !!result.data.has_next);
-              this.$set(this, 'curPage', result.data.curre_page);
-            } else {
-              throw result.msg;
-            };
-          };
+        Http.resolve(response).then(result => {
+          this.$set(this, 'list', this.list.concat(result.data.result_list));
+          this.$set(this, 'hasNext', !!result.data.has_next);
+          this.$set(this, 'curPage', result.data.curre_page);
+        }).catch(error => {
+          throw new Error(error);
         });
       });
     },

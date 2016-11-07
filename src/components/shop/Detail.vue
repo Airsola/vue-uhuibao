@@ -285,45 +285,38 @@ export default {
     Http.fetch('shop/get_shop_index', {
       shop_id: to.params.shop_id
     }, CHANNEL_CODE).then(response => {
-      Http.resolve(response, (error, result) => {
-        if (error) {
-          next(false);
-          throw result;
-        } else {
-          if (result.status === 1) {
-            next(vm => {
-              vm.$set(vm, 'shopName', result.data.shop_name);
-              vm.$set(vm, 'shopLogo', result.data.shop_logo_url);
-              vm.$set(vm, 'shopDesc', result.data.shop_desc);
-              vm.$set(vm, 'shopLink', result.data.shop_link);
-              vm.$set(vm, 'shopAuth', !!result.data.shop_auth);
-              vm.$set(vm, 'shopMobile', result.data.shop_mobile);
-              vm.$set(vm, 'shopAddress', result.data.shop_address);
-              vm.$set(vm, 'shopCount', result.data.store_count);
-              vm.$set(vm, 'payMethods', result.data.shop_payment_method.split(';'));
+      Http.resolve(response).then(result => {
+        next(vm => {
+          vm.$set(vm, 'shopName', result.data.shop_name);
+          vm.$set(vm, 'shopLogo', result.data.shop_logo_url);
+          vm.$set(vm, 'shopDesc', result.data.shop_desc);
+          vm.$set(vm, 'shopLink', result.data.shop_link);
+          vm.$set(vm, 'shopAuth', !!result.data.shop_auth);
+          vm.$set(vm, 'shopMobile', result.data.shop_mobile);
+          vm.$set(vm, 'shopAddress', result.data.shop_address);
+          vm.$set(vm, 'shopCount', result.data.store_count);
+          vm.$set(vm, 'payMethods', result.data.shop_payment_method.split(';'));
 
-              vm.$set(vm, 'shopMapLng', result.data.shop_longitude);
-              vm.$set(vm, 'shopMapLat', result.data.shop_latitude);
+          vm.$set(vm, 'shopMapLng', result.data.shop_longitude);
+          vm.$set(vm, 'shopMapLat', result.data.shop_latitude);
 
-              if (result.data.images) {
-                result.data.images.forEach(url => {
-                  vm.photoList.push({
-                    url,
-                    scale: 'normal'
-                  });
-                });
-              };
-
-              if (result.data.servers) vm.$set(vm, 'serviceList', result.data.servers);
-              if (result.data.tasks) vm.$set(vm, 'taskList', result.data.tasks);
-              if (result.data.coupons) vm.$set(vm, 'couponList', result.data.coupons);
-              if (result.data.articles) vm.$set(vm, 'newsList', result.data.articles);
+          if (result.data.images) {
+            result.data.images.forEach(url => {
+              vm.photoList.push({
+                url,
+                scale: 'normal'
+              });
             });
-          } else {
-            next({path: '/404'});
-            throw result.msg;
           };
-        };
+
+          if (result.data.servers) vm.$set(vm, 'serviceList', result.data.servers);
+          if (result.data.tasks) vm.$set(vm, 'taskList', result.data.tasks);
+          if (result.data.coupons) vm.$set(vm, 'couponList', result.data.coupons);
+          if (result.data.articles) vm.$set(vm, 'newsList', result.data.articles);
+        });
+      }).catch(error => {
+        next({path: '/404'});
+        throw new Error(error);
       });
     });
   },
@@ -332,42 +325,36 @@ export default {
       Http.fetch('shop/get_shop_index', {
         shop_id: to.params.shop_id
       }, CHANNEL_CODE).then(response => {
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            throw result;
-          } else {
-            if (result.status === 1) {
-              this.$set(this, 'shopName', result.data.shop_name);
-              this.$set(this, 'shopLogo', result.data.shop_logo_url);
-              this.$set(this, 'shopDesc', result.data.shop_desc);
-              this.$set(this, 'shopLink', result.data.shop_link);
-              this.$set(this, 'shopAuth', !!result.data.shop_auth);
-              this.$set(this, 'shopMobile', result.data.shop_mobile);
-              this.$set(this, 'shopAddress', result.data.shop_address);
-              this.$set(this, 'shopCount', result.data.store_count);
-              this.$set(this, 'payMethods', result.data.shop_payment_method.split(';'));
+        Http.resolve(response).then(result => {
+          this.$set(this, 'shopName', result.data.shop_name);
+          this.$set(this, 'shopLogo', result.data.shop_logo_url);
+          this.$set(this, 'shopDesc', result.data.shop_desc);
+          this.$set(this, 'shopLink', result.data.shop_link);
+          this.$set(this, 'shopAuth', !!result.data.shop_auth);
+          this.$set(this, 'shopMobile', result.data.shop_mobile);
+          this.$set(this, 'shopAddress', result.data.shop_address);
+          this.$set(this, 'shopCount', result.data.store_count);
+          this.$set(this, 'payMethods', result.data.shop_payment_method.split(';'));
 
-              this.$set(this, 'shopMapLng', result.data.shop_longitude);
-              this.$set(this, 'shopMapLat', result.data.shop_latitude);
+          this.$set(this, 'shopMapLng', result.data.shop_longitude);
+          this.$set(this, 'shopMapLat', result.data.shop_latitude);
 
-              if (result.data.images) {
-                result.data.images.forEach(url => {
-                  this.photoList.push({
-                    url,
-                    scale: 'normal'
-                  });
-                });
-              };
-
-              if (result.data.servers) this.$set(this, 'serviceList', result.data.servers);
-              if (result.data.tasks) this.$set(this, 'taskList', result.data.tasks);
-              if (result.data.coupons) this.$set(this, 'couponList', result.data.coupons);
-              if (result.data.articles) this.$set(this, 'newsList', result.data.articles);
-            } else {
-              this.$router.replace({path: '/404'});
-              throw result.msg;
-            };
+          if (result.data.images) {
+            result.data.images.forEach(url => {
+              this.photoList.push({
+                url,
+                scale: 'normal'
+              });
+            });
           };
+
+          if (result.data.servers) this.$set(this, 'serviceList', result.data.servers);
+          if (result.data.tasks) this.$set(this, 'taskList', result.data.tasks);
+          if (result.data.coupons) this.$set(this, 'couponList', result.data.coupons);
+          if (result.data.articles) this.$set(this, 'newsList', result.data.articles);
+        }).catch(error => {
+          this.$router.replace({path: '/404'});
+          throw new Error(error);
         });
       });
     }

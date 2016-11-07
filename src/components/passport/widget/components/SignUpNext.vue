@@ -133,23 +133,23 @@ const Language = {
     title: '设置游惠宝密码',
     typePassword: '请输入密码',
     typePasswordAgain: '请再次输入密码',
-    noTypePassword: '嘿，你还没有输入密码！',
-    passwordLengthError: '密码的长度为6-16位字符！',
-    noTypeConfirmPassword: '请再次输入确认密码！',
-    passwordDiff: '两次密码不一样啊！',
-    signUpSuccess: ['註冊成功，', '秒后回到登录窗！'],
+    noTypePassword: '嘿，你还没有输入密码！ ',
+    passwordLengthError: '密码的长度为6-16位字符！ ',
+    noTypeConfirmPassword: '请再次输入确认密码！ ',
+    passwordDiff: '两次密码不一样啊！ ',
+    signUpSuccess: ['注册成功，', '秒后回到登录窗！ '],
     passwordSaveIng: '密码设置中…'
   },
   'zh-tw': {
     title: '設置遊惠寶密碼',
     typePassword: '請輸入密碼',
     typePasswordAgain: '請再次輸入密碼',
-    noTypePassword: '嘿，你還沒有輸入密碼！',
-    passwordLengthError: '密碼的長度為6-16位字元！',
-    noTypeConfirmPassword: '請再次輸入確認密碼！',
-    passwordDiff: '兩次密碼不一樣啊！',
-    signUpSuccess: ['註冊成功，', '秒後回到登錄窗！'],
-    passwordSaveIng: '密码設置中…'
+    noTypePassword: '嘿，你還沒有輸入密碼！ ',
+    passwordLengthError: '密碼的長度為6-16位字符！ ',
+    noTypeConfirmPassword: '請再次輸入確認密碼！ ',
+    passwordDiff: '兩次密碼不一樣啊！ ',
+    signUpSuccess: ['註冊成功，', '秒後回到登錄窗！ '],
+    passwordSaveIng: '密碼設置中…'
   }
 };
 const language = Language[LANG_TYPE];
@@ -180,22 +180,18 @@ export default {
       Http.fetch('api/register', {password}).then(response => {
         this.submiting = false;
 
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            throw result;
-          } else {
-            if (result.status === 1) {
-              this.timeout = 3;
-              this.timer = window.setInterval(() => {
-                this.timeout --;
-                if (this.timeout === 0) window.clearInterval(this.timer);
-                this.swipeTo(0);
-              }, 1000);
-            } else {
-              this.$message(result.msg);
-              throw result.msg;
+        Http.resolve(response).then(result => {
+          this.timeout = 3;
+          this.timer = window.setInterval(() => {
+            this.timeout --;
+            if (this.timeout === 0) {
+              window.clearInterval(this.timer);
+              this.swipeTo(0);
             };
-          };
+          }, 1000);
+        }).catch(error => {
+          if (response.ok) this.$message(error);
+          throw new Error(error);
         });
       });
     }

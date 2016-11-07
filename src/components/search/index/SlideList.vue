@@ -91,38 +91,32 @@ export default {
         // 加载完成，结束加载状态
         this.data.isLoading = false;
 
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            throw result;
-          } else {
-            if (result.status === 1) {
-              const task = result.data.tao_list;
-              const coupon = result.data.coupon_list;
-              const news = result.data.news_list;
+        Http.resolve(response).then(result => {
+          const task = result.data.tao_list;
+          const coupon = result.data.coupon_list;
+          const news = result.data.news_list;
 
-              if (this.index === 2) {
-                this.$set(this.data, 'list', this.data.list.concat(task.list));
-                this.$set(this.data, 'curPage', task.page);
-                this.$set(this.data, 'hasNext', task.page < task.total);
-              };
-
-              if (this.index === 3) {
-                this.$set(this.data, 'list', this.data.list.concat(coupon.result_list));
-                this.$set(this.data, 'curPage', coupon.curre_page);
-                this.$set(this.data, 'hasNext', coupon.has_next);
-              };
-
-              if (this.index === 4) {
-                this.$set(this.data, 'list', this.data.list.concat(news.result_list));
-                this.$set(this.data, 'curPage', news.curre_page);
-                this.$set(this.data, 'hasNext', news.has_next);
-              };
-
-              this.$nextTick(this.swiperUpdate);
-            } else {
-              throw result.msg;
-            };
+          if (this.index === 2) {
+            this.$set(this.data, 'list', this.data.list.concat(task.list));
+            this.$set(this.data, 'curPage', task.page);
+            this.$set(this.data, 'hasNext', task.page < task.total);
           };
+
+          if (this.index === 3) {
+            this.$set(this.data, 'list', this.data.list.concat(coupon.result_list));
+            this.$set(this.data, 'curPage', coupon.curre_page);
+            this.$set(this.data, 'hasNext', coupon.has_next);
+          };
+
+          if (this.index === 4) {
+            this.$set(this.data, 'list', this.data.list.concat(news.result_list));
+            this.$set(this.data, 'curPage', news.curre_page);
+            this.$set(this.data, 'hasNext', news.has_next);
+          };
+
+          this.$nextTick(this.swiperUpdate);
+        }).catch(error => {
+          throw new Error(error);
         });
       });
     }

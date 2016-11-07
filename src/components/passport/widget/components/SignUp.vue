@@ -249,22 +249,16 @@ export default {
       }).then(response => {
         this.msgSending = false;
 
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            throw result;
-          } else {
-            if (result.status === 1) {
-              this.$message(language.verifyCodeSendSuccess);
-              this.timeout = 60;
-              this.timer = window.setInterval(() => {
-                this.timeout --;
-                if (this.timeout === 0) window.clearInterval(this.timer);
-              }, 1000);
-            } else {
-              this.$message(result.msg);
-              throw result.msg;
-            };
-          };
+        Http.resolve(response).then(result => {
+          this.$message(language.verifyCodeSendSuccess);
+          this.timeout = 60;
+          this.timer = window.setInterval(() => {
+            this.timeout --;
+            if (this.timeout === 0) window.clearInterval(this.timer);
+          }, 1000);
+        }).catch(error => {
+          if (response.ok) this.$message(error);
+          throw new Error(error);
         });
       });
     },
@@ -285,17 +279,11 @@ export default {
       }).then(response => {
         this.codeVerifying = false;
 
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            throw result;
-          } else {
-            if (result.status === 1) {
-              this.swipeTo(2);
-            } else {
-              this.$message(result.msg);
-              throw result.msg;
-            };
-          };
+        Http.resolve(response).then(result => {
+          this.swipeTo(2);
+        }).catch(error => {
+          if (response.ok) this.$message(error);
+          throw new Error(error);
         });
       });
     }

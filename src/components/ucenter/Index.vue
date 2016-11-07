@@ -259,27 +259,22 @@ export default {
       next({name: 'passport:signin'});
     } else {
       Http.fetch('api/get_user_info').then(response => {
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            next(false);
-            throw result;
-          } else {
-            if (result.status === 1) {
-              next(vm => {
-                vm.$set(vm, 'userAvatar', result.data.user_head_url || avatarImg);
-                vm.$set(vm, 'userNickName', result.data.user_nick);
-                vm.$set(vm, 'flowCoin', result.data.flowcoin);
-                vm.$set(vm, 'couponCount', result.data.user_ticket_count);
-                vm.$set(vm, 'orderCount', result.data.order_count);
-              });
-            } else if (result.status === -2) {
-              next({name: 'passport:signin'});
-              throw result.msg;
-            } else {
-              next({path: '/404'});
-              throw result.msg;
-            };
+        Http.resolve(response).then(result => {
+          if (result.status === 1) {
+            next(vm => {
+              vm.$set(vm, 'userAvatar', result.data.user_head_url || avatarImg);
+              vm.$set(vm, 'userNickName', result.data.user_nick);
+              vm.$set(vm, 'flowCoin', result.data.flowcoin);
+              vm.$set(vm, 'couponCount', result.data.user_ticket_count);
+              vm.$set(vm, 'orderCount', result.data.order_count);
+            });
+          } else if (result.status === -2) {
+            next({name: 'passport:signin'});
+            throw new Error(result.msg);
           };
+        }).catch(error => {
+          next({path: '/404'});
+          throw new Error(error);
         });
       });
     };
@@ -291,29 +286,22 @@ export default {
       Http.fetch('api/logout').then(response => {
         this.signouting = false;
 
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            throw result;
-          } else {
-            if (result.status === 1) {
-
-              this.$notice(language.logoutSuccess, {
-                container: this.$el,
-                onShow: () => {
-                  this.$root.$emit('blur:toggle');
-                  USER_AUTH.user_auth = false;
-                },
-                onHide: () => {
-                  this.$root.$emit('blur:toggle');
-                  this.$router.replace({
-                    name: 'index'
-                  });
-                }
+        Http.resolve(response).then(result => {
+          this.$notice(language.logoutSuccess, {
+            container: this.$el,
+            onShow: () => {
+              this.$root.$emit('blur:toggle');
+              USER_AUTH.user_auth = false;
+            },
+            onHide: () => {
+              this.$root.$emit('blur:toggle');
+              this.$router.replace({
+                name: 'index'
               });
-            } else {
-              throw result.msg;
-            };
-          };
+            }
+          });
+        }).catch(error => {
+          throw new Error(error);
         });
       });
     }

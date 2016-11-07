@@ -110,9 +110,9 @@ const Language = {
     signIn: '登录',
     nextStep: '下一步',
     codeVerifying: '验证中…',
-    noTypePhoneNumber: '嘿，要先输入手机号码！',
-    phoneNumberError: '亲，手机号码写错了，改一改！',
-    noTypeVerifyCode: '请输入短信验证码！',
+    noTypePhoneNumber: '嘿，要先输入手机号码！ ',
+    phoneNumberError: '亲，手机号码写错了，改一改！ ',
+    noTypeVerifyCode: '请输入短信验证码！ ',
     verifyCodeError: '验证码为四位数字',
     verifyCodeSendSuccess: '验证信息已经发送至该手机号码'
   },
@@ -175,21 +175,16 @@ export default {
       }).then(response => {
         this.msgSending = false;
 
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            throw result;
-          } else {
-            if (result.status === 0) {
-              this.$message(result.msg);
-            } else {
-              this.$message(language.verifyCodeSendSuccess);
-              this.timeout = 60;
-              this.timer = window.setInterval(() => {
-                this.timeout --;
-                if (this.timeout === 0) window.clearInterval(this.timer);
-              }, 1000);
-            };
-          };
+        Http.resolve(response).then(result => {
+          this.$message(language.verifyCodeSendSuccess);
+          this.timeout = 60;
+          this.timer = window.setInterval(() => {
+            this.timeout --;
+            if (this.timeout === 0) window.clearInterval(this.timer);
+          }, 1000);
+        }).catch(error => {
+          if (response.ok) this.$message(error);
+          throw new Error(error);
         });
       });
     },
@@ -210,16 +205,11 @@ export default {
       }).then(response => {
         this.codeVerifying = false;
 
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            throw result;
-          } else {
-            if (result.status === 0) {
-              this.$message(result.msg);
-            } else {
-              this.swipeTo(2);
-            };
-          };
+        Http.resolve(response).then(result => {
+          this.swipeTo(2);
+        }).catch(error => {
+          if (response.ok) this.$message(error);
+          throw new Error(error);
         });
       });
     }

@@ -133,25 +133,18 @@ export default {
     Http.fetch('shop/get_shop_photo', {
       shop_id: to.params.shop_id
     }, CHANNEL_CODE).then(response => {
-      Http.resolve(response, (error, result) => {
-        if (error) {
-          next(false);
-          throw result;
-        } else {
-          if (result.status === 1) {
-            next(vm => {
-              result.data.map(url => {
-                vm.photoList.push({
-                  url,
-                  scale: 'normal'
-                });
-              });
+      Http.resolve(response).then(result => {
+        next(vm => {
+          result.data.map(url => {
+            vm.photoList.push({
+              url,
+              scale: 'normal'
             });
-          } else {
-            next({path: '/404'});
-            throw result.msg;
-          };
-        };
+          });
+        });
+      }).catch(error => {
+        next({path: '/404'});
+        throw new Error(error);
       });
     });
   },
@@ -160,22 +153,16 @@ export default {
       Http.fetch('shop/get_shop_photo', {
         shop_id: to.params.shop_id
       }, CHANNEL_CODE).then(response => {
-        Http.resolve(response, (error, result) => {
-          if (error) {
-            throw result;
-          } else {
-            if (result.status === 1) {
-              result.data.map(url => {
-                this.photoList.push({
-                  url,
-                  scale: 'normal'
-                });
-              });
-            } else {
-              this.$router.replace({path: '/404'});
-              throw result.msg;
-            };
-          };
+        Http.resolve(response).then(result => {
+          result.data.map(url => {
+            this.photoList.push({
+              url,
+              scale: 'normal'
+            });
+          });
+        }).catch(error => {
+          this.$router.replace({path: '/404'});
+          throw new Error(error);
         });
       });
     }
