@@ -1,4 +1,4 @@
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 .album-list {
   padding: .2rem;
   & > ul {

@@ -1,4 +1,4 @@
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 .layout-header {
   position: fixed;
   z-index: 1;

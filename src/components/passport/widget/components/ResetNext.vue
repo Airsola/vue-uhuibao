@@ -1,4 +1,4 @@
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 .popup-animate {
   position: absolute;
   width: 85%;

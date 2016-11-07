@@ -1,24 +1,18 @@
 import Vue from 'vue';
 import Helper from 'helper';
+import Component from './component.vue';
 
-const Constructor = Vue.extend(require('./component.vue'));
+const Constructor = Vue.extend(Component);
 const instances = [];
 const methods = {
-  onSuccess(id, callback) {
-    for (let instance of instances) {
-      if (instance.id === id) {
-        callback(instance);
-        break;
-      };
-    };
+  onSuccess(callback) {
+    callback();
   },
-  onForgone(id, callback) {
-    for (let instance of instances) {
-      if (instance.id === id) {
-        callback(instance);
-        break;
-      };
-    };
+  onForgone(callback) {
+    callback();
+  },
+  onShow(callback) {
+    callback();
   },
   onHide(id, callback) {
     if (typeof callback === 'function') callback();
@@ -32,37 +26,37 @@ const methods = {
   }
 };
 
-const Widget = function(options) {
-  const {container, onSuccess, onForgone, onShow, onHide} = options;
-
+const Widget = function(options = {}) {
+  const {container, onShow, onHide, onSuccess, onForgone} = options;
   const id = Helper.getRandomStamp();
-  const instance = new Constructor({
-    data: {
-      onHide() {
-        methods.onHide(id, onHide);
-      },
-      onSuccess(vm) {
-        methods.onSuccess(id, onSuccess);
-      },
-      onForgone() {
-        methods.onForgone(id, onForgone);
-      }
-    }
-  });
+  const data = {container};
 
-  if (typeof onShow === 'function') onShow();
+  data.onHide = () => {
+    methods.onHide(id, onHide);
+  };
+
+  if (typeof onShow === 'function') {
+    data.onShow = () => {
+      methods.onShow(onShow);
+    };
+  };
+
+  if (typeof onSuccess === 'function') {
+    data.onSuccess = () => {
+      methods.onSuccess(onSuccess);
+    };
+  };
+
+  if (typeof onForgone === 'function') {
+    data.onForgone = () => {
+      methods.onForgone(onForgone);
+    };
+  };
+
+  const instance = new Constructor({data});
 
   instance.id = id;
   instance.vm = instance.$mount();
-
-  if (container) {
-    container.appendChild(instance.vm.$el);
-  } else {
-    document.body.appendChild(instance.vm.$el);
-  };
-
-  instance.vm.visible = true;
-  instance.dom = instance.vm.$el;
 
   instances.push(instance);
 };

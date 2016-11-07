@@ -1,4 +1,4 @@
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 .service-list {
   padding-top: .4rem;
   position: relative;

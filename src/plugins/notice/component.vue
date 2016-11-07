@@ -1,36 +1,35 @@
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 .ui-popup {
   position: fixed;
   left: 0;
   width: 100%;
   background-color: rgba(0, 0, 0, .6);
-}
-.ui-popup-animate {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  & > p {
+  & > .ui-popup-animate {
     position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    border-radius: .03rem;
-    box-shadow: 0 .01rem .03rem rgba(0,0,0,.2);
-    overflow: hidden;
-    font-size: .14rem;
-    color: #333;
-    padding: .12rem;
-    white-space: nowrap;
-    word-break: break-all;
-    max-width: 90%;
-    line-height: .24rem;
-    text-align: center;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    & > p {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      border-radius: .03rem;
+      box-shadow: 0 .01rem .03rem rgba(0,0,0,.2);
+      overflow: hidden;
+      font-size: .14rem;
+      color: #333;
+      padding: .12rem;
+      white-space: nowrap;
+      word-break: break-all;
+      max-width: 90%;
+      line-height: .24rem;
+      text-align: center;
+    }
   }
 }
-
 .fade-enter-active{
   animation: fadeIn .4s ease;
 }
@@ -104,30 +103,36 @@ export default {
     closed(newVal) {
       if (newVal === true) {
         this.visible = false;
-        if (typeof this.onHide === 'function') this.onHide();
       };
     }
   },
   methods: {
+    startTimer() {
+      if (this.timeout > 0) {
+        this.timer = window.setTimeout(() => {
+          this.clearTimer();
+
+          this.closed = true;
+          this.onHide();
+        }, this.timeout);
+      }
+    },
+    clearTimer() {
+      window.clearTimeout(this.timer);
+    },
     destroy(evt) {
       if (this.closed && evt.target === this.$el) {
         this.$el.parentNode.removeChild(this.$el);
         this.$destroy(true);
       };
-    },
-    clearTimer() {
-      clearTimeout(this.timer);
-    },
-    startTimer() {
-      if (this.timeout > 0) {
-        this.timer = setTimeout(() => {
-          this.closed = !this.closed;
-        }, this.timeout);
-      }
     }
   },
   mounted() {
-    if (typeof this.onShow === 'function') this.onShow();
+    (this.container || window.document.body).appendChild(this.$el);
+
+    this.visible = true;
+    if (this.onShow) this.onShow();
+
     this.startTimer();
   }
 };

@@ -1,4 +1,4 @@
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 .generic-list {
   dl {
     transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);

@@ -1,4 +1,4 @@
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 .main-nav {
   background-color: #fff;
   border-bottom: solid 1px #eaeaea;

@@ -1,4 +1,4 @@
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 .branch-store {
   & > p {
     padding: .2rem .2rem .1rem .2rem;

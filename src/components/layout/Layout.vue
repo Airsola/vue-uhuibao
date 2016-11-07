@@ -1,4 +1,4 @@
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 .layout {
   min-height: 100vh;
   background-color: #f6f6f6;

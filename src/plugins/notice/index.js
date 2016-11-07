@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import Helper from 'helper';
+import Component from './component.vue';
 
-const Constructor = Vue.extend(require('./component.vue'));
+const Constructor = Vue.extend(Component);
 const instances = [];
 const methods = {
   onShow(callback) {
@@ -19,20 +20,34 @@ const methods = {
   }
 };
 
-const Notice = function(message, options) {
-  const {container, onShow, onHide} = options;
+/*
+ * 系统通知框
+ * @params message [*] String 通知文字
+ * @params options (= {}) Object 其它选项参数
+ * @params options.container Element 被包括的父级DOM元素
+ * @params options.onShow Function 显示时的回调
+ * @params options.onHide Function 关闭时的回调
+ *
+ * author shusiwei
+ * date 2016/11/07
+ */
+const Notice = (message, options = {}) => {
+  if (typeof message !== 'string') throw new Error('message must be a string');
+  if (options && typeof options !== 'object') throw new Error('options must be a plain object');
 
+  const {container, onShow, onHide} = options;
   const id = Helper.getRandomStamp();
-  const data = {message};
+  const data = {
+    message,
+    container,
+    onHide() {
+      methods.onHide(id, onHide);
+    }
+  };
 
   if (typeof onShow === 'function') {
     data.onShow = () => {
       methods.onShow(onShow);
-    };
-  };
-  if (typeof onHide === 'function') {
-    data.onHide = () => {
-      methods.onHide(id, onHide);
     };
   };
 
@@ -40,15 +55,6 @@ const Notice = function(message, options) {
 
   instance.id = id;
   instance.vm = instance.$mount();
-
-  if (container) {
-    container.appendChild(instance.vm.$el);
-  } else {
-    document.body.appendChild(instance.vm.$el);
-  };
-
-  instance.vm.visible = true;
-  instance.dom = instance.vm.$el;
 
   instances.push(instance);
 };

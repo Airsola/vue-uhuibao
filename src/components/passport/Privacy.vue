@@ -1,4 +1,4 @@
-<style lang="sass">
+<style lang="stylus">
 .privacy-article {
   padding: .2rem;
   background-color: #fff;

@@ -1,10 +1,10 @@
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 .banner-swiper img,.banner-swiper a {
   display: block;
   width: 100%;
 }
 </style>
-<style lang="sass">
+<style lang="stylus">
 .swiper-pagination {
   position: absolute;
   width: 100%;

@@ -1,4 +1,4 @@
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 .location-map {
   height: calc(100vh - .5rem);
 }
@@ -43,7 +43,7 @@
   overflow: hidden;
 }
 </style>
-<style lang="sass">
+<style lang="stylus">
 .anchorBL,
 .BMap_cpyCtrl,
 .pano_pc_indoor_exit,

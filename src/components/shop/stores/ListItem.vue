@@ -1,4 +1,4 @@
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 li {
   position: relative;
   padding: .15rem .2rem;

@@ -1,4 +1,4 @@
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 .custom-nav {
   padding-bottom: .2rem;
   &.even {

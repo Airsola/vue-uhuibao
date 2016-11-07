@@ -1,4 +1,4 @@
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 .top-bar {
   position: fixed;
   left: 0;
@@ -31,7 +31,7 @@
   }
 }
 </style>
-<style lang="sass">
+<style lang="stylus">
 .has-top-bar {
   & > .layout-header {
     top: .3rem !important;

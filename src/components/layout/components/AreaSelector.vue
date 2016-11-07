@@ -1,4 +1,4 @@
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 .area-drop-down {
   position: absolute;
   left: .2rem;

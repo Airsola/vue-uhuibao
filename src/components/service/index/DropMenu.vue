@@ -1,4 +1,4 @@
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 /* 导航栏 */
 .main-nav-bar {
   background-color: #fff;

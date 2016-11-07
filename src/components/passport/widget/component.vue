@@ -1,4 +1,4 @@
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 .passport-popup {
   position: fixed;
   left: 0;
@@ -100,7 +100,7 @@ export default {
     closed(newVal) {
       if (newVal === true) {
         this.visible = false;
-        if (typeof this.onHide === 'function') this.onHide();
+        this.onHide();
       };
     }
   },
@@ -111,9 +111,9 @@ export default {
     close(error) {
       this.closed = true;
       if (error) {
-        if (typeof this.onForgone === 'function') this.onForgone(this);
+        if (this.onForgone) this.onForgone(this);
       } else {
-        if (typeof this.onSuccess === 'function') this.onSuccess(this);
+        if (this.onSuccess) this.onSuccess(this);
       };
     },
     destroy(evt) {
@@ -122,6 +122,12 @@ export default {
         this.$destroy(true);
       };
     }
+  },
+  mounted() {
+    (this.container || window.document.body).appendChild(this.$el);
+
+    this.visible = true;
+    if (this.onShow) this.onShow();
   }
 };
 </script>

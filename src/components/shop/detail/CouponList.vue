@@ -1,4 +1,4 @@
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 .shop-item {
   & > h5 {
     padding: .16rem .2rem;

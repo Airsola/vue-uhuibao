@@ -1,4 +1,4 @@
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 .layout-body {
   padding-top: .5rem;
   position: relative;

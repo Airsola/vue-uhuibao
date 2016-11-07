@@ -1,4 +1,4 @@
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 .shop-info {
   & > img {
     width: .9rem;

@@ -1,42 +1,60 @@
 import Vue from 'vue';
-let MessageConstructor = Vue.extend(require('./component.vue'));
+import Helper from 'helper';
+import Component from './component.vue';
 
-let instances = [];
-let count = 1;
+const Constructor = Vue.extend(Component);
+const instances = [];
+const methods = {
+  onShow(callback) {
+    callback();
+  },
+  onHide(id, callback) {
+    if (typeof callback === 'function') callback();
 
-var Message = function(options) {
-  options = options || {};
-  if (typeof options === 'string') {
-    options = {
-      message: options
+    for (let i = 0, len = instances.length; i < len; i++) {
+      if (id === instances[i].id) {
+        instances.splice(i, 1);
+        break;
+      };
     };
   }
-  const userOnHide = options.onHide;
-  const id = 'message-' + count++;
-
-  options.onHide = function() {
-    Message.hide(id, userOnHide);
-  };
-
-  const instance = new MessageConstructor({
-    data: options
-  });
-  instance.id = id;
-  instance.vm = instance.$mount();
-  document.body.appendChild(instance.vm.$el);
-  instance.vm.visible = true;
-  instance.dom = instance.vm.$el;
-  instances.push(instance);
 };
 
-Message.hide = function(id, onHide) {
-  for (let i = 0, len = instances.length; i < len; i++) {
-    if (id === instances[i].id) {
-      if (typeof onHide === 'function') onHide(instances[i]);
-      instances.splice(i, 1);
-      break;
+/*
+ * 消息提示框
+ * @params message [*] String 消息文字
+ * @params options (= {}) Object 其它选项参数
+ * @params options.onShow Function 显示时的回调
+ * @params options.onHide Function 关闭时的回调
+ *
+ * author shusiwei
+ * date 2016/11/07
+ */
+const Message = (message, options = {}) => {
+  if (typeof message !== 'string') throw new Error('message must be a string');
+  if (options && typeof options !== 'object') throw new Error('options must be a plain object');
+
+  const {onShow, onHide} = options;
+  const id = Helper.getRandomStamp();
+  const data = {
+    message,
+    onHide() {
+      methods.onHide(id, onHide);
     }
-  }
+  };
+
+  if (typeof onShow === 'function') {
+    data.onShow = () => {
+      methods.onShow(onShow);
+    };
+  };
+
+  const instance = new Constructor({data});
+
+  instance.id = id;
+  instance.vm = instance.$mount();
+
+  instances.push(instance);
 };
 
 export default Message;
