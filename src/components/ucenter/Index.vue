@@ -185,7 +185,7 @@
       </div>
       <div class="signout ui-card ui-card-overline ui-card-underline ui-card-mar-btm">
         <a v-if="signouting">{{lang.signouting}}</a>
-        <a else @click="signoutAction">{{lang.signout}}</a>
+        <a v-else @click="signoutAction">{{lang.signout}}</a>
       </div>
       <div class="clearfix"></div>
     </layout-body>

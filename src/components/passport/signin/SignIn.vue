@@ -166,8 +166,7 @@ export default {
 
           // 如果有来源地址，则返回来源地址，否则则回到用户中心页面！
           if (url) {
-            window.history.replaceState(null, null, url);
-            window.location.reload();
+            window.location.replace(url);
           } else {
             this.$router.replace({
               name: 'ucenter'

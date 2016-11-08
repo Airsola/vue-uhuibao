@@ -62,9 +62,9 @@ export default {
   methods: {
     loadMoreFn(evt) {
       if (this.data.hasNext === false || this.data.isLoading === true) return;
-      if (Helper.isPageBottom(Helper.rem2px(1))) this.fetchData(this.index, this.data.curPage + 1);
+      if (Helper.isPageBottom(Helper.rem2px(1))) this.fetchData(this.keyword, this.index, this.data.curPage + 1);
     },
-    fetchData(flag, page) {
+    fetchData(keyword, flag, page) {
       switch (this.active) {
         case 0 :
           if (this.index !== 4) return;
@@ -83,11 +83,7 @@ export default {
       this.data.isLoading = true;
 
       // 请求数据
-      Http.fetch('common/search_data', CHANNEL_CODE, AREA_CODE, {
-        keyword: this.keyword,
-        flag: flag,
-        page: page
-      }).then(response => {
+      Http.fetch('common/search_data', CHANNEL_CODE, AREA_CODE, {keyword, flag, page}).then(response => {
         // 加载完成，结束加载状态
         this.data.isLoading = false;
 
@@ -96,19 +92,19 @@ export default {
           const coupon = result.data.coupon_list;
           const news = result.data.news_list;
 
-          if (this.index === 2) {
+          if (flag === 2) {
             this.$set(this.data, 'list', this.data.list.concat(task.list));
             this.$set(this.data, 'curPage', task.page);
             this.$set(this.data, 'hasNext', task.page < task.total);
           };
 
-          if (this.index === 3) {
+          if (flag === 3) {
             this.$set(this.data, 'list', this.data.list.concat(coupon.result_list));
             this.$set(this.data, 'curPage', coupon.curre_page);
             this.$set(this.data, 'hasNext', coupon.has_next);
           };
 
-          if (this.index === 4) {
+          if (flag === 4) {
             this.$set(this.data, 'list', this.data.list.concat(news.result_list));
             this.$set(this.data, 'curPage', news.curre_page);
             this.$set(this.data, 'hasNext', news.has_next);
