@@ -33,17 +33,16 @@ import {Layout, LayoutHeader, LayoutBody, LayoutFooter} from '../layout';
 import DropMenu from './index/DropMenu.vue';
 import List from './index/List.vue';
 
-import {LANG_TYPE} from 'config';
+import {translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     title: '卡券'
   },
   'zh-tw': {
     title: '卡券'
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   components: {

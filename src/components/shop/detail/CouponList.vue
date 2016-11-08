@@ -35,9 +35,9 @@
 <script>
 import ListItem from '../../coupon/components/ListItem.vue';
 
-import {LANG_TYPE} from 'config';
+import {translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     title: '卡券',
     showMore: ['查看其它', '张卡券']
@@ -46,8 +46,7 @@ const Language = {
     title: '卡券',
     showMore: ['查看其它', '張卡券']
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   components: {

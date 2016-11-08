@@ -37,9 +37,10 @@
 </template>
 
 <script>
-import {CHANNEL_CODE, AREA_CODE, LANG_TYPE} from 'config';
+import {CHANNEL_CODE, AREA_CODE} from 'config';
+import {translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     clicked: '人领取',
     shop: '商家：'
@@ -48,8 +49,7 @@ const Language = {
     clicked: '人領取',
     shop: '商家：'
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   props: ['couponId', 'couponName', 'couponLogo', 'couponUv', 'tags', 'shopId', 'shopName', 'shopAuth', 'productName'],

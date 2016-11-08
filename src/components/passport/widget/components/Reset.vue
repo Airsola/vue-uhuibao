@@ -170,10 +170,10 @@
 </template>
 
 <script>
-import {Http, LANG_TYPE} from 'config';
+import {Http, translate} from 'methods';
 import Helper from 'helper';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     title: '找回游惠宝账号',
     typePhoneNumber: '请输入手机号',
@@ -206,8 +206,7 @@ const Language = {
     verifyCodeError: '驗證碼為四位數字',
     verifyCodeSendSuccess: '驗證信息已經發送至該手機號碼'
   }
-};
-const language = Language[LANG_TYPE];
+});
 const TWPhoneRegex = new RegExp('^09(\\d{8})$');
 const isTWPhone = function(string) {
   return TWPhoneRegex.test(string);

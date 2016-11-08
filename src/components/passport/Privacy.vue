@@ -29,17 +29,16 @@
 
 <script>
 import {Layout, LayoutHeader, LayoutBody} from '../layout';
-import {Http, LANG_TYPE} from 'config';
+import {Http, translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     title: '游惠宝用户协议'
   },
   'zh-tw': {
     title: '遊惠寶用戶協議'
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   components: {

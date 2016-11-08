@@ -86,17 +86,16 @@
 </template>
 
 <script>
-import {LANG_TYPE} from 'config';
+import {translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     goToSee: '进去逛逛'
   },
   'zh-tw': {
     goToSee: '進去逛逛'
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   props: ['shopId', 'shopName', 'shopLogo', 'shopDesc', 'shopAuth'],

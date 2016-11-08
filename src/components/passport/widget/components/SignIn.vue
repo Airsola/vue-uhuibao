@@ -168,10 +168,11 @@
 </template>
 
 <script>
-import {Http, LANG_TYPE, USER_AUTH} from 'config';
+import {USER_AUTH} from 'config';
+import {Http, translate} from 'methods';
 import Helper from 'helper';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     title: '游惠宝账号登录',
     typePhoneNumber: '请输入手机号',
@@ -200,8 +201,7 @@ const Language = {
     passwordLengthError: '密碼的長度為6-16位字元！',
     signInEorror: '您輸入的賬號或密碼不正確！'
   }
-};
-const language = Language[LANG_TYPE];
+});
 const TWPhoneRegex = new RegExp('^09(\\d{8})$');
 const isTWPhone = function(string) {
   return TWPhoneRegex.test(string);

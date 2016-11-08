@@ -126,9 +126,9 @@
 </template>
 
 <script>
-import {Http, LANG_TYPE} from 'config';
+import {Http, translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     title: '设置游惠宝密码',
     typePassword: '请输入密码',
@@ -151,8 +151,7 @@ const Language = {
     signUpSuccess: ['註冊成功，', '秒後回到登錄窗！ '],
     passwordSaveIng: '密碼設置中…'
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   props: ['swipeTo'],

@@ -152,9 +152,10 @@ import {Layout, LayoutHeader, LayoutBody} from '../layout';
 import IdCard from '../shop/components/IdCard.vue';
 
 import Helper from 'helper';
-import {Http, LANG_TYPE, CHANNEL_CODE, USER_AUTH} from 'config';
+import {CHANNEL_CODE, USER_AUTH} from 'config';
+import {Http, translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     title: '资讯详情',
     collect: '收藏',
@@ -173,8 +174,7 @@ const Language = {
     collecting: '收藏中…',
     collectResult: ['取消收藏成功！', '攻略收藏成功！']
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   components: {

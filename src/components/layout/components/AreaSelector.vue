@@ -78,17 +78,17 @@
 
 <script>
 import Helper from 'helper';
-import {Http, CHANNEL_CODE, AREA_CODE, LANG_TYPE, HASH_CLICK} from 'config';
+import {CHANNEL_CODE, AREA_CODE, HASH_CLICK} from 'config';
+import {Http, translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     allArea: '所有地区'
   },
   'zh-tw': {
     allArea: '所有地區'
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   computed: {

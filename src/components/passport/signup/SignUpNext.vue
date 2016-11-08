@@ -129,9 +129,9 @@ label {
 </template>
 
 <script>
-import {Http, LANG_TYPE} from 'config';
+import {Http, translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     typePassword: '请输入密码',
     typePasswordAgain: '请再次输入密码',
@@ -156,8 +156,7 @@ const Language = {
     passwordSaveIng: '密碼設置中…',
     noAgreePrivacy: '要先同意用戶註冊協議的！ '
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   props: ['url'],

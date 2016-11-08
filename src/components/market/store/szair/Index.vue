@@ -32,11 +32,12 @@
 import {Layout, LayoutHeader, LayoutBody} from '../../../layout';
 import ListItem from './components/ListItem.vue';
 
-import {Http, LANG_TYPE, CHANNEL_CODE, AREA_CODE} from 'config';
+import {CHANNEL_CODE, AREA_CODE} from 'config';
+import {Http, translate} from 'methods';
 import Helper from 'helper';
 import bannerImg from 'assets/images/szair/banner.jpg';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     title: '境外通讯卡',
     myOrder: '我的',
@@ -53,8 +54,7 @@ const Language = {
     pullUpLoadMore: '上拉加载更多~',
     moreLoading: '请稍等，正在努力加载中…'
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   components: {

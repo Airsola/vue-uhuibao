@@ -105,9 +105,9 @@
 
 <script>
 import {Layout, LayoutHeader, LayoutBody} from '../layout';
-import {Http, LANG_TYPE} from 'config';
+import {Http, translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     title: '商家位置',
     seeRoadLine: '查看路线'
@@ -116,8 +116,7 @@ const Language = {
     title: '商家位置',
     seeRoadLine: '查看路線'
   }
-};
-const language = Language[LANG_TYPE];
+});
 const BMap = window.BMap;
 class CustomOverlay extends BMap.Overlay {
   constructor(map, point) {

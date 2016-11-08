@@ -46,9 +46,9 @@
 
 <script>
 import placeholder from 'assets/images/x1_y1.png';
-import {LANG_TYPE} from 'config';
+import {translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     clicked: '已购买',
     shop: '商家：',
@@ -59,8 +59,7 @@ const Language = {
     shop: '商家：',
     currencySymbol: 'NT$'
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   props: ['goodsId', 'goodsName', 'goodsLogo', 'goodsPrice', 'goodsUv', 'tags', 'shopId', 'shopName', 'shopAuth', 'productName'],

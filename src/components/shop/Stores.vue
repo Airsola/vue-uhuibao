@@ -27,9 +27,9 @@
 import {Layout, LayoutHeader, LayoutBody} from '../layout';
 import ListItem from './stores/ListItem.vue';
 
-import {Http, LANG_TYPE} from 'config';
+import {Http, translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     title: '分店信息',
     countDesc: ['全部分店共', '家']
@@ -38,8 +38,7 @@ const Language = {
     title: '分店信息',
     countDesc: ['全部分店共', '家']
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   components: {

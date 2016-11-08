@@ -13,17 +13,17 @@ import {Layout, LayoutHeader, LayoutBody} from '../layout';
 import Forgot from './forgot/Forgot.vue';
 import ForgotNext from './forgot/ForgotNext.vue';
 
-import {Http, LANG_TYPE, USER_AUTH} from 'config';
+import {USER_AUTH} from 'config';
+import {Http, translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     title: '找回游惠宝账号'
   },
   'zh-tw': {
     title: '找回游惠寶帳號'
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   components: {

@@ -58,9 +58,10 @@ import {Layout, LayoutHeader, LayoutBody} from '../layout';
 import SlideList from './index/SlideList.vue';
 
 import Swiper from 'swiper';
-import {Http, CHANNEL_CODE, AREA_CODE, LANG_TYPE} from 'config';
+import {CHANNEL_CODE, AREA_CODE} from 'config';
+import {Http, translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     title: '请输入需要搜索的关键字',
     noTypeKeyword: '请输入关键字~',
@@ -75,8 +76,7 @@ const Language = {
     noTypeNewKeywordTips: '請輸入新的關鍵字！ ',
     productName: ['資訊', '淘流量', '卡券']
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   components: {
@@ -151,7 +151,7 @@ export default {
               }, 1000);
             });
           });
-        }).then(error => {
+        }).catch(error => {
           next({path: '/404'});
           throw new Error(error);
         });

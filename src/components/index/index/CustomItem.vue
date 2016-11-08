@@ -111,9 +111,10 @@ import TaskListItem from '../../task/components/ListItem.vue';
 import CouponListItem from '../../coupon/components/ListItem.vue';
 import NewsListItem from '../../news/components/ListItem.vue';
 
-import {Http, LANG_TYPE, CHANNEL_CODE, AREA_CODE} from 'config';
+import {CHANNEL_CODE, AREA_CODE} from 'config';
+import {Http, translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     rotation: ['加载中…', '换一批'],
     productName: ['服务', '淘流量', '卡券', '资讯']
@@ -122,8 +123,7 @@ const Language = {
     rotation: ['加載中…', '換一批'],
     productName: ['服務', '淘流量', '卡券', '資訊']
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   components: {

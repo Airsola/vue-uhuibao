@@ -37,9 +37,10 @@
 </template>
 
 <script>
-import {CHANNEL_CODE, AREA_CODE, LANG_TYPE} from 'config';
+import {CHANNEL_CODE, AREA_CODE} from 'config';
+import {translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     clicked: '人参与',
     shop: '商家：',
@@ -50,8 +51,7 @@ const Language = {
     shop: '商家：',
     flowCoin: '流量幣'
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   props: ['taskId', 'taskName', 'taskLogo', 'taskCost', 'taskUv', 'shopId', 'shopName', 'shopAuth', 'productName'],

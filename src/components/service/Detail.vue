@@ -116,9 +116,9 @@ import {Layout, LayoutHeader, LayoutBody} from '../layout';
 import IdCard from '../shop/components/IdCard.vue';
 
 import Helper from 'helper';
-import {Http, LANG_TYPE} from 'config';
+import {Http, translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     title: '服务详情',
     clicked: '人浏览',
@@ -131,8 +131,7 @@ const Language = {
     currencySymbol: 'NT$',
     buyNotes: '購買須知'
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   components: {

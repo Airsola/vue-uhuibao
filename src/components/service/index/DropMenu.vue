@@ -176,9 +176,10 @@
 <script>
 import Swiper from 'swiper';
 
-import {Http, CHANNEL_CODE, LANG_TYPE} from 'config';
+import {CHANNEL_CODE} from 'config';
+import {Http, translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     category: ['推荐商家', '所有地区'],
     allCategory: ['推荐商家', '全部商家'],
@@ -189,8 +190,7 @@ const Language = {
     allCategory: ['推薦商家', '全部商家'],
     allSubCategory: '全部'
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   props: ['showCateMenu', 'showAreaMenu', 'slideToggle'],

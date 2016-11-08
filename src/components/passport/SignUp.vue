@@ -13,17 +13,17 @@ import {Layout, LayoutHeader, LayoutBody} from '../layout';
 import SignUp from './signup/SignUp.vue';
 import SignUpNext from './signup/SignUpNext.vue';
 
-import {Http, LANG_TYPE, USER_AUTH} from 'config';
+import {USER_AUTH} from 'config';
+import {Http, translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     title: '注册游惠宝账号'
   },
   'zh-tw': {
     title: '註冊遊惠寶賬號'
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   components: {

@@ -23,9 +23,10 @@ import CouponListItem from '../../coupon/components/ListItem.vue';
 import NewsListItem from '../../news/components/ListItem.vue';
 
 import Helper from 'helper';
-import {Http, CHANNEL_CODE, AREA_CODE, LANG_TYPE} from 'config';
+import {CHANNEL_CODE, AREA_CODE} from 'config';
+import {Http, translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     noData: ['亲，还没有', '~'],
     nextNoData: '下面没有了~',
@@ -38,8 +39,7 @@ const Language = {
     pullUpLoadMore: '上拉加載更多~',
     moreLoading: '請稍等，正在努力加載中…'
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   components: {

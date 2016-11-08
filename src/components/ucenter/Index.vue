@@ -195,10 +195,11 @@
 
 <script>
 import {Layout, LayoutHeader, LayoutBody, LayoutFooter} from '../layout';
-import {Http, LANG_TYPE, USER_AUTH} from 'config';
+import {USER_AUTH} from 'config';
+import {Http, translate} from 'methods';
 import avatarImg from 'assets/images/avatar.jpg';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     title: '我的',
     setNickname: '设置昵称',
@@ -233,8 +234,7 @@ const Language = {
     signouting: '註銷中…',
     logoutSuccess: '登錄註銷成功，即將跳轉到首頁'
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   components: {

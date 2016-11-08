@@ -172,9 +172,9 @@
 import {Layout, LayoutHeader, LayoutBody} from '../../../layout';
 
 import Helper from 'helper';
-import {Http, LANG_TYPE} from 'config';
+import {Http, translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     title: '商品详情',
     clicked: '已购买',
@@ -195,8 +195,7 @@ const Language = {
     buyNowing: '加載中…',
     storeEmpty: '已售罄'
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   components: {

@@ -76,9 +76,9 @@
 </template>
 
 <script>
-import {Http, LANG_TYPE} from 'config';
+import {Http, translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     typePassword: '请输入密码',
     typePasswordAgain: '请再次输入密码',
@@ -101,8 +101,7 @@ const Language = {
     signUpSuccess: ['密碼重置成功，', '秒後回到登錄窗！ '],
     passwordSaveIng: '密碼重置中…'
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   props: ['url'],

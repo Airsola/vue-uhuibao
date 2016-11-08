@@ -218,10 +218,11 @@ import {Layout, LayoutHeader, LayoutBody} from '../../../layout';
 import ListItem from './components/ListItem.vue';
 
 import Helper from 'helper';
-import {Http, LANG_TYPE, CHANNEL_CODE, AREA_CODE} from 'config';
+import {CHANNEL_CODE, AREA_CODE} from 'config';
+import {Http, translate} from 'methods';
 import mapNavImg from 'assets/images/szair/location.jpg';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     title: '填写领取信息',
     typeUserName: '请输入领卡人姓名',
@@ -270,8 +271,7 @@ const Language = {
     verifyCodeSendSuccess: '驗證信息已經發送至該手機號碼',
     orderSuccess: '訂單提交成功，即將跳轉到訂單詳情！'
   }
-};
-const language = Language[LANG_TYPE];
+});
 const TWPhoneRegex = new RegExp('^09(\\d{8})$');
 const isTWPhone = function(string) {
   return TWPhoneRegex.test(string);

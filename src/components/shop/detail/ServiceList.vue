@@ -35,9 +35,9 @@
 <script>
 import ListItem from '../../service/components/ListItem.vue';
 
-import {LANG_TYPE} from 'config';
+import {translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     title: '精选服务',
     showMore: ['查看其它', '个服务']
@@ -46,8 +46,7 @@ const Language = {
     title: '精選服務',
     showMore: ['查看其它', '個服務']
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   components: {

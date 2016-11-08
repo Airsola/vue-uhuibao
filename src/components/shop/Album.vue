@@ -102,9 +102,10 @@
 import {Layout, LayoutHeader, LayoutBody} from '../layout';
 
 import Swiper from 'swiper';
-import {Http, LANG_TYPE, CHANNEL_CODE} from 'config';
+import {CHANNEL_CODE} from 'config';
+import {Http, translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     title: '商家相册',
     noData: '亲，暂时没有图片！'
@@ -113,8 +114,7 @@ const Language = {
     title: '商家相冊',
     noData: '親愛的，暫時沒有圖片！'
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   components: {

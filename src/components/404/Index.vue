@@ -66,9 +66,9 @@
 <script>
 import {Layout, LayoutHeader, LayoutBody} from '../layout';
 
-import {LANG_TYPE} from 'config';
+import {translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     title: '页面未找到',
     desc: '您访问的页面未找到',
@@ -79,8 +79,7 @@ const Language = {
     desc: '您訪問的頁面未找到',
     linkTo: ['返回上一頁', '回到首頁']
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   components: {

@@ -111,7 +111,8 @@
 
 <script>
 import Helper from 'helper';
-import {Http, CHANNEL_CODE, HASH_CLICK} from 'config';
+import {CHANNEL_CODE, HASH_CLICK} from 'config';
+import {Http} from 'methods';
 
 export default {
   name: 'footer',

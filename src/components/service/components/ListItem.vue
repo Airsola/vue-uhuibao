@@ -45,9 +45,10 @@
 
 <script>
 import placeholder from 'assets/images/x1_y1.png';
-import {Http, CHANNEL_CODE, LANG_TYPE} from 'config';
+import {CHANNEL_CODE} from 'config';
+import {Http, translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     shop: '商家：',
     clicked: '人浏览',
@@ -58,8 +59,7 @@ const Language = {
     clicked: '人瀏覽',
     currencySymbol: 'NT$'
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   props: ['serviceId', 'serviceName', 'serviceLogo', 'discountTag', 'serviceType', 'serviceLink', 'discountPrice', 'servicePrice', 'serviceUv', 'tags', 'shopId', 'shopName', 'shopAuth', 'productName'],

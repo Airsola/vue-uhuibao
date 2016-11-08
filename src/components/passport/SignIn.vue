@@ -10,17 +10,17 @@
 <script>
 import {Layout, LayoutHeader, LayoutBody} from '../layout';
 import SignIn from './signin/SignIn.vue';
-import {Http, LANG_TYPE, USER_AUTH} from 'config';
+import {USER_AUTH} from 'config';
+import {Http, translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     title: '游惠宝账号登录'
   },
   'zh-tw': {
     title: '遊惠寶賬號登錄'
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   components: {

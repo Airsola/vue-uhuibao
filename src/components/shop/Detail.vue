@@ -227,9 +227,10 @@ import CouponList from './detail/CouponList.vue';
 import TaskList from './detail/TaskList.vue';
 import NewsList from './detail/NewsList.vue';
 
-import {Http, LANG_TYPE, CHANNEL_CODE} from 'config';
+import {CHANNEL_CODE} from 'config';
+import {Http, translate} from 'methods';
 
-const Language = {
+const language = translate({
   'zh-cn': {
     payMethod: '支持：',
     showBranchStore: ['查看全部', '家分店']
@@ -238,8 +239,7 @@ const Language = {
     payMethod: '支持：',
     showBranchStore: ['查看全部', '家分店']
   }
-};
-const language = Language[LANG_TYPE];
+});
 
 export default {
   components: {

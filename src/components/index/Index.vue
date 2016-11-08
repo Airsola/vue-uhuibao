@@ -20,7 +20,8 @@ import CustomBanner from './index/CustomBanner.vue';
 import CustomNav from './index/CustomNav.vue';
 import CustomItem from './index/CustomItem.vue';
 
-import {Http, CHANNEL_CODE, CHANNEL_NAME, AREA_CODE} from 'config';
+import {CHANNEL_CODE, CHANNEL_NAME, AREA_CODE} from 'config';
+import {Http} from 'methods';
 
 export default {
   components: {

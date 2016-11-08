@@ -161,4 +161,6 @@ $(document.body).on('click', 'a[href^="#!"]', function(evt) {
 
 fastclick.attach(document.body);
 
-export {Http, WechatAPI, HASH_CLICK};
+const translate = (language) => language[LANG_TYPE];
+
+export {Http, WechatAPI, HASH_CLICK, translate};
