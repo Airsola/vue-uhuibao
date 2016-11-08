@@ -36,8 +36,17 @@ const routes = [
   }
 ];
 
-const router = new Router({
-  routes
+if (window.location.hostname === 'h5.uhuibao.com' || window.location.hostname === 'tw.uhuibao.com') {
+  const scriptNode = document.createElement('script');
+  window.document.head.appendChild(scriptNode);
+  scriptNode.src = '//hm.baidu.com/hm.js?7de78c62a11f49220a48261c9326ec7d';
+};
+
+const router = new Router({routes});
+
+// 每次路由完成之后完成进行一次百度统计
+router.afterEach((vm) => {
+  window._hmt.push(['_trackPageview', '/v2/#' + vm.fullPath]);
 });
 
 export default router;
