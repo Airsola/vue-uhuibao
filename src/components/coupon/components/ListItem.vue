@@ -20,7 +20,7 @@
   <transition name="slide-left">
     <dl class="underline" @click="redirectTo(couponId)">
       <dt>
-        <img :src="couponLogo" :alt="couponName">
+        <img v-lazy="couponLogo" :src="placeholder" :alt="couponName">
       </dt>
       <dd>
         <h4 class="t-bold"><span v-if="productName" class="rightline">{{productName}}</span>{{couponName}}</h4>
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import placeholder from 'assets/images/x1_y1.png';
 import {CHANNEL_CODE, AREA_CODE} from 'config';
 import {translate} from 'methods';
 
@@ -55,6 +56,7 @@ export default {
   props: ['couponId', 'couponName', 'couponLogo', 'couponUv', 'tags', 'shopId', 'shopName', 'shopAuth', 'productName'],
   data() {
     return {
+      placeholder,
       lang: language
     };
   },

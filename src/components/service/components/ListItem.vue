@@ -2,7 +2,7 @@
 .generic-list {
   dl {
     transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
-}
+  }
 }
 .slide-left-enter,
 .slide-right-leave-active {
@@ -20,7 +20,7 @@
   <transition name="slide-left">
     <dl class="underline" @click="redirectTo(serviceType, serviceLink, serviceId, shopId)">
       <dt>
-        <img v-lazy="serviceLogo" :alt="serviceLogo" :placeholder="placeholder"></lazy>
+        <img v-lazy="serviceLogo" :src="placeholder" :alt="serviceName">
         <span v-if="discountPrice && discountTag">{{discountTag}}</span>
       </dt>
       <dd>
@@ -88,8 +88,8 @@ export default {
   },
   data() {
     return {
-      lang: language,
-      placeholder
+      placeholder,
+      lang: language
     };
   }
 };

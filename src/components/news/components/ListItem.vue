@@ -21,7 +21,7 @@
   <transition name="slide-left">
     <router-link :to="{name: 'news:detail', params: {news_id: newsId}}" tag="dl" class="underline">
       <dt>
-        <img :src="newsLogo" :alt="newsName" :placeholder="placeholder"></img>
+        <img v-lazy="newsLogo" :src="placeholder" :alt="newsName">
       </dt>
       <dd>
         <h4 class="t-bold"><span v-if="productName" class="rightline">{{productName}}</span>{{newsName}}</h4>
@@ -57,8 +57,8 @@ export default {
   props: ['newsId', 'newsName', 'newsLogo', 'newsDate', 'newsUv', 'tags', 'shopId', 'shopName', 'shopAuth', 'productName'],
   data() {
     return {
-      lang: language,
-      placeholder
+      placeholder,
+      lang: language
     };
   }
 };

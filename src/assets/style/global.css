@@ -42,7 +42,7 @@ p.no-next-data{padding:.2rem 0;}
 .generic-list dl{min-height:.9rem;padding:.2rem;position:relative;background-color:#fff;}
 .generic-list dl:last-of-type:after{display:none;}
 .generic-list dl>dt{position:absolute;width:.9rem;height:.9rem;overflow:hidden;}
-.generic-list dl>dt>img{display:block;width:100%;height:100%;}
+.generic-list dl>dt>img{display:block;width:100%;height:100%;transition:transform .3s ease;-webkit-transition:-webkit-transform .3s ease;}
 .generic-list dl>dt>span{position:absolute;left:0;top:0;z-index:1;background-color:#f39935;font-size:.1rem;line-height:.16rem;padding:0 .06rem;color:#fff;border-bottom-right-radius:.05rem;white-space:nowrap;}
 .generic-list dl>dd{margin-left:1.1rem;height:0.9rem;position:relative;}
 .generic-list dl>dd>h4{font-size:.15rem;color:#222;line-height:.21rem;position:relative;top:-.03rem;word-break:break-all;
@@ -82,3 +82,5 @@ p.no-next-data{padding:.2rem 0;}
 .html-content img{max-width:100%;}
 .html-content table{width:100%;border-collapse:collapse;border:solid 1px #f0f0f0;margin:.1rem 0;}
 .html-content table td{border:solid 1px #f0f0f0;padding:.06rem;}
+
+img.lazy-pending,img.lazy-pending{background:url('lazy_logo.png') no-repeat 50% 50% #f5f5f5;display:block;background-size:auto 40%;}

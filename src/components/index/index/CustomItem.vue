@@ -98,7 +98,7 @@
     <div v-else :class="['clearfix', className]">
       <span v-for="(item, index) in data.list" :class="gridClass ? gridClass[index] : ''">
         <a :href="item.url">
-          <img :src="item.image">
+          <img v-lazy="item.image" :src="placeholder">
         </a>
       </span>
     </div>
@@ -113,6 +113,8 @@ import NewsListItem from '../../news/components/ListItem.vue';
 
 import {CHANNEL_CODE, AREA_CODE} from 'config';
 import {Http, translate} from 'methods';
+import placeholder from 'assets/images/x1_y1.png';
+import placeholderX25Y9 from 'assets/images/x25_y9.png';
 
 const language = translate({
   'zh-cn': {
@@ -143,6 +145,7 @@ export default {
             'rt underline',
             'rb'
           ],
+          placeholder,
           lang: language
         };
 
@@ -155,6 +158,7 @@ export default {
             'lb',
             'rb leftline'
           ],
+          placeholder,
           lang: language
         };
 
@@ -162,6 +166,7 @@ export default {
         return {
           className: 'th1-grid',
           gridClass: [],
+          placeholder: placeholderX25Y9,
           lang: language
         };
 

@@ -20,7 +20,7 @@
   <transition name="slide-left">
     <dl class="underline" @click="redirectTo(taskId)">
       <dt>
-        <img :src="taskLogo" :alt="taskName">
+        <img v-lazy="taskLogo" :src="placeholder" :alt="taskName">
       </dt>
       <dd>
         <h4 class="t-bold"><span v-if="productName" class="rightline">{{productName}}</span>{{taskName}}</h4>
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import placeholder from 'assets/images/x1_y1.png';
 import {CHANNEL_CODE, AREA_CODE} from 'config';
 import {translate} from 'methods';
 
@@ -57,6 +58,7 @@ export default {
   props: ['taskId', 'taskName', 'taskLogo', 'taskCost', 'taskUv', 'shopId', 'shopName', 'shopAuth', 'productName'],
   data() {
     return {
+      placeholder,
       lang: language
     };
   },

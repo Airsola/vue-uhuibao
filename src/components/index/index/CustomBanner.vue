@@ -35,8 +35,8 @@
     <div class="swiper-wrapper">
       <div class="swiper-slide" v-for="item in data">
         <a :href="item.bann_link_url">
-          <img v-if="observer" :src="item.bann_pic_img" @load="update">
-          <img v-else :src="item.bann_pic_img" @load="update">
+          <img v-if="observer" v-lazy="item.bann_pic_img" :src="placeholder" @load="update">
+          <img v-else v-lazy="item.bann_pic_img" :src="placeholder" @load="update">
         </a>
       </div>
     </div>
@@ -45,8 +45,8 @@
 </template>
 
 <script>
-import Swiper from 'swiper';
 import placeholder from 'assets/images/x25_y11.png';
+import Swiper from 'swiper';
 
 export default {
   props: ['data'],
