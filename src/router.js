@@ -10,6 +10,7 @@ import news from './routes/news';
 import passport from './routes/passport';
 import market from './routes/market';
 import ucenter from './routes/ucenter';
+import {Weixin} from './methods';
 
 const routes = [
   {
@@ -47,6 +48,7 @@ const router = new Router({routes});
 // 每次路由完成之后完成进行一次百度统计
 router.afterEach((vm) => {
   window._hmt.push(['_trackPageview', '/v2/#' + vm.fullPath]);
+  Weixin.updateShare();
 });
 
 export default router;

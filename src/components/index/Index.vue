@@ -21,7 +21,7 @@ import CustomNav from './index/CustomNav.vue';
 import CustomItem from './index/CustomItem.vue';
 
 import {CHANNEL_CODE, CHANNEL_NAME, AREA_CODE} from 'config';
-import {Http} from 'methods';
+import {Http, Weixin} from 'methods';
 
 export default {
   components: {
@@ -87,6 +87,8 @@ export default {
               vm.list.push(data);
             });
           });
+
+          Weixin.updateShare();
         });
       }).catch(error => {
         next({path: '/404'});

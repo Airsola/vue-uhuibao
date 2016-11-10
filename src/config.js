@@ -98,7 +98,7 @@ const Http = {
 };
 
 import shareLogo from 'assets/images/share_logo.jpg';
-const WechatAPI = new JssdkHelper(API_PATH + 'api/wechat_config', _.assign({
+const Weixin = new JssdkHelper(API_PATH + 'api/wechat_config', _.assign({
   body: formDataSource({
     url: encodeURIComponent(location.href.split('#')[0])
   })
@@ -110,8 +110,8 @@ const WechatAPI = new JssdkHelper(API_PATH + 'api/wechat_config', _.assign({
   callback: {
     success: function(a) {
       Http.fetch('api/sharelog', {
-        share_title: WechatAPI.getState('title'),
-        url: WechatAPI.getState('link'),
+        share_title: Weixin.getState('title'),
+        url: Weixin.getState('link'),
         share_way: 1
       }, CHANNEL_CODE);
     }
@@ -163,4 +163,4 @@ fastclick.attach(document.body);
 
 const translate = (language) => language[LANG_TYPE];
 
-export {Http, WechatAPI, HASH_CLICK, translate};
+export {Http, Weixin, HASH_CLICK, translate};

@@ -228,7 +228,7 @@ import TaskList from './detail/TaskList.vue';
 import NewsList from './detail/NewsList.vue';
 
 import {CHANNEL_CODE} from 'config';
-import {Http, translate} from 'methods';
+import {Http, translate, Weixin} from 'methods';
 
 const language = translate({
   'zh-cn': {
@@ -313,6 +313,13 @@ export default {
           if (result.data.tasks) vm.$set(vm, 'taskList', result.data.tasks);
           if (result.data.coupons) vm.$set(vm, 'couponList', result.data.coupons);
           if (result.data.articles) vm.$set(vm, 'newsList', result.data.articles);
+
+          Weixin.updateShare({
+            title: vm.shopName,
+            link: window.location.href,
+            desc: vm.shopDesc,
+            imgUrl: vm.shopLogo
+          });
         });
       }).catch(error => {
         next({path: '/404'});
@@ -352,6 +359,13 @@ export default {
           if (result.data.tasks) this.$set(this, 'taskList', result.data.tasks);
           if (result.data.coupons) this.$set(this, 'couponList', result.data.coupons);
           if (result.data.articles) this.$set(this, 'newsList', result.data.articles);
+
+          Weixin.updateShare({
+            title: this.shopName,
+            link: window.location.href,
+            desc: this.shopDesc,
+            imgUrl: this.shopLogo
+          });
         }).catch(error => {
           this.$router.replace({path: '/404'});
           throw new Error(error);

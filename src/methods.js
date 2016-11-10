@@ -1,2 +1,2 @@
-import {Http, translate, WechatAPI} from './config';
-export {Http, translate, WechatAPI};
+import {Http, translate, Weixin} from './config';
+export {Http, translate, Weixin};

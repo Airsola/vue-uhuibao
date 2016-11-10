@@ -5,9 +5,20 @@ import Component from './component.vue';
 const Constructor = Vue.extend(Component);
 const instances = [];
 const methods = {
+  /*
+   * @name 显示回调
+   *
+   * @params {Function} callback * 回调函数
+   */
   onShow(callback) {
     callback();
   },
+  /*
+   * @name 关闭回调
+   *
+   * @params {String} id * 实例ID
+   * @params {function} callback 回调函数
+   */
   onHide(id, callback) {
     if (typeof callback === 'function') callback();
 
@@ -23,11 +34,11 @@ const methods = {
 /*
  * @name 系统通知框
  *
- * @params message [*] String 通知文字
- * @params options (= {}) Object 其它选项参数
- * @params options.container Element 被包括的父级DOM元素
- * @params options.onShow Function 显示时的回调
- * @params options.onHide Function 关闭时的回调
+ * @params {String} message * 通知文字
+ * @params {Object} options [{}] 其它选项参数
+ * @params {Element} options.container 被包括的父级DOM元素
+ * @params {Function} options.onShow 显示时的回调
+ * @params {Function} options.onHide 关闭时的回调
  *
  * @author shusiwei
  * @date 2016/11/07

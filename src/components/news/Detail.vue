@@ -153,7 +153,7 @@ import IdCard from '../shop/components/IdCard.vue';
 
 import Helper from 'helper';
 import {CHANNEL_CODE, USER_AUTH} from 'config';
-import {Http, translate} from 'methods';
+import {Http, translate, Weixin} from 'methods';
 
 const language = translate({
   'zh-cn': {
@@ -222,6 +222,12 @@ export default {
           vm.$set(vm, 'shopDesc', result.data.shop_desc);
           vm.$set(vm, 'shopLogo', result.data.shop_logo_url);
           vm.$set(vm, 'shopAuth', result.data.shop_auth);
+
+          Weixin.updateShare({
+            title: vm.newsTitle,
+            link: window.location.href,
+            imgUrl: vm.newsLogo
+          });
         });
       }).catch(error => {
         next({path: '/404'});
@@ -249,6 +255,12 @@ export default {
           this.$set(this, 'shopDesc', result.data.shop_desc);
           this.$set(this, 'shopLogo', result.data.shop_logo_url);
           this.$set(this, 'shopAuth', result.data.shop_auth);
+
+          Weixin.updateShare({
+            title: this.newsTitle,
+            link: window.location.href,
+            imgUrl: this.newsLogo
+          });
         }).catch(error => {
           this.$router.replace({path: '/404'});
           throw new Error(error);

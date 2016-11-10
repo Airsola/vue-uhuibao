@@ -33,7 +33,7 @@
 <template>
   <div class="banner-swiper swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide" v-for="item in data">
+      <div class="swiper-slide" v-for="item in data" :data-swiper-autoplay="item.bann_forecast_time ? item.bann_forecast_time * 1000 : 3000">
         <a :href="item.bann_link_url">
           <img v-if="observer" v-lazy="item.bann_pic_img" :src="placeholder" @load="update">
           <img v-else v-lazy="item.bann_pic_img" :src="placeholder" @load="update">
@@ -48,6 +48,8 @@
 import placeholder from 'assets/images/x25_y11.png';
 import Swiper from 'swiper';
 
+let swiper = null;
+
 export default {
   props: ['data'],
   computed: {
@@ -57,24 +59,25 @@ export default {
   },
   data() {
     return {
-      swiper: null,
       placeholder
     };
   },
   mounted() {
-    this.swiper = new Swiper(this.$el, {
+    swiper = new Swiper(this.$el, {
       observer: true,
       autoHeight: true,
+      autoplay: 3000,
+      loop: true,
       pagination: this.$refs['pagination']
     });
   },
   methods: {
     update() {
-      this.swiper.update(true);
+      swiper.update(true);
     }
   },
   beforeDestroy() {
-    this.swiper.destroy();
+    swiper.destroy();
   }
 };
 </script>

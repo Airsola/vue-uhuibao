@@ -26,7 +26,7 @@ import ListItem from '../components/ListItem.vue';
 
 import Helper from 'helper';
 import {CHANNEL_CODE} from 'config';
-import {Http, translate} from 'methods';
+import {Http, translate, Weixin} from 'methods';
 
 const language = translate({
   'zh-cn': {
@@ -82,6 +82,11 @@ export default {
           this.$set(this, 'list', this.list.concat(result.data.result_list));
           this.$set(this, 'hasNext', !!result.data.has_next);
           this.$set(this, 'curPage', result.data.curre_page);
+
+          Weixin.updateShare({
+            title: '游惠宝-服务精选',
+            link: window.location.href
+          });
         }).catch(error => {
           throw new Error(error);
         });
