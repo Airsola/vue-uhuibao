@@ -26,7 +26,7 @@
   <transition name="slide-left">
     <router-link :to="{name: 'market:store@szair:detail', params: {goods_id: goodsId}}" tag="dl" class="underline">
       <dt>
-        <img :src="goodsLogo" :alt="goodsName" :placeholder="placeholder"></img>
+        <img v-lazy="goodsLogo" :src="placeholder" :alt="goodsName"></img>
       </dt>
       <dd>
         <h4 class="t-bold"><span v-if="productName" class="rightline">{{productName}}</span>{{goodsName}}</h4>

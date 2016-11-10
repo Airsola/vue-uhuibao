@@ -184,7 +184,7 @@
           <ul>
             <li v-for="(item, index) in photoList">
               <router-link :to="{name: 'shop:album', params: {shop_id: shopId}}">
-                <img :src="item.url" :class="item.scale" @load="imgResize($event, index)">
+                <img v-lazy="item.url" :src="placeholder" :class="item.scale" @load="imgResize($event, index)">
               </router-link>
             </li>
           </ul>
@@ -229,6 +229,7 @@ import NewsList from './detail/NewsList.vue';
 
 import {CHANNEL_CODE} from 'config';
 import {Http, translate, Weixin} from 'methods';
+import placeholder from 'assets/images/x21_y16.png';
 
 const language = translate({
   'zh-cn': {
@@ -278,6 +279,7 @@ export default {
         5: 'mastercard',
         6: 'cash'
       },
+      placeholder,
       lang: language
     };
   },

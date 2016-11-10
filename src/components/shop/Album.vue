@@ -80,7 +80,7 @@
         <ul class="clearfix">
           <li v-for="(item, index) in photoList">
             <figure @click="openPhoto(index)">
-              <img :src="item.url" :class="item.scale" @load="imgResize($event, index)">
+              <img v-lazy="item.url" :src="placeholder" :class="item.scale" @load="imgResize($event, index)">
             </figure>
           </li>
         </ul>
@@ -104,6 +104,7 @@ import {Layout, LayoutHeader, LayoutBody} from '../layout';
 import Swiper from 'swiper';
 import {CHANNEL_CODE} from 'config';
 import {Http, translate} from 'methods';
+import placeholder from 'assets/images/x21_y16.png';
 
 const language = translate({
   'zh-cn': {
@@ -125,8 +126,9 @@ export default {
   data() {
     return {
       photoList: [],
-      lang: language,
-      show: false
+      show: false,
+      placeholder,
+      lang: language
     };
   },
   beforeRouteEnter(to, from, next) {

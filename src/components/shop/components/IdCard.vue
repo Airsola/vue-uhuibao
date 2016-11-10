@@ -72,7 +72,7 @@
   <router-link :to="{name: 'shop:detail', params: {shop_id: shopId}}" class="shop-card" tag="div">
     <dl>
       <dt>
-        <img :src="shopLogo" :alt="shopName">
+        <img v-lazy="shopLogo" :src="placeholder" :alt="shopName">
       </dt>
       <dd>
         <h5 class="t-bold">
@@ -87,6 +87,7 @@
 
 <script>
 import {translate} from 'methods';
+import placeholder from 'assets/images/x1_y1.png';
 
 const language = translate({
   'zh-cn': {
@@ -101,6 +102,7 @@ export default {
   props: ['shopId', 'shopName', 'shopLogo', 'shopDesc', 'shopAuth'],
   data() {
     return {
+      placeholder,
       lang: language
     };
   }
