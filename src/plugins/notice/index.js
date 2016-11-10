@@ -5,7 +5,7 @@ import Component from './component.vue';
 const Constructor = Vue.extend(Component);
 const instances = [];
 const methods = {
-  /*
+  /**
    * @name 显示回调
    *
    * @params {Function} callback * 回调函数
@@ -13,7 +13,7 @@ const methods = {
   onShow(callback) {
     callback();
   },
-  /*
+  /**
    * @name 关闭回调
    *
    * @params {String} id * 实例ID
@@ -31,7 +31,7 @@ const methods = {
   }
 };
 
-/*
+/**
  * @name 系统通知框
  *
  * @params {String} message * 通知文字

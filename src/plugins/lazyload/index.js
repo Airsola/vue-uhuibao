@@ -1,9 +1,19 @@
+/**
+ * @name vue-directive-lazyload for vue2
+ *
+ * 为vue添加图片懒加载
+ * 支持所iOS7+、安卓4.4+、Chrome、Firefox、IE1110、Edge
+ *
+ * @example
+ * <img v-lazy="imgSrc" :src="placeholderSrc"></img>
+ */
+
 import Vue from 'vue';
 // 添加 IntersectionObserver polyfill
 import 'intersection-observer';
 
-/*
- * @name viewport 探测器
+/**
+ * viewport 探测器
  *
  * @params {Function} 探测过执行的回调
  * @options {Object} 其它参数
@@ -31,7 +41,7 @@ const imagesArr = [];
 const transitionend = window.hasOwnProperty('onwebkittransitionend') ? 'webkitTransitionEnd' : 'transitionend';
 const animationend = window.hasOwnProperty('onwebkitanimationend') ? 'webkitAnimationEnd' : 'animationend';
 
-/*
+/**
  * @name 将图片添加到数组队列
  *
  * @params {Img Element} el * 要加入到队列的图片元素
@@ -51,7 +61,7 @@ const push = (el, src) => {
   };
 };
 
-/*
+/**
  * @name 从数组队列中移除
  *
  * @params {Img Element} el * 要从队列中移除的图片元素
@@ -69,7 +79,7 @@ const remove = (el) => {
   };
 };
 
-/*
+/**
  * @name 图片元素绑定占位图
  *
  * @params {Img Element} el * 要绑定占位图的图片元素
@@ -79,7 +89,7 @@ const bind = (el) => {
   el.placeholder = el.src;
 };
 
-/*
+/**
  * @name 更新图片元素状态
  *
  * @params {Img Element} el * 将要更新的图片元素
@@ -104,7 +114,7 @@ const update = (el, src) => {
   if (!observer) check(el);
 };
 
-/*
+/**
  * @name 图片元素触发可见
  *
  * @params {Img Element} el * 将要触发显示的图片元素
@@ -132,7 +142,7 @@ const emit = (el) => {
   return promise;
 };
 
-/*
+/**
  * @name 应用真实的图片源地址，并将此图片元素从队列中移除
  *
  * @params {Img Element} el * 显示的图片元素
@@ -150,7 +160,7 @@ const apply = (el, ok) => {
   remove(el);
 };
 
-/*
+/**
  * @name 图片请求完成后执行的过渡动画
  *
  * @params {Img Element} el * 执行过渡的图片元素
@@ -193,7 +203,7 @@ const transition = (el, opacity) => {
   return promise;
 };
 
-/*
+/**
  * @name 检测某个图片元素是否在窗口可见
  *
  * @params {Img Element} el * 被检测的图片元素
@@ -222,7 +232,7 @@ const check = (el) => {
 };
 
 if (!observer) {
-  /*
+  /**
    * @name 对队列进行遍历
    */
   const each = () => {

@@ -5,7 +5,7 @@ import Component from './component.vue';
 const Constructor = Vue.extend(Component);
 const instances = [];
 const methods = {
-  /*
+  /**
    * @name 登录成功回调
    *
    * @params {Function} callback * 回调函数
@@ -13,7 +13,7 @@ const methods = {
   onSuccess(callback) {
     callback();
   },
-  /*
+  /**
    * @name 放弃登录回调
    *
    * @params {Function} callback * 回调函数
@@ -21,7 +21,7 @@ const methods = {
   onForgone(callback) {
     callback();
   },
-  /*
+  /**
    * @name 显示回调
    *
    * @params {Function} callback * 回调函数
@@ -30,7 +30,7 @@ const methods = {
     callback();
   },
 
-  /*
+  /**
    * @name 关闭回调
    *
    * @params {String} id * 实例ID
@@ -48,7 +48,7 @@ const methods = {
   }
 };
 
-/*
+/**
  * @name 用户登录挂件
  *
  * @params {Object} options [{}] 其它选项参数
