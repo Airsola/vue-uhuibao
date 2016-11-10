@@ -46,7 +46,7 @@ Helper.autoRootEM(375);
 
 NProgress.configure({
   showSpinner: false,
-  trickleRate: 0.1,
+  trickleRate: 0.05,
   trickleSpeed: 300,
   easing: 'ease'
 });

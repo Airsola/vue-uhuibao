@@ -8,6 +8,7 @@
     "es6-promise": "^4.0.5",
     "fastclick": "^1.0.6",
     "helper": "github:shusiwei/helper",
+    "intersection-observer": "^0.1.1",
     "jquery": "^3.1.1",
     "jssdk-helper": "github:shusiwei/jssdk-helper",
     "lodash": "^4.16.6",
