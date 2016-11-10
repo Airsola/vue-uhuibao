@@ -2,7 +2,7 @@
  * @name vue-directive-lazyload for vue2
  *
  * 为vue添加图片懒加载
- * 支持所iOS7+、安卓4.4+、Chrome、Firefox、IE1110、Edge
+ * 支持所iOS7+、安卓4.4+、Chrome、Firefox、IE10+、Edge
  *
  * @example
  * <img v-lazy="imgSrc" :src="placeholderSrc"></img>
