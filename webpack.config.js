@@ -69,6 +69,7 @@ module.exports = {
       vue: {
         postcss: [require('autoprefixer')()]
       }
-    })
+    }),
+    new StyleLintPlugin()
   ]
 };
