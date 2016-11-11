@@ -52,7 +52,7 @@ const push = (el, src) => {
   el.lazy = src;
 
   // 标记图片状态为挂起
-  el.dataset.lazy = 'pending';
+  el.setAttribute('lazy', 'pending');
 
   if (observer) {
     observer.observe(el);
@@ -97,7 +97,7 @@ const bind = (el) => {
  */
 const update = (el, src) => {
   if (el.lazy !== src) {
-    switch (el.dataset.lazy) {
+    switch (el.getAttribute('lazy')) {
       case 'pending' :
       case 'loading' :
         el.lazy === src;
@@ -123,7 +123,7 @@ const update = (el, src) => {
  */
 const emit = (el) => {
   // 标记图片状态为加载中
-  el.dataset.lazy = 'loading';
+  el.setAttribute('lazy', 'loading');
 
   const promise = new Promise((resolve, reject) => {
     const image = new Image();
@@ -154,7 +154,7 @@ const apply = (el, ok) => {
     el.src = ok ? el.lazy : el.placeholder;
 
     // 改变状态为成功/失败
-    el.dataset.lazy = ok ? 'success' : 'failed';
+    el.setAttribute('lazy', ok ? 'success' : 'failed');
   });
 
   remove(el);
@@ -193,7 +193,7 @@ const transition = (el, opacity) => {
     };
 
     // 图片开始淡出
-    styleNode.transition = styleNode.webkitTransition = 'opacity .5s ease';
+    styleNode.transition = styleNode.webkitTransition = 'opacity .3s ease';
     styleNode.opacity = 0;
 
     // 增加 transitionend 事件

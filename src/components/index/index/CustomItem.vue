@@ -113,8 +113,8 @@ import NewsListItem from '../../news/components/ListItem.vue';
 
 import {CHANNEL_CODE, AREA_CODE} from 'config';
 import {Http, translate} from 'methods';
-import placeholder from 'assets/images/x1_y1.png';
-import placeholderX25Y9 from 'assets/images/x25_y9.png';
+import placeholder from 'assets/x1_y1.png';
+import placeholderX25Y9 from 'assets/x25_y9.png';
 
 const language = translate({
   'zh-cn': {

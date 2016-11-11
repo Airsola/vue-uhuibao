@@ -220,7 +220,7 @@ import ListItem from './components/ListItem.vue';
 import Helper from 'helper';
 import {CHANNEL_CODE, AREA_CODE} from 'config';
 import {Http, translate} from 'methods';
-import mapNavImg from 'assets/images/szair/location.jpg';
+import mapNavImg from 'assets/szair/location.jpg';
 
 const language = translate({
   'zh-cn': {

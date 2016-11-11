@@ -1,6 +1,6 @@
-import 'assets/style/reset.css';
-import 'assets/style/font.css';
-import 'assets/style/global.css';
+import 'assets/reset.styl';
+import 'assets/font.styl';
+import 'assets/global.styl';
 
 import Vue from 'vue';
 import router from './router';

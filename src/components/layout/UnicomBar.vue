@@ -11,7 +11,7 @@
     &.logo {
       width: .6rem;
       height: .2rem;
-      background: url('../../assets/images/17wo.png') no-repeat 0 0;
+      background: url('../../assets/17wo.png') no-repeat 0 0;
       background-size: 100% 100%;
       display: block;
       position: absolute;

@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import placeholder from 'assets/images/x1_y1.png';
+import placeholder from 'assets/x1_y1.png';
 import {CHANNEL_CODE, AREA_CODE} from 'config';
 import {translate} from 'methods';
 

@@ -25,9 +25,9 @@ module.exports = {
         loader: 'babel!eslint',
         exclude: [/node_modules/, path.resolve(__dirname, './src/modules/')]
       }, {
-        test: /\.css$/,
-        loader: 'style!css!postcss',
-        exclude: /node_modules/,
+        test: /\.(css|styl)$/,
+        loader: 'style!css!postcss!stylus',
+        exclude: /node_modules/
       }, {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file',

@@ -197,7 +197,7 @@
 import {Layout, LayoutHeader, LayoutBody, LayoutFooter} from '../layout';
 import {USER_AUTH} from 'config';
 import {Http, translate} from 'methods';
-import avatarImg from 'assets/images/avatar.jpg';
+import avatarImg from 'assets/avatar.jpg';
 
 const language = translate({
   'zh-cn': {

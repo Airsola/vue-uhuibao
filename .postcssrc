@@ -1,7 +1,7 @@
 {
   "plugins": {
     "autoprefixer": {
-      browsers: ['last 2 versions']
+      "browsers": ["last 6 iOS versions", "Firefox ESR", "last 2 versions"]
     }
   }
 }

@@ -45,6 +45,7 @@
   left: 0;
   top: .5rem;
   width: 100%;
+  height: -webkit-calc(100% - .5rem);
   height: calc(100% - .5rem);
   z-index: 1;
   background-color: #000;
@@ -104,7 +105,7 @@ import {Layout, LayoutHeader, LayoutBody} from '../layout';
 import Swiper from 'swiper';
 import {CHANNEL_CODE} from 'config';
 import {Http, translate} from 'methods';
-import placeholder from 'assets/images/x21_y16.png';
+import placeholder from 'assets/x21_y16.png';
 
 const language = translate({
   'zh-cn': {

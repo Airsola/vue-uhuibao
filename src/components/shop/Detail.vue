@@ -114,25 +114,25 @@
       margin-right: .04rem;
       &.alipay {
         width: .16rem;
-        background-image: url(../../assets/images/pay_alipay.png);
+        background-image: url(../../assets/pay_alipay.png);
         border-radius: .02rem;
       }
       &.weipay {
         width: .16rem;
-        background-image: url(../../assets/images/pay_wxpay.png);
+        background-image: url(../../assets/pay_wxpay.png);
         border-radius: .02rem;
       }
       &.unionpay {
         width: .26rem;
-        background-image: url(../../assets/images/pay_union.png);
+        background-image: url(../../assets/pay_union.png);
       }
       &.visa {
         width: .21rem;
-        background-image: url(../../assets/images/pay_visa.png);
+        background-image: url(../../assets/pay_visa.png);
       }
       &.mastercard {
         width: .27rem;
-        background-image: url(../../assets/images/pay_mastercard.png);
+        background-image: url(../../assets/pay_mastercard.png);
       }
     }
   }
@@ -229,7 +229,7 @@ import NewsList from './detail/NewsList.vue';
 
 import {CHANNEL_CODE} from 'config';
 import {Http, translate, Weixin} from 'methods';
-import placeholder from 'assets/images/x21_y16.png';
+import placeholder from 'assets/x21_y16.png';
 
 const language = translate({
   'zh-cn': {

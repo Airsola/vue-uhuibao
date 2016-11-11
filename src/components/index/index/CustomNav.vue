@@ -106,12 +106,12 @@
   }
   &.zh-cn {
     &:before {
-      background-image: url(../../../assets/images/news_cn.png);
+      background-image: url(../../../assets/news_cn.png);
     }
   }
   &.zh-tw {
     &:before {
-      background-image: url(../../../assets/images/news_tw.png);
+      background-image: url(../../../assets/news_tw.png);
     }
   }
   & > .news-topic-list {

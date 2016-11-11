@@ -1,4 +1,4 @@
-import 'assets/style/nprogress.css';
+import 'assets/nprogress.styl';
 import $ from 'jquery';
 import _ from 'lodash';
 import Helper from 'helper';
@@ -97,7 +97,7 @@ const Http = {
   }
 };
 
-import shareLogo from 'assets/images/share_logo.jpg';
+import shareLogo from 'assets/share_logo.jpg';
 const Weixin = new JssdkHelper(API_PATH + 'api/wechat_config', _.assign({
   body: formDataSource({
     url: encodeURIComponent(location.href.split('#')[0])

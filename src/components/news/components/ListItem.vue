@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import placeholder from 'assets/images/x1_y1.png';
+import placeholder from 'assets/x1_y1.png';
 import {translate} from 'methods';
 
 const language = translate({

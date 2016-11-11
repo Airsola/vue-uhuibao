@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import placeholder from 'assets/images/x25_y11.png';
+import placeholder from 'assets/x25_y11.png';
 import Swiper from 'swiper';
 
 let swiper = null;

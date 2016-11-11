@@ -35,7 +35,7 @@ import ListItem from './components/ListItem.vue';
 import {CHANNEL_CODE, AREA_CODE} from 'config';
 import {Http, translate} from 'methods';
 import Helper from 'helper';
-import bannerImg from 'assets/images/szair/banner.jpg';
+import bannerImg from 'assets/szair/banner.jpg';
 
 const language = translate({
   'zh-cn': {
