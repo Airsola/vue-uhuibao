@@ -1,138 +1,6 @@
-<style lang="stylus" scoped>
-.popup-animate {
-  position: absolute;
-  width: 85%;
-  top: 50%;
-  left: 50%;
-  background-color: #fff;
-  box-shadow: 0 .01rem .03rem rgba(0,0,0,.2);
-  z-index: 2;
-  border-radius: .03rem;
-  transition: all .5s cubic-bezier(.55,0,.1,1);
-  transform: translate(-50%, -50%);
-  & > a {
-    width: .28rem;
-    height: .28rem;
-    line-height: .28rem;
-    text-align: center;
-    display: block;
-    position: absolute;
-    z-index: 1;
-    top: -.14rem;
-    right: -.14rem;
-    border-radius: 50%;
-    background-color: #fff;
-    &:before {
-      color: #999;
-    }
-  }
-}
-.slide-up-enter {
-  opacity: 0;
-  transform: translate(-50%, -45%);
-}
-.slide-up-leave-active {
-  opacity: 0;
-  transform: translate(-50%, -45%);
-}
-.from-wrap {
-  padding: .2rem;
-}
-.form-title {
-  font-size: .16rem;
-  text-align: center;
-  padding-bottom: .1rem;
-}
-.form-table {
-  & > li {
-    position: relative;
-    & > label {
-      display: block;
-      padding: .16rem 0 .16rem .3rem;
-      height: .16rem;
-      position: relative;
-      &.short {
-        margin-right: 1rem;
-      }
-      &:before {
-        font-size: .16rem;
-        color: #c7d1da;
-        line-height: 1em;
-        position: absolute;
-        left: 0;
-        top: 50%;
-        margin-top: -.5em;
-      }
-      & > input {
-        border: none;
-        height: .16rem;
-        width: 100%;
-        line-height: .16rem;
-        font-size: .14rem;
-      }
-    }
-    & > span {
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      line-height: .3rem;
-      padding: 0 .1rem;
-      font-size: .14rem;
-      border-radius: .03rem;
-      background-color: #2dbcff;
-      color: #fff;
-      z-index: 1;
-    }
-  }
-}
-.from-link {
-  font-size: .14rem;
-  color: #ffaa18;
-  padding-top: .2rem;
-}
-.form-submit {
-  padding-top: .2rem;
-  & > span {
-    float: left;
-    width: 50%;
-    &:nth-of-type(1) {
-      & > a {
-        margin-right: .1rem;
-      }
-    }
-    &:nth-of-type(2) {
-      & > a {
-        margin-left: .1rem;
-      }
-    }
-  }
-  a {
-    border-radius: .03rem;
-    text-align: center;
-    line-height: .4rem;
-    font-size: .14rem;
-    display: block;
-    color: #666;
-    border: solid 1px #f2f2f2;
-    transition: background-color .2s ease,border-color .2s ease,color .2s ease;
-    &.disabled {
-      background-color: #f2f2f2;
-      border-color: #f2f2f2;
-      color: #ccc;
-    }
-    &.important {
-      background-color: #5fb8f1;
-      border-color: #5fb8f1;
-      color: #fff;
-    }
-  }
-}
-</style>
-
 <template>
   <transition name="slide-up">
-    <div class="popup-animate">
+    <div class="form-animate">
       <a class="iconfont i-close-bfo" @click="close(true)"></a>
       <div class="from-wrap">
         <div class="form-box">
@@ -154,8 +22,7 @@
           </div>
           <div class="form-submit clearfix">
             <span>
-              <a v-if="submiting" class="disabled">{{lang.signIng}}</a>
-              <a v-else @click="loginAction(telphone, password)" class="important">{{lang.signIn}}</a>
+              <a :class="[!telphone || !isTelphone(telphone) || !password || password.length < 6 || password.length > 16 || submiting ? 'disabled' : 'important']" @click="submitAction(telphone, password)">{{submiting ? lang.signIng : lang.signIn}}</a>
             </span>
             <span>
               <a @click="swipeTo(1)">{{lang.signUp}}</a>
@@ -224,11 +91,15 @@ export default {
     }
   },
   methods: {
-    loginAction(telphone, password) {
+    syncTelphone(evt) {
+      this.telphone = evt.target.value.replace(/ /g, '');
+    },
+    isTelphone: (telphone) => Helper.is('cell', telphone) || isTWPhone(telphone),
+    submitAction(telphone, password) {
       if (this.submiting) return;
 
       if (!telphone) return this.$message(language.noTypePhoneNumber);
-      if (!Helper.is('cell', telphone) && !isTWPhone(telphone)) return this.$message(language.phoneNumberError);
+      if (!this.isTelphone(telphone)) return this.$message(language.phoneNumberError);
       if (!password) return this.$message(language.noTypePassword);
       if (password.length < 6 || password.length > 16) return this.$message(language.passwordLengthError);
 
@@ -248,9 +119,6 @@ export default {
           throw new Error(error);
         });
       });
-    },
-    syncTelphone(evt) {
-      this.telphone = evt.target.value.replace(/ /g, '');
     }
   }
 };

@@ -98,7 +98,7 @@
 
 <template>
   <transition name="slide-up">
-    <div class="popup-animate">
+    <div class="form-animate">
       <div class="from-wrap">
         <div class="form-box">
           <h5 class="form-title">{{lang.title}}</h5>
@@ -115,9 +115,7 @@
             </li>
           </ul>
           <div class="form-submit">
-            <a v-if="timeout > 0 && !submiting" class="disabled">{{lang.signUpSuccess[0]}}{{timeout}}{{lang.signUpSuccess[1]}}</a>
-            <a v-if="timeout === 0 && !submiting" @click="setPassword(password, repassword)" class="important">{{lang.title}}</a>
-            <a v-if="timeout === 0 && submiting" class="disabled">{{lang.title}}</a>
+            <a :class="[!password || password.length < 6 || password.length > 16 || !repassword || password !== repassword || submiting || timeout > 0 ? 'disabled' : 'important']" @click="setPasswordAction(password, repassword)">{{submiting ? lang.passwordSaveIng : (timeout > 0 ? lang.signUpSuccess[0] + timeout + lang.signUpSuccess[1] : lang.setPasspord)}}</a>
           </div>
         </div>
       </div>
@@ -133,22 +131,24 @@ const language = translate({
     title: '设置游惠宝密码',
     typePassword: '请输入密码',
     typePasswordAgain: '请再次输入密码',
-    noTypePassword: '嘿，你还没有输入密码！ ',
-    passwordLengthError: '密码的长度为6-16位字符！ ',
-    noTypeConfirmPassword: '请再次输入确认密码！ ',
-    passwordDiff: '两次密码不一样啊！ ',
-    signUpSuccess: ['注册成功，', '秒后回到登录窗！ '],
+    setPasspord: '设置密码',
+    noTypePassword: '嘿，你还没有输入密码！',
+    passwordLengthError: '密码的长度为6-16位字符！',
+    noTypeConfirmPassword: '请再次输入确认密码！',
+    passwordDiff: '两次密码不一样啊！',
+    signUpSuccess: ['注册成功，', '秒后回到登录窗！'],
     passwordSaveIng: '密码设置中…'
   },
   'zh-tw': {
     title: '設置遊惠寶密碼',
     typePassword: '請輸入密碼',
+    setPasspord: '設置密碼',
     typePasswordAgain: '請再次輸入密碼',
-    noTypePassword: '嘿，你還沒有輸入密碼！ ',
-    passwordLengthError: '密碼的長度為6-16位字符！ ',
-    noTypeConfirmPassword: '請再次輸入確認密碼！ ',
-    passwordDiff: '兩次密碼不一樣啊！ ',
-    signUpSuccess: ['註冊成功，', '秒後回到登錄窗！ '],
+    noTypePassword: '嘿，你還沒有輸入密碼！',
+    passwordLengthError: '密碼的長度為6-16位字符！',
+    noTypeConfirmPassword: '請再次輸入確認密碼！',
+    passwordDiff: '兩次密碼不一樣啊！',
+    signUpSuccess: ['註冊成功，', '秒後回到登錄窗！'],
     passwordSaveIng: '密碼設置中…'
   }
 });
@@ -167,7 +167,7 @@ export default {
   },
   methods: {
     setPassword(password, repassword) {
-      if (this.submiting) return;
+      if (this.submiting || this.timeout > 0) return;
 
       if (!password) return this.$message(language.noTypePassword);
       if (password.length < 6 || password.length > 16) return this.$message(language.passwordLengthError);

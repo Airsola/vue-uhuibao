@@ -199,8 +199,14 @@ export default {
           // 清空数据并拉入新的数据
           data.list.splice(0, data.list.length);
 
-          // 更换新的数据
-          this.$set(data, 'list', data.list.concat(result.data));
+          const timer = window.setTimeout(() => {
+            window.clearTimeout(timer);
+
+            // 更换新的数据
+            for (let item of result.data) {
+              data.list.push(item);
+            };
+          }, 500);
         }).catch(error => {
           throw new Error(error);
         });

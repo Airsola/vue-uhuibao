@@ -1,22 +1,3 @@
-<style lang="stylus" scoped>
-.generic-list {
-  dl {
-    transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
-  }
-}
-.slide-left-enter,
-.slide-right-leave-active {
-  opacity: 0;
-  transform: translate(30px, 0);
-}
-.slide-left-leave-active,
-.slide-right-enter {
-  opacity: 0;
-  transform: translate(-30px, 0);
-}
-
-</style>
-
 <template>
   <transition name="slide-left">
     <router-link :to="{name: 'news:detail', params: {news_id: newsId}}" tag="dl" class="underline">

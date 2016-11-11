@@ -2,7 +2,7 @@
   <layout>
     <layout-header :title="lang.title" :search="false"></layout-header>
     <layout-body>
-      <forgot v-if="step === 1" :swipeTo="swipeTo" :url="url"></forgot>
+      <forgot v-if="step === 1" :swipeToNext="swipeToNext" :url="url"></forgot>
       <forgot-next v-if="step === 2" :url="url"></forgot-next>
     </layout-body>
   </layout>
@@ -65,8 +65,8 @@ export default {
     }
   },
   methods: {
-    swipeTo(index) {
-      this.step = index;
+    swipeToNext() {
+      this.step = 2;
     }
   }
 };
