@@ -67,7 +67,7 @@ module.exports = {
     }),
     new webpack.LoaderOptionsPlugin({
       vue: {
-        postcss: [require('postcss-cssnext')()]
+        postcss: [require('autoprefixer')()]
       }
     }),
     new StyleLintPlugin()
