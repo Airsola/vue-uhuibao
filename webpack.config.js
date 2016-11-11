@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -70,6 +71,9 @@ module.exports = {
         postcss: [require('autoprefixer')()]
       }
     }),
-    new StyleLintPlugin()
+    new StyleLintPlugin({
+      syntax: 'scss',
+      files: ['**/*.css', '**/*.styl']
+    })
   ]
 };
