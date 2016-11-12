@@ -1,11 +1,11 @@
 /**
- * @name vue-directive-lazyload for vue2
+ * @name vue-lazyload-directive for vue2
  *
  * 为vue添加图片懒加载
  * 支持所iOS7+、安卓4.4+、Chrome、Firefox、IE10+、Edge
  *
  * @example
- * <img v-lazy="imgSrc" :src="placeholderSrc"></img>
+ * <img v-lazy="imgSrc" :src="placeholderSrc">
  */
 
 import Vue from 'vue';
@@ -34,12 +34,17 @@ const observer = window.IntersectionObserver ? new window.IntersectionObserver(e
   threshold: [0, 0.25]
 }) : null;
 
-// 存放等待延时加载的图片元素
-const imagesArr = [];
-
 // 动画事件名称
 const transitionend = window.hasOwnProperty('onwebkittransitionend') ? 'webkitTransitionEnd' : 'transitionend';
-const animationend = window.hasOwnProperty('onwebkitanimationend') ? 'webkitAnimationEnd' : 'animationend';
+
+/**
+ * @name 图片元素绑定占位图
+ *
+ * @params {Img Element} el * 要绑定占位图的图片元素
+ */
+const bind = (el) => {
+  el.placeholder = el.src;
+};
 
 /**
  * @name 将图片添加到数组队列
@@ -54,11 +59,7 @@ const push = (el, src) => {
   // 标记图片状态为挂起
   el.setAttribute('lazy', 'pending');
 
-  if (observer) {
-    observer.observe(el);
-  } else {
-    imagesArr.push(el);
-  };
+  observer.observe(el);
 };
 
 /**
@@ -66,28 +67,7 @@ const push = (el, src) => {
  *
  * @params {Img Element} el * 要从队列中移除的图片元素
  */
-const remove = (el) => {
-  if (observer) {
-    observer.unobserve(el);
-  } else {
-    for (let i = 0, len = imagesArr.length; i < len; i++) {
-      if (imagesArr[i] === el) {
-        imagesArr.splice(i, 1);
-        break;
-      };
-    };
-  };
-};
-
-/**
- * @name 图片元素绑定占位图
- *
- * @params {Img Element} el * 要绑定占位图的图片元素
- */
-const bind = (el) => {
-  // 记住占位图
-  el.placeholder = el.src;
-};
+const remove = (el) => observer.unobserve(el);
 
 /**
  * @name 更新图片元素状态
@@ -109,9 +89,6 @@ const update = (el, src) => {
         break;
     };
   };
-
-  // 在没有监视者的时候，需要主动检测
-  if (!observer) check(el);
 };
 
 /**
@@ -201,51 +178,6 @@ const transition = (el, opacity) => {
   });
 
   return promise;
-};
-
-/**
- * @name 检测某个图片元素是否在窗口可见
- *
- * @params {Img Element} el * 被检测的图片元素
- */
-const check = (el) => {
-  const rect = el.getBoundingClientRect();
-  const style = window.getComputedStyle(el, null);
-  const width = parseFloat(style.width);
-  const height = parseFloat(style.height);
-
-  // 水平方向可见
-  let x = false;
-
-  // 垂直方向可见
-  let y = false;
-
-  if (style.display === 'none' || style.visibility === 'hidden' || width === 0 || height === 0 || parseFloat(style.opacity) === 0) return;
-
-  // 水平方向是否可见
-  if ((rect.left >= 0 && rect.left < window.innerWidth) || (rect.left < 0 && Math.abs(rect.left) < width)) x = true;
-
-  // 垂直方向是否可见
-  if ((rect.top >= 0 && rect.top < window.innerHeight) || (rect.top < 0 && Math.abs(rect.top) < height)) y = true;
-
-  if (x && y) emit(el).then(el => apply(el, true)).catch(el => apply(el, false));
-};
-
-if (!observer) {
-  /**
-   * @name 对队列进行遍历
-   */
-  const each = () => {
-    for (let el of imagesArr) {
-      check(el);
-    };
-  };
-
-  // 全局监听事件
-  window.addEventListener('scroll', each);
-  window.addEventListener('resize', each);
-  window.addEventListener(animationend, each);
-  window.addEventListener(transitionend, each);
 };
 
 // 添加vue指令
