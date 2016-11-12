@@ -41,6 +41,7 @@ module.exports = {
   resolve: {
     alias: {
       jquery: path.resolve(__dirname, './src/modules/jquery'),
+      helper: path.resolve(__dirname, './src/modules/helper'),
       config: path.resolve(__dirname, './src/config'),
       methods: path.resolve(__dirname, './src/methods'),
       components: path.resolve(__dirname, './src/components'),
